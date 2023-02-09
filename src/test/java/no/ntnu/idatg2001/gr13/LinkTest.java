@@ -17,18 +17,34 @@ public class LinkTest
         this.link = new Link("test text", "test reference");
     }
 
+
     /**
      * Tester for setting the text in Link class.
      * Positive and negative test.
      */
     @Test
-    void testSetLinkText(){
+    void testSetText(){
         // Negative test, checks if it throws "IllegalArgumentException"
         Assertions.assertThrows(IllegalArgumentException.class, () ->
             link.setText(null), "error invalid text");
         Assertions.assertThrows(IllegalArgumentException.class, () ->
             link.setText(""), "error invalid text");
         // Positive test, sets the text.
+        link.setText("Test");
+    }
+
+    /**
+     * Tester for setting the reference in Link class.
+     * Positive and negative test.
+     */
+    @Test
+    void testSetReference(){
+        // Negative test, checks if it throws "IllegalArgumentException"
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+            link.setReference(null), "error invalid text");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+            link.setReference(""), "error invalid text");
+        // Positive test, sets the reference.
         link.setText("Test");
     }
 }

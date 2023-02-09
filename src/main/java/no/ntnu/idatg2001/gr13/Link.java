@@ -57,6 +57,7 @@ public class Link
      */
     public void setReference(String reference) throws IllegalArgumentException
     {
+
         this.reference = reference;
     }
 
