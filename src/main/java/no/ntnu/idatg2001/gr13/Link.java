@@ -1,9 +1,14 @@
 package no.ntnu.idatg2001.gr13;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Action;
 
+/**
+ * Class representing a Link class.
+ * @author Arthur Borger Thorkildsen
+ * @version 0.0.1
+ * @since 9/2-2023
+ */
 public class Link
 {
     private String text;
@@ -15,23 +20,57 @@ public class Link
         setText(text);
     }
 
+    /**
+     * Gets text String
+     * @return text
+     */
     public String getText()
     {
         return text;
     }
 
+    /**
+     * Sets text String
+     * @param text to be set
+     */
     public void setText(String text)
     {
         this.text = text;
     }
 
+    /**
+     * Gets reference String
+     * @return reference
+     */
     public String getReference()
     {
         return reference;
     }
 
+    /**
+     * Sets reference String
+     * @param reference to be set
+     */
     public void setReference(String reference)
     {
         this.reference = reference;
+    }
+
+    /**
+     * Gets a list of actions
+     * @return The action
+     */
+    public List<Action> getAction()
+    {
+        return action;
+    }
+
+    /**
+     * Sets the action
+     * @param action Available user action as a list
+     */
+    public void setAction(List<Action> action)
+    {
+        this.action = action;
     }
 }
