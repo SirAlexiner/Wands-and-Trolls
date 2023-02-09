@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
 import javax.swing.Action;
+import utility.CheckValid;
 
 /**
  * Class representing a Link class.
@@ -35,7 +36,7 @@ public class Link
      */
     public void setText(String text) throws IllegalArgumentException
     {
-        if (text != null && !text.isEmpty()) {
+        if (CheckValid.checkString(text)) {
             this.text = text;
         } else {
             throw new IllegalArgumentException("error invalid text input");
@@ -57,8 +58,11 @@ public class Link
      */
     public void setReference(String reference) throws IllegalArgumentException
     {
-
-        this.reference = reference;
+        if (CheckValid.checkString(reference)) {
+            this.reference = reference;
+        } else {
+            throw new IllegalArgumentException("error invalid reference input");
+        }
     }
 
     /**
