@@ -1,5 +1,8 @@
 package no.ntnu.idatg2001.gr13;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +21,14 @@ public class LinkTest
      */
     @Test
     void testSetLinkText(){
-        link.getText();
-        link.setText("New text");
+        try
+        {
+            link.setText(null);
+            link.setText("");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertTrue(true);
+        }
+
     }
 }
