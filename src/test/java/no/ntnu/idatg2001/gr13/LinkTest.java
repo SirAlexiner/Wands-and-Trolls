@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.gr13;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,17 +19,16 @@ public class LinkTest
 
     /**
      * Tester for setting the text in Link class.
+     * Positive and negative test.
      */
     @Test
     void testSetLinkText(){
-        try
-        {
-            link.setText(null);
-            link.setText("");
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertTrue(true);
-        }
-
+        // Negative test, checks if it throws "IllegalArgumentException"
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+            link.setText(null), "error invalid text");
+        Assertions.assertThrows(IllegalArgumentException.class, () ->
+            link.setText(""), "error invalid text");
+        // Positive test, sets the text.
+        link.setText("Test");
     }
 }
