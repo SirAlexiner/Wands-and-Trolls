@@ -15,7 +15,7 @@ public class Link
     private String reference;
     private List<Action> action;
 
-    public Link(String text, String reference){
+    public Link(String text, String reference) throws IllegalArgumentException{
         setReference(reference);
         setText(text);
     }
@@ -33,9 +33,13 @@ public class Link
      * Sets text String
      * @param text to be set
      */
-    public void setText(String text)
+    public void setText(String text) throws IllegalArgumentException
     {
-        this.text = text;
+        if (text != null && !text.isEmpty()) {
+            this.text = text;
+        } else {
+            throw new IllegalArgumentException("error invalid text input");
+        }
     }
 
     /**
@@ -51,7 +55,7 @@ public class Link
      * Sets reference String
      * @param reference to be set
      */
-    public void setReference(String reference)
+    public void setReference(String reference) throws IllegalArgumentException
     {
         this.reference = reference;
     }
