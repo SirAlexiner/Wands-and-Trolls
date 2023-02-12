@@ -2,14 +2,14 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
 
+/**
+ * Class representing a Passage class.
+ * @author Arthur Borger Thorkildsen
+ * @version 0.0.1
+ * @since 12/2-2023
+ */
 public class Passage
 {
-    /**
-     * Class representing a Passage class.
-     * @author Arthur Borger Thorkildsen
-     * @version 0.0.1
-     * @since 12/2-2023
-     */
     private String title;
     private String content;
     private List<Link> links;
