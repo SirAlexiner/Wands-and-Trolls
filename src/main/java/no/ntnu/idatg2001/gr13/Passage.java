@@ -1,6 +1,7 @@
 package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
+import utility.CheckValid;
 
 /**
  * Class representing a Passage class.
@@ -33,9 +34,13 @@ public class Passage
      * Sets the title.
      * @param title As a String.
      */
-    public void setTitle(String title)
+    public void setTitle(String title) throws IllegalArgumentException
     {
-        this.title = title;
+        if (CheckValid.checkString(title)){
+            this.title = title;
+        } else {
+            throw new IllegalArgumentException("error invalid text input");
+        }
     }
 
     /**
@@ -51,9 +56,13 @@ public class Passage
      * Sets the content.
      * @param content As a String.
      */
-    public void setContent(String content)
+    public void setContent(String content) throws IllegalArgumentException
     {
-        this.content = content;
+        if (CheckValid.checkString(content)) {
+            this.content = content;
+        } else {
+            throw new IllegalArgumentException("error invalid text input");
+        }
     }
 
     /**
@@ -66,11 +75,15 @@ public class Passage
     }
 
     /**
-     * Sets the list.
-     * @param links As List.
+     * Updates the list of links
+     * @param links The new list of links to set.
      */
-    public void setLinks(List<Link> links)
+    public void setLinks(List<Link> links) throws IllegalArgumentException
     {
-        this.links = links;
+        if (links != null) {
+            this.links = links;
+        } else {
+            throw new IllegalArgumentException("Links cannot be null.");
+        }
     }
 }
