@@ -1,9 +1,9 @@
 package no.ntnu.idatg2001.gr13;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class PassageTest
 {
     Passage passage;
-    ArrayList<Object> list = new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();
     PassageTest(){
     }
 
@@ -49,26 +49,28 @@ class PassageTest
         passage.setContent("Test");
     }
 
+    /**
+     * A positive test for updateLinkList. The test
+     * creates an arraylist with String.
+     */
     @Test
-    void testSetLinks(){
-        //TODO debug this test, error probably in implementing list
-        list.add("link1");
-        list.add(2);
-        list.add(3);
+    void positiveTestUpdateLinkList() {
+        List<String> links = new ArrayList<>();
+        links.add("test 1");
+        links.add("test 2");
 
-        // Check size of list
-        assertEquals(3, list.size());
+        passage.updateLinkList(links);
 
-        // Check if elements are in the list
-        assertTrue(list.contains("link1"));
-        assertTrue(list.contains(2));
-        assertTrue(list.contains(3));
+        assertEquals(links, passage.getLinks());
+    }
 
-        // Clears the list
-        list.clear();
-
+    /**
+     * Negative test for updateLinkList. The test checks if
+     * it throws any arguments.
+     */
+    @Test
+    void setLinks_NullInput_ThrowsException() {
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-            list.add(null), "Links cannot be null");
-
+            passage.updateLinkList(null), "Links cannot be null.");
     }
 }

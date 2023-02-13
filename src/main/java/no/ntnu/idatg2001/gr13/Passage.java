@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.gr13;
 
+import java.util.ArrayList;
 import java.util.List;
 import utility.CheckValid;
 
@@ -13,12 +14,27 @@ public class Passage
 {
     private String title;
     private String content;
-    private List<Link> links;
+    private List<String> links;
 
-    public Passage(String title, String content, List links){
+    public Passage(String title, String content){
         setContent(content);
-        setLinks(links);
         setTitle(title);
+        // The object can be set up without links.
+        links = new ArrayList<>();
+    }
+
+    /**
+     * Creates a new Passage object with the given title, content, and list of links.
+     *
+     * @param title The title of the Passage.
+     * @param content The content of the Passage.
+     * @param links The list of links associated with the Passage.
+     */
+    // Overriding the constructor
+    public Passage(String title, String content, List<String> links) {
+        setTitle(title);
+        setContent(content);
+        updateLinkList(links);
     }
 
     /**
@@ -69,7 +85,7 @@ public class Passage
      * Gets the Links list.
      * @return Linklist.
      */
-    public List<Link> getLinks()
+    public List<String> getLinks()
     {
         return links;
     }
@@ -78,7 +94,7 @@ public class Passage
      * Updates the list of links
      * @param links The new list of links to set.
      */
-    public void setLinks(List<Link> links) throws IllegalArgumentException
+    public void updateLinkList(List<String> links) throws IllegalArgumentException
     {
         if (links != null) {
             this.links = links;
