@@ -14,7 +14,7 @@ public class Link
 {
     private String text;
     private String reference;
-    private List<Action> action;
+    private List<String> action;
 
     public Link(String text, String reference) throws IllegalArgumentException{
         setReference(reference);
@@ -69,17 +69,21 @@ public class Link
      * Gets a list of actions
      * @return The action
      */
-    public List<Action> getAction()
+    public List<String> getAction()
     {
         return action;
     }
 
     /**
-     * Sets the action
-     * @param action Available user action as a list
+     * Sets the action as a list.
+     * @param action Available user action as a list, String.
      */
-    public void setAction(List<Action> action)
+    public void setAction(List<String> action)
     {
-        this.action = action;
+        if (action != null) {
+            this.action = action;
+        } else {
+            throw new IllegalArgumentException("Action cannot be null.");
+        }
     }
 }
