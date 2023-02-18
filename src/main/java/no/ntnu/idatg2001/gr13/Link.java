@@ -1,89 +1,34 @@
 package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
-import javax.swing.Action;
-import utility.CheckValid;
+import lombok.Getter;
+import no.ntnu.idatg2001.gr13.actions.Action;
 
-/**
- * Class representing a Link class.
- * @author Arthur Borger Thorkildsen
- * @version 0.0.1
- * @since 9/2-2023
- */
-public class Link
-{
-    private String text;
-    private String reference;
-    private List<String> action;
+public class Link {
+  @Getter
+  private String text;
+  @Getter
+  private String reference;
+  @Getter
+  private List<Action> actions = null;
+  public Link(String text, String reference) {
+    this.text = text;
+    this.reference = reference;
+  }
 
-    public Link(String text, String reference) throws IllegalArgumentException{
-        setReference(reference);
-        setText(text);
-    }
+  public void addAction(Action action) {
+    this.actions.add(action);
+  }
 
-    /**
-     * Gets text String
-     * @return text
-     */
-    public String getText()
-    {
-        return text;
-    }
+  @Override
+  public String toString() {
+  }
 
-    /**
-     * Sets text String
-     * @param text to be set
-     */
-    public void setText(String text) throws IllegalArgumentException
-    {
-        if (CheckValid.checkString(text)) {
-            this.text = text;
-        } else {
-            throw new IllegalArgumentException("error invalid text input");
-        }
-    }
+  @Override
+  public boolean equals(Object object) {
+  }
+  @Override
+  public int hashCode() {
+  }
 
-    /**
-     * Gets reference String
-     * @return reference
-     */
-    public String getReference()
-    {
-        return reference;
-    }
-
-    /**
-     * Sets reference String
-     * @param reference to be set
-     */
-    public void setReference(String reference) throws IllegalArgumentException
-    {
-        if (CheckValid.checkString(reference)) {
-            this.reference = reference;
-        } else {
-            throw new IllegalArgumentException("error invalid reference input");
-        }
-    }
-
-    /**
-     * Gets a list of actions
-     * @return The action
-     */
-    public List<String> getAction()
-    {
-        return action;
-    }
-
-    /**
-     * Sets the action as a list.
-     * @param action Available user action as a list, String.
-     */
-    public void setAction(List<String> action)
-    {
-        if (action != null) {
-            this.action = action;
-        } else {
-            throw new IllegalArgumentException("Action cannot be null.");
-        }
-    }
 }
