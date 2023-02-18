@@ -1,13 +1,14 @@
 package no.ntnu.idatg2001.gr13;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 
 public class Story {
   @Getter
   private String title;
-  private Map<Link,Passage> passages;
+  private Map<Link,Passage> passages = new HashMap<>();
   @Getter
   private Passage openingPassage;
 
@@ -21,10 +22,10 @@ public class Story {
   }
 
   public Passage getPassage(Link link) {
-
+    return passages.get(link);
   }
 
   public Collection<Passage> getPassages() {
-
+    return passages.values();
   }
 }

@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.gr13;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class Player {
   @Getter
   private int gold;
   @Getter
-  private List<String> inventory;
+  private List<String> inventory = new ArrayList<>();
   @Getter
   private int score;
 

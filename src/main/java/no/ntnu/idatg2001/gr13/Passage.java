@@ -21,6 +21,7 @@ public class Passage {
   }
 
   public boolean hasLinks() {
+    return !links.isEmpty();
   }
 
   @Override
