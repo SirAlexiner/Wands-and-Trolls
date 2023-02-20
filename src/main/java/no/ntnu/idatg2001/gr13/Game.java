@@ -18,9 +18,9 @@ public class Game {
     this.goals = goals;
   }
 
-  public Passage begin() {
-  }
+//  public Passage begin() {
+//  }
 
-  public Passage go(Link link) {
-  }
+//  public Passage go(Link link) {
+//  }
 }

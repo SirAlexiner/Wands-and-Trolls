@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 import no.ntnu.idatg2001.gr13.actions.Action;
 
@@ -21,14 +22,22 @@ public class Link {
     this.actions.add(action);
   }
 
-  @Override
-  public String toString() {
-  }
+//  @Override
+//  public String toString() {
+//  }
 
   @Override
-  public boolean equals(Object object) {
+  public boolean equals(Object o) {
+    if (o == this)
+      return true;
+    if (!(o instanceof Link other))
+      return false;
+    boolean referenceEquals = (this.reference == null && other.reference == null)
+        || (this.reference != null && this.reference.equals(other.reference));
+    return Objects.equals(this.text, other.text) && referenceEquals;
   }
-  @Override
-  public int hashCode() {
-  }
+
+//  @Override
+//  public int hashCode() {
+//  }
 }

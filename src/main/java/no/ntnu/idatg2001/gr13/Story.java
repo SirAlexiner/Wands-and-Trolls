@@ -18,7 +18,7 @@ public class Story {
   }
 
   public void addPassage(Passage passage){
-
+    passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
   }
 
   public Passage getPassage(Link link) {

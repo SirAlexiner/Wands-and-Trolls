@@ -24,14 +24,14 @@ public class Passage {
     return !links.isEmpty();
   }
 
-  @Override
-  public String toString() {
-  }
-
-  @Override
-  public boolean equals(Object object) {
-  }
-  @Override
-  public int hashCode() {
-  }
+//  @Override
+//  public String toString() {
+//  }
+//
+//  @Override
+//  public boolean equals(Object object) {
+//  }
+//  @Override
+//  public int hashCode() {
+//  }
 }

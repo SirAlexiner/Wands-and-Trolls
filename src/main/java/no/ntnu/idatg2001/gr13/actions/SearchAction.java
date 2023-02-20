@@ -6,6 +6,5 @@ public class SearchAction implements Action {
 
   @Override
   public void execute(Player player) {
-
   }
 }
