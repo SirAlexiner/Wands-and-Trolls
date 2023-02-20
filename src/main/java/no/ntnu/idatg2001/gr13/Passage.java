@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.gr13;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
@@ -9,7 +10,7 @@ public class Passage {
   @Getter
   private String content;
   @Getter
-  private List<Link> links = null;
+  private List<Link> links = new ArrayList<>();
 
   public Passage(String title, String content) {
     this.title = title;
@@ -22,6 +23,19 @@ public class Passage {
 
   public boolean hasLinks() {
     return !links.isEmpty();
+  }
+
+  // This function is not in req-spec, but is needed for everything to work:
+  public Link getLink(String command) {
+    if (this.hasLinks()) {
+      for (Link link : this.getLinks()
+      ) {
+        if (link.toString().equals(command)) {
+          return link;
+        }
+      }
+    }
+    return null;
   }
 
 //  @Override

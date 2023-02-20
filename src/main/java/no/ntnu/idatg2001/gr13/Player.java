@@ -25,11 +25,11 @@ public class Player {
     this.score = score;
   }
 
-  public void adjustHealth(int health){
+  public void addHealth(int health){
     this.health = getHealth() + health;
   }
 
-  public void adjustGold(int gold){
+  public void addGold(int gold){
   }
 
   public void addToInventory(String item){

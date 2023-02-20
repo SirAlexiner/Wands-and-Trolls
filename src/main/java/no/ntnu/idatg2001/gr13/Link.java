@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import lombok.Getter;
 import no.ntnu.idatg2001.gr13.actions.Action;
 
@@ -10,7 +9,7 @@ public class Link {
   @Getter
   private String text;
   @Getter
-  private String reference;
+  private final String reference;
   @Getter
   private List<Action> actions = new ArrayList<>();
   public Link(String text, String reference) {
@@ -22,12 +21,13 @@ public class Link {
     this.actions.add(action);
   }
 
-//  @Override
-//  public String toString() {
-//  }
+  @Override
+  public String toString() {
+    return this.text;
+  }
 
   @Override
-  public boolean equals(Object o) {
+  public final boolean equals(Object o) {
     if (o == this)
       return true;
     if (!(o instanceof Link other))
@@ -36,7 +36,12 @@ public class Link {
         || (this.reference != null && this.reference.equals(other.reference));
   }
 
-//  @Override
-//  public int hashCode() {
-//  }
+  @Override
+  public final int hashCode() {
+    int result = 17;
+    if (reference != null) {
+      result = 31 * result + reference.hashCode();
+    }
+    return result;
+  }
 }
