@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.gr13;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import no.ntnu.idatg2001.gr13.actions.InventoryAction;
 import no.ntnu.idatg2001.gr13.goals.Goal;
 import no.ntnu.idatg2001.gr13.goals.GoldGoals;
 import no.ntnu.idatg2001.gr13.goals.HealthGoal;
@@ -27,19 +28,20 @@ public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal
     Story story = new Story("Exit Cave", startingRoom);
     Passage caveEntrance = new Passage("Enter Cave", "<: You've entered the troll cave," +
         " it's very dark, but you see openings to the left and right :>");
-    Passage justLeft = new Passage("Exit Cave", """
-        FAILURE!
-        The cave was just to much for you, so you left without doing any exploring.""");
-    Passage leftRoom =
+    Passage justLeft = new Passage("Exit Cave", "You left the cave");
+    Passage trollRoom =
         new Passage("Go Left", "<: You've entered the room to the left and run into the troll :>");
-    Passage rightRoom = new Passage("Go Right", "<: You've entered a seemingly empty room," +
+    Link magicSpell = new Link("Cast Magic Spell", "Cast Magic Spell");
+    magicSpell.addAction(new InventoryAction("Spell Scroll"));
+    trollRoom.addLink(magicSpell);
+    Passage spellRoom = new Passage("Go Right", "<: You've entered a seemingly empty room," +
         " it's very dark! :>");
     caveEntrance.addLink(new Link("Go Left", "Go Left"));
     caveEntrance.addLink(new Link("Go Right", "Go Right"));
     story.addPassage(caveEntrance);
     story.addPassage(justLeft);
-    story.addPassage(leftRoom);
-    story.addPassage(rightRoom);
+    story.addPassage(trollRoom);
+    story.addPassage(spellRoom);
     Goal gold = new GoldGoals(50);
     Goal health = new HealthGoal(0);
     List<String> mandatoryItems = new ArrayList<>();

@@ -2,6 +2,9 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
 import java.util.Scanner;
+import no.ntnu.idatg2001.gr13.actions.Action;
+import no.ntnu.idatg2001.gr13.goals.Goal;
+import no.ntnu.idatg2001.gr13.goals.GoldGoals;
 
 public class Main {
   private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
@@ -10,7 +13,8 @@ public class Main {
     Game game = Game.setup();
     System.out.println("Hello " + game.getPlayer().getName() + ".");
     System.out.println(
-        "You have embarked on a journey to retrieve a rare spell from an inhabited troll cave.");
+        "You have embarked on a journey to retrieve a rare spell from an inhabited troll cave.\n" +
+            "Your Quest is to retrieve the spell and make it out on the other side of the mountain.");
     Passage start = game.begin();
     room(game, start);
   }
@@ -22,11 +26,29 @@ public class Main {
     System.out.println(passage.getContent());
     System.out.println(
         "||--------------------------------------------------------------------------------||");
-    System.out.println("What do you want to do?");
     if (passage.hasLinks()) {
+      System.out.println("What do you want to do?");
       List<Link> links = passage.getLinks();
       for (Link link : links) {
         System.out.print(link.toString() + " | ");
+      }
+    } else {
+      List<Goal> goals = game.getGoals();
+      if (goals.get(0).isFulfilled(game.getPlayer())) {
+        System.out.println(
+            "You managed to conquered the troll using the spell, but was unable to make it trough the mountain");
+        System.exit(0);
+      } else if (goals.get(2).isFulfilled(game.getPlayer())) {
+        System.out.println(
+            "You managed to find the hidden key, and have conquered the troll using the spell. You leave victorious!");
+        System.exit(0);
+      } else if (goals.get(3).isFulfilled(game.getPlayer())) {
+        System.out.println(
+            "You managed to find the hidden key and the hidden door, You leave with the spell not having encountered the troll");
+        System.exit(0);
+      } else {
+        System.out.println("You left the cave without having archived anything!");
+        System.exit(0);
       }
     }
     System.out.print("Quit | ");
@@ -40,6 +62,8 @@ public class Main {
         if (newRoom != null) {
           System.out.println(" ");
           room(game, newRoom);
+        } else {
+          System.out.println(passage.getLink(command).getActions());
         }
       }
     }
