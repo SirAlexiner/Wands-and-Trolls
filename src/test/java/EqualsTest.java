@@ -18,7 +18,7 @@ class EqualsTest {
 
   @Test
   void partialCorrectEqualsTest(){
-    boolean expectedVal = false;
+    boolean expectedVal = true;
     boolean returnedVal = linkTest.equals(linkPartialCorrect);
     assertEquals(expectedVal,returnedVal);
   }

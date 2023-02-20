@@ -32,9 +32,8 @@ public class Link {
       return true;
     if (!(o instanceof Link other))
       return false;
-    boolean referenceEquals = (this.reference == null && other.reference == null)
+    return (this.reference == null && other.reference == null)
         || (this.reference != null && this.reference.equals(other.reference));
-    return Objects.equals(this.text, other.text) && referenceEquals;
   }
 
 //  @Override
