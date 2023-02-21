@@ -21,6 +21,10 @@ public class Link {
     this.actions.add(action);
   }
 
+  public boolean hasActions() {
+    return !actions.isEmpty();
+  }
+
   @Override
   public String toString() {
     return this.text;

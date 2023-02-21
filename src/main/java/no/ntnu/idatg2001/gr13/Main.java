@@ -62,8 +62,10 @@ public class Main {
         if (newRoom != null) {
           System.out.println(" ");
           room(game, newRoom);
-        } else {
+        } else if (passage.getLink(command).hasActions()){
           System.out.println(passage.getLink(command).getActions());
+        } else {
+          System.out.println("I did not understand what you want to do, please tell me again.");
         }
       }
     }
