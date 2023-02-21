@@ -11,7 +11,7 @@ public class Link {
   @Getter
   private final String reference;
   @Getter
-  private Action action;
+  private Action action = null;
   public Link(String reference) {
     this.reference = reference;
   }
@@ -21,11 +21,7 @@ public class Link {
   }
 
   public boolean hasAction() {
-    if (action != null) {
-      return false;
-    } else {
-      return true;
-    }
+    return action != null;
   }
 
   @Override
