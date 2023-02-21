@@ -12,6 +12,11 @@ public class InventoryAction implements Action {
   }
 
   @Override
-  public void execute(Player player) {
+  public boolean canExecute(Player player) {
+    if (player.getInventory().contains(item)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

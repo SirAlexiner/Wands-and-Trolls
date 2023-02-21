@@ -11,18 +11,17 @@ public class Link {
   @Getter
   private final String reference;
   @Getter
-  private List<Action> actions = new ArrayList<>();
-  public Link(String text, String reference) {
-    this.text = text;
+  private Action action;
+  public Link(String reference) {
     this.reference = reference;
   }
 
   public void addAction(Action action) {
-    this.actions.add(action);
+    this.action = action;
   }
 
-  public boolean hasActions() {
-    if (actions.isEmpty()) {
+  public boolean hasAction() {
+    if (action != null) {
       return false;
     } else {
       return true;
@@ -31,7 +30,7 @@ public class Link {
 
   @Override
   public String toString() {
-    return this.text;
+    return this.reference;
   }
 
   @Override

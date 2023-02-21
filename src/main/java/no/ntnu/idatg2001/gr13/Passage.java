@@ -6,14 +6,14 @@ import lombok.Getter;
 
 public class Passage {
   @Getter
-  private String title;
+  private String reference;
   @Getter
   private String content;
   @Getter
   private List<Link> links = new ArrayList<>();
 
-  public Passage(String title, String content) {
-    this.title = title;
+  public Passage(String reference, String content) {
+    this.reference = reference;
     this.content = content;
   }
 
