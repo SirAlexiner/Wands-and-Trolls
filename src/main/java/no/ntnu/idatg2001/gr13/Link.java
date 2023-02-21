@@ -22,7 +22,11 @@ public class Link {
   }
 
   public boolean hasActions() {
-    return !actions.isEmpty();
+    if (actions.isEmpty()) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @Override

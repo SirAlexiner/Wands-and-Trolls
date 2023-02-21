@@ -2,9 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
 import java.util.Scanner;
-import no.ntnu.idatg2001.gr13.actions.Action;
 import no.ntnu.idatg2001.gr13.goals.Goal;
-import no.ntnu.idatg2001.gr13.goals.GoldGoals;
 
 public class Main {
   private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
@@ -62,7 +60,7 @@ public class Main {
         if (newRoom != null) {
           System.out.println(" ");
           room(game, newRoom);
-        } else if (passage.getLink(command).hasActions()){
+        } else if (passage.getLink(command) != null && passage.getLink(command).hasActions()){
           System.out.println(passage.getLink(command).getActions());
         } else {
           System.out.println("I did not understand what you want to do, please tell me again.");
