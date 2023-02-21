@@ -62,7 +62,7 @@ public class Main {
           room(game, newRoom);
         } else if (passage.getLink(command) != null && passage.getLink(command).hasAction()){
           if (passage.getLink(command).getAction().canExecute(game.getPlayer())) {
-            System.out.println("You use the spell, and turned to troll to stone.");
+            System.out.println("You used the spell, and turned the troll to stone.");
           } else {
             System.out.println("You checked your inventory, but you do not have any spells, the troll kills you in one swell swoop.");
           }
