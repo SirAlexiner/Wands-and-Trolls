@@ -7,8 +7,6 @@ import no.ntnu.idatg2001.gr13.actions.Action;
 
 public class Link {
   @Getter
-  private String text;
-  @Getter
   private final String reference;
   @Getter
   private Action action = null;
