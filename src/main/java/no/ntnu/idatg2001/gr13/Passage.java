@@ -30,7 +30,7 @@ public class Passage {
     if (this.hasLinks()) {
       for (Link link : this.getLinks()
       ) {
-        if (link.toString().equals(command)) {
+        if (link.toString().equalsIgnoreCase(command)) {
           return link;
         }
       }
