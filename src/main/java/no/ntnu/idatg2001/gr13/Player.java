@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
+/**
+ * A class representing a Player, part of the WiNG application.
+ */
 public class Player {
   @Getter
   private String name;
