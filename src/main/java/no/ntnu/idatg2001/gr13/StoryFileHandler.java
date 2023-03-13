@@ -4,6 +4,7 @@ import static java.nio.file.Files.newBufferedWriter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +39,9 @@ public class StoryFileHandler
                     writer.write("\n\n");
                 }
                 catch (IndexOutOfBoundsException e){
+                    System.err.println("Error: index out of bounds!");
+                }
+                catch (EOFException e){
                     System.err.println("Error: index out of bounds!");
                 }
             }
