@@ -1,0 +1,18 @@
+Exit Cave
+
+::Go Right
+<: You've entered a seemingly empty room, it's very dark! :>
+[null]()
+
+::Go Left
+<: You've entered the room to the left and run into the troll :>
+[null]()
+
+::Enter Cave
+<: You've entered the troll cave, it's very dark, but you see openings to the left and right :>
+[null]()
+
+::Exit Cave
+You left the cave
+[null]()
+

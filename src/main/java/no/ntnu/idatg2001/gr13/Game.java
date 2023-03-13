@@ -55,6 +55,9 @@ public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal
     goals.add(inv);
     goals.add(score);
 
+    // Write to file '.paths'
+    StoryFileHandler.writeToFile(story, ".paths");
+
     return new Game(player, story, goals);
   }
 }

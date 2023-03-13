@@ -20,6 +20,7 @@ public class StoryFileHandler
                 writer.write("::" + passage.getReference() + "\n");
                 writer.write(passage.getContent() + "\n");
                 writer.write("[" + passage.getLink(passage.getContent()) + "]" + "(" + ")");
+                writer.write("\n\n");
             }
         }
         catch (IOException e){
