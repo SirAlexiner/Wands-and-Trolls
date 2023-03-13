@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class StoryFileHandler
 {
@@ -15,12 +16,30 @@ public class StoryFileHandler
         // Try-with-resource-statement"
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
             writer.write(story.getTitle() + "\n\n");
+
+            // Creates a new arrayList
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (Passage passage: story.getPassages()){
+                arrayList.add(passage.getReference());
+            }
+            int index = 0;
             for (Passage passage: story.getPassages())
             {
-                writer.write("::" + passage.getReference() + "\n");
-                writer.write(passage.getContent() + "\n");
-                writer.write("[" + passage.getLink(passage.getContent()) + "]" + "(" + ")");
-                writer.write("\n\n");
+                try
+                {
+                    index++;
+                    // Writes the reference to the passage.
+                    writer.write("::" + passage.getReference() + "\n");
+
+                    // Writes the content of the passage
+                    writer.write(passage.getContent() + "\n");
+
+                    writer.write("[" + "]" + "(" + arrayList.get(index) +  ")");
+                    writer.write("\n\n");
+                }
+                catch (IndexOutOfBoundsException e){
+                    System.err.println("Error: index out of bounds!");
+                }
             }
         }
         catch (IOException e){
