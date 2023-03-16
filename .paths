@@ -2,15 +2,16 @@ Exit Cave
 
 ::Go Right
 <: You've entered a seemingly empty room, it's very dark! :>
-[](Go Left)
 
 ::Go Left
 <: You've entered the room to the left and run into the troll :>
-[](Enter Cave)
+[](empty reference)
 
 ::Enter Cave
 <: You've entered the troll cave, it's very dark, but you see openings to the left and right :>
-[](Exit Cave)
+[](empty LINK reference)
+[](empty LINK reference)
 
 ::Exit Cave
 You left the cave
+

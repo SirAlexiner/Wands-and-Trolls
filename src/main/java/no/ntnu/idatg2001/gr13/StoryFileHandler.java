@@ -22,28 +22,42 @@ public class StoryFileHandler
             ArrayList<String> arrayList = new ArrayList<>();
             for (Passage passage: story.getPassages()){
                 arrayList.add(passage.getReference());
+
+
+                for (Link link : passage.getLinks()){
+                    System.out.println("---");
+                    System.out.println(link.getReference());
+                    System.out.println(link.getAction());
+                    System.out.println("---");
+                }
             }
-            int index = 0;
-            for (Passage passage: story.getPassages())
-            {
-                try
+            int index = 1;
+            while (story.getPassages().size() > index){
+                for (Passage passage: story.getPassages())
                 {
-                    index++;
                     // Writes the reference to the passage.
                     writer.write("::" + passage.getReference() + "\n");
 
                     // Writes the content of the passage
                     writer.write(passage.getContent() + "\n");
 
-                    writer.write("[" + "]" + "(" + arrayList.get(index) +  ")");
-                    writer.write("\n\n");
+                    for (Link link : passage.getLinks()) {
+                        try {
+
+                            writer.write("[" + "]" + "("  + link.getReference() + ")");
+                            writer.write("\n");
+                            index++;
+                        }
+                        catch (IndexOutOfBoundsException e){
+                            System.err.println("Error: index out of bounds!");
+                        }
+                        catch (EOFException e){
+                            System.err.println("Error: index out of bounds!");
+                        }
+                    }
+                    writer.write("\n");
                 }
-                catch (IndexOutOfBoundsException e){
-                    System.err.println("Error: index out of bounds!");
-                }
-                catch (EOFException e){
-                    System.err.println("Error: index out of bounds!");
-                }
+
             }
         }
         catch (IOException e){
