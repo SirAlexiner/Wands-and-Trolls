@@ -10,10 +10,14 @@ import no.ntnu.idatg2001.gr13.actions.Action;
  */
 public class Link {
   @Getter
+  private final String text;
+  @Getter
   private final String reference;
   @Getter
   private Action action = null;
-  public Link(String reference) {
+
+  public Link(String text, String reference) {
+    this.text = text;
     this.reference = reference;
   }
 

@@ -27,7 +27,7 @@ public class Story {
    */
 
   public void addPassage(Passage passage){
-    passages.put(new Link(passage.getReference()), passage);
+    passages.put(new Link(passage.getContent(), passage.getReference()), passage);
   }
 
 
