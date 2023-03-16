@@ -4,9 +4,9 @@ import no.ntnu.idatg2001.gr13.Link;
 import org.junit.jupiter.api.Test;
 
 class EqualsTest {
-  Link linkTest = new Link("Arthur");
-  Link linkCorrect = new Link("Arthur");
-  Link linkNotCorrect = new Link("Torgrim");
+  Link linkTest = new Link("Arthur", "Room 1");
+  Link linkCorrect = new Link("Arthur", "Room 2");
+  Link linkNotCorrect = new Link("Torgrim", "Room 3");
 
   @Test
   void correctEqualsTest(){
