@@ -84,6 +84,11 @@ public class StoryFileHandler
         return story;
     }
 
+    /**
+     * A method for reading action from a CSV file format.
+     * @param actionFromFile A string with the action to be read.
+     * @return the Action.
+     */
     public static Action readActionFromFile(String actionFromFile){
         String[] action = actionFromFile.split(";");
 
