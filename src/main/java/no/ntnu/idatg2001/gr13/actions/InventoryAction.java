@@ -19,4 +19,14 @@ public class InventoryAction implements Action {
       return false;
     }
   }
+
+  @Override
+  public String getActionType(){
+    return "Inventory";
+  }
+
+  @Override
+  public String getActionValue(){
+    return this.item;
+  }
 }

@@ -9,15 +9,15 @@ import lombok.Getter;
  */
 public class Passage {
   @Getter
-  private String reference;
-  @Getter
   private String content;
+  @Getter
+  private String title;
   @Getter
   private List<Link> links = new ArrayList<>();
 
-  public Passage(String reference, String content) {
-    this.reference = reference;
+  public Passage(String content, String title) {
     this.content = content;
+    this.title = title;
   }
 
   /**
@@ -65,13 +65,16 @@ public class Passage {
   @Override
   public String toString() {
     // The different characters refers to '.path' characters for Link.
-    return ( ("[") + this.content + ("]") + ("(") + this.reference + (")") );
+    return ( ("::") + this.title + ("\n") + this.content);
   }
 
+  /*
   @Override
   public boolean equals(Object object) {
   }
   @Override
   public int hashCode() {
   }
+
+   */
 }

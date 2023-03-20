@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.List;
 import java.util.Scanner;
+import no.ntnu.idatg2001.gr13.actions.Action;
 import no.ntnu.idatg2001.gr13.goals.Goal;
 
 public class Main {
@@ -16,14 +17,21 @@ public class Main {
             "Your Quest is to retrieve the spell and make it out on the other side of the mountain.");*/
 
     System.out.println(story.getTitle() + "\n");
-    StoryFileHandler.readActionFromFile(".paths");
+    StoryFileHandler.readFromFile(".paths");
     for (Passage passage : story.getPassages()) {
       System.out.println(passage.toString());
+      System.out.println("\n");
 
       for (Link link : passage.getLinks()) {
         System.out.println(link.toString());
+        for (Action action : link.getActions()){
+          System.out.println(action.getActionType());
+          System.out.println(action.getActionValue());
+        }
       }
+
     }
+
 
     //Passage start = game.begin();
     //room(game, start);
@@ -33,7 +41,7 @@ public class Main {
     System.out.println(
         "||--------------------------------------------------------------------------------||");
     System.out.println("Health: " + game.player().getHealth());
-    System.out.println(passage.getContent());
+    System.out.println(passage.getTitle());
     System.out.println(
         "||--------------------------------------------------------------------------------||");
     if (passage.hasLinks()) {

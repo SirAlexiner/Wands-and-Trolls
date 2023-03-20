@@ -18,6 +18,7 @@ public class StoryFileHandler
 {
     private static Story story = null;
     private static Passage passage = null;
+    private static Link link = null;
 
     public static void writeToFile(Story story, String fileName){
         // Try-with-resource-statement"
@@ -27,10 +28,10 @@ public class StoryFileHandler
                 for (Passage passage: story.getPassages())
                 {
                     // Writes the reference to the passage.
-                    writer.write("::" + passage.getReference() + "\n");
+                    writer.write("::" + passage.getContent() + "\n");
 
                     // Writes the content of the passage
-                    writer.write(passage.getContent() + "\n");
+                    writer.write(passage.getTitle() + "\n");
 
                     for (Link link : passage.getLinks()) {
                         // Writes the reference of the link
@@ -68,13 +69,17 @@ public class StoryFileHandler
                 }
                 // TODO can use scanner and delimiter() instead of bufferedReader.
                 if (lineOfText.startsWith("[") && passage != null){
-                    String[] line = lineOfText.split("]");
-                    Link link = new Link(line[0], line[1]);
+                    String[] line = lineOfText.split("\\[");
+                    String[] text = line[1].split("]");
+
+                    line = text[1].split("\\(");
+                    String[] reference = line[1].split("\\)");
+                    link = new Link(text[0], reference[0]);
                     passage.addLink(link);
-                    if (lineOfText.startsWith("=")){
-                        // Adds an action to the link object.
-                        link.addAction(readActionFromFile(reader.readLine()));
-                    }
+                }
+                if (lineOfText.startsWith("=") && link != null){
+                    // Adds an action to the link object.
+                    link.addAction(readActionFromFile(lineOfText));
                 }
             }
         }
@@ -90,7 +95,8 @@ public class StoryFileHandler
      * @return the Action.
      */
     public static Action readActionFromFile(String actionFromFile){
-        String[] action = actionFromFile.split(";");
+        String[] action = actionFromFile.split("=");
+        action = action[1].split(";");
 
         switch (action[0]){
             // Parsing it to integer since the input from the file is an int.
@@ -108,7 +114,7 @@ public class StoryFileHandler
                 return (new InventoryAction(action[1]));
             }
 
-            default -> System.err.print("error");
+            default -> System.err.print("error in switch");
         }
         return null;
     }

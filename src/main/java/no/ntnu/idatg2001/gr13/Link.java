@@ -51,7 +51,7 @@ public class Link {
    */
   @Override
   public String toString() {
-    return this.reference;
+    return ( ("[") + this.text + ("](") +  this.reference + (")") );
   }
 
   /**
