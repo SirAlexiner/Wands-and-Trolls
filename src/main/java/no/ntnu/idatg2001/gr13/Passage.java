@@ -58,14 +58,20 @@ public class Passage {
     return null;
   }
 
-//  @Override
-//  public String toString() {
-//  }
-//
-//  @Override
-//  public boolean equals(Object object) {
-//  }
-//  @Override
-//  public int hashCode() {
-//  }
+  /**
+   * A method for returning the Link object to a string.
+   * @return A String of the Link object.
+   */
+  @Override
+  public String toString() {
+    // The different characters refers to '.path' characters for Link.
+    return ( ("[") + this.content + ("]") + ("(") + this.reference + (")") );
+  }
+
+  @Override
+  public boolean equals(Object object) {
+  }
+  @Override
+  public int hashCode() {
+  }
 }
