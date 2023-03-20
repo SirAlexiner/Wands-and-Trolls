@@ -4,18 +4,21 @@ import static java.nio.file.Files.newBufferedWriter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.EOFException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.ListIterator;
+
 import no.ntnu.idatg2001.gr13.actions.Action;
+import no.ntnu.idatg2001.gr13.actions.GoldAction;
+import no.ntnu.idatg2001.gr13.actions.HealthAction;
+import no.ntnu.idatg2001.gr13.actions.InventoryAction;
+import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 
 public class StoryFileHandler
 {
     private static Story story = null;
     private static Passage passage = null;
+    private static  Link link = null;
 
     public static void writeToFile(Story story, String fileName){
         // Try-with-resource-statement"
@@ -64,14 +67,14 @@ public class StoryFileHandler
                     story.addPassage(passage);
 
                 }
-                //
                 // TODO can use scanner and delimiter() instead of bufferedReader.
                 if (lineOfText.startsWith("[") && passage != null){
                     String[] line = lineOfText.split("]");
                     Link link = new Link(line[0], line[1]);
                     passage.addLink(link);
                     if (lineOfText.startsWith("=")){
-                        String[] actionLine = lineOfText.split(";");
+                        // Adds an action to the link object.
+                        link.addAction(readActionFromFile(reader.readLine()));
                     }
                 }
             }
@@ -81,6 +84,29 @@ public class StoryFileHandler
             System.out.println(e);
         }
         return story;
+    }
+
+    public static Action readActionFromFile(String actionFromFile){
+        String[] action = actionFromFile.split(";");
+
+        switch (action[0]){
+            // Parsing it to integer since the input from the file is an int.
+            case ("Gold") -> {
+                return (new GoldAction(Integer.parseInt(action[1])));
+            }
+            case ("Health") -> {
+                return (new HealthAction(Integer.parseInt(action[1])));
+            }
+            case ("Score") -> {
+                return (new ScoreAction(Integer.parseInt(action[1])));
+            }
+            // Inventory action uses String as datatype.
+            case ("Inventory") -> {
+                return (new InventoryAction(action[1]));
+            }
+
+            default -> System.err.print("error");
+        }
     }
 
 }
