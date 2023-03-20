@@ -13,12 +13,13 @@ public class Link {
   private final String text;
   @Getter
   private final String reference;
-  @Getter
-  private Action action = null;
+
+  private final List<Action> actions;
 
   public Link(String text, String reference) {
     this.text = text;
     this.reference = reference;
+    actions = new ArrayList<>();
   }
 
   /**
@@ -26,7 +27,11 @@ public class Link {
    * @param action The action to be performed.
    */
   public void addAction(Action action) {
-    this.action = action;
+    actions.add(action);
+  }
+
+  public List<Action> getActions() {
+    return this.actions;
   }
 
   /**
@@ -36,7 +41,7 @@ public class Link {
    */
   // Overriding the toString method.
   public boolean hasAction() {
-    return action != null;
+    return !actions.isEmpty();
   }
 
   /**

@@ -10,29 +10,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import no.ntnu.idatg2001.gr13.actions.Action;
 
 public class StoryFileHandler
 {
+    private static Story story = null;
+    private static Passage passage = null;
+
     public static void writeToFile(Story story, String fileName){
         // Try-with-resource-statement"
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
             writer.write(story.getTitle() + "\n\n");
-
-            // Creates a new arrayList
-            ArrayList<String> arrayList = new ArrayList<>();
-            for (Passage passage: story.getPassages()){
-                arrayList.add(passage.getReference());
-
-
-                for (Link link : passage.getLinks()){
-                    System.out.println("---");
-                    System.out.println(link.getReference());
-                    System.out.println(link.getAction());
-                    System.out.println("---");
-                }
-            }
-            int index = 1;
-            while (story.getPassages().size() > index){
+            {
                 for (Passage passage: story.getPassages())
                 {
                     // Writes the reference to the passage.
@@ -42,18 +31,13 @@ public class StoryFileHandler
                     writer.write(passage.getContent() + "\n");
 
                     for (Link link : passage.getLinks()) {
-                        try {
+                        // Writes the reference of the link
+                        writer.write("[" + "]" + "("  + link.getReference() + ")");
 
-                            writer.write("[" + "]" + "("  + link.getReference() + ")");
-                            writer.write("\n");
-                            index++;
+                        for (Action action : link.getActions()) {
+                            writer.write("=" + action.toString() + ";");
                         }
-                        catch (IndexOutOfBoundsException e){
-                            System.err.println("Error: index out of bounds!");
-                        }
-                        catch (EOFException e){
-                            System.err.println("Error: index out of bounds!");
-                        }
+
                     }
                     writer.write("\n");
                 }
@@ -63,20 +47,40 @@ public class StoryFileHandler
         catch (IOException e){
             System.err.println("There was a problem writing to" + fileName);
         }
-
     }
-    public static Story readToFile(String fileName){
+    public static Story readFromFile(String fileName){
+        String lineOfText;
         try(BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
-            String lineOfText;
+            String titleOfGame = reader.readLine();
             while ((lineOfText = reader.readLine()) != null){
-                String[] words = lineOfText.split("");
-            }
+                if (lineOfText.startsWith("::")){
+                    String[] line = lineOfText.split("::");
+                    passage = new Passage(line[1], reader.readLine());
 
+                    if (story == null) {
+                        story = new Story(titleOfGame, passage);
+                    }
+
+                    story.addPassage(passage);
+
+                }
+                //
+                // TODO can use scanner and delimiter() instead of bufferedReader.
+                if (lineOfText.startsWith("[") && passage != null){
+                    String[] line = lineOfText.split("]");
+                    Link link = new Link(line[0], line[1]);
+                    passage.addLink(link);
+                    if (lineOfText.startsWith("=")){
+                        String[] actionLine = lineOfText.split(";");
+                    }
+                }
+            }
+            reader.close();
         }
         catch (IOException e){
-
+            System.out.println(e);
         }
-        Story Story = null;
-        return Story;
+        return story;
     }
+
 }

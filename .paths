@@ -1,16 +1,17 @@
 Exit Cave
 
 ::Go Right
-<: You've entered a seemingly empty room, it's very dark! :>
+You've entered a seemingly empty room, it's very dark!
+[Link text](Link reference)
 
 ::Go Left
-<: You've entered the room to the left and run into the troll :>
-[](empty reference)
+You've entered the room to the left and run into the troll
+[Link text](Link reference)
 
 ::Enter Cave
-<: You've entered the troll cave, it's very dark, but you see openings to the left and right :>
-[](empty LINK reference)
-[](empty LINK reference)
+You've entered the troll cave, it's very dark, but you see openings to the left and right
+=some action ; some other
+[Link text](Link reference)
 
 ::Exit Cave
 You left the cave

@@ -21,6 +21,7 @@ public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal
   }
 
   public static Game setup() {
+    /*
     Player player = new Player("Adventurer", 100, 0, 0);
     Passage startingRoom = new Passage("Starting Room", "<: A seemingly empty cave opening :>");
     startingRoom.addLink(new Link("Enter Cave", "empty LINK reference"));
@@ -55,9 +56,14 @@ public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal
     goals.add(inv);
     goals.add(score);
 
+    return new Game(player, story, goals);
+     */
+    Passage noobBeginning = new Passage("Enter NOOB cav3", "");
+    Story story = new Story("NOOB gaming", noobBeginning);
+
     // Write to file '.paths'
     StoryFileHandler.writeToFile(story, ".paths");
 
-    return new Game(player, story, goals);
+
   }
 }
