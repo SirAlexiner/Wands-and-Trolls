@@ -8,13 +8,25 @@ public class Main {
   private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
 
   public static void main(String[] args) {
-    Game game = Game.setup();
-    System.out.println("Hello " + game.getPlayer().getName() + ".");
-    System.out.println(
+    Story story = StoryFileHandler.readFromFile(".paths");
+    //Game game = Game.setup();
+    //System.out.println("Hello " + game.getPlayer().getName() + ".");
+    /*System.out.println(
         "You have embarked on a journey to retrieve a rare spell from an inhabited troll cave.\n" +
-            "Your Quest is to retrieve the spell and make it out on the other side of the mountain.");
-    Passage start = game.begin();
-    room(game, start);
+            "Your Quest is to retrieve the spell and make it out on the other side of the mountain.");*/
+
+    System.out.println(story.getTitle() + "\n");
+    StoryFileHandler.readActionFromFile(".paths");
+    for (Passage passage : story.getPassages()) {
+      System.out.println(passage.toString());
+
+      for (Link link : passage.getLinks()) {
+        System.out.println(link.toString());
+      }
+    }
+
+    //Passage start = game.begin();
+    //room(game, start);
   }
 
   private static void room(Game game, Passage passage) {

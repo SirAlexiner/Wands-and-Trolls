@@ -18,7 +18,6 @@ public class StoryFileHandler
 {
     private static Story story = null;
     private static Passage passage = null;
-    private static  Link link = null;
 
     public static void writeToFile(Story story, String fileName){
         // Try-with-resource-statement"
@@ -78,7 +77,6 @@ public class StoryFileHandler
                     }
                 }
             }
-            reader.close();
         }
         catch (IOException e){
             System.out.println(e);
@@ -107,6 +105,7 @@ public class StoryFileHandler
 
             default -> System.err.print("error");
         }
+        return null;
     }
 
 }
