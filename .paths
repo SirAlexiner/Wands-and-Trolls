@@ -1,0 +1,18 @@
+Planet of the trolls
+
+::Go Right
+You've entered a seemingly empty room, it's very dark!
+[Link text](Link reference)
+
+::Go Left
+You've entered the room to the left and run into the troll
+[Link text](Link reference)
+
+::Enter Cave
+You've entered the troll cave, it's very dark, but you see openings to the left and right
+=Gold;1000
+[Link text](Link reference)
+
+::Exit Cave
+You left the cave
+

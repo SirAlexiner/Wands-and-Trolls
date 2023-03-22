@@ -11,6 +11,16 @@ public class HealthAction implements Action{
   }
 
   @Override
-  public void execute(Player player) {
+  public boolean canExecute(Player player) {
+    return false;
+  }
+
+  @Override
+  public String getActionType(){
+    return "Health";
+  }
+  @Override
+  public String getActionValue(){
+    return "" + this.health;
   }
 }

@@ -1,8 +1,12 @@
 package no.ntnu.idatg2001.gr13;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 
+/**
+ * A class representing a Player, part of the WiNG application.
+ */
 public class Player {
   @Getter
   private String name;
@@ -11,7 +15,7 @@ public class Player {
   @Getter
   private int gold;
   @Getter
-  private List<String> inventory;
+  private List<String> inventory = new ArrayList<>();
   @Getter
   private int score;
 
@@ -24,11 +28,11 @@ public class Player {
     this.score = score;
   }
 
-  public void adjustHealth(int health){
+  public void addHealth(int health){
     this.health = getHealth() + health;
   }
 
-  public void adjustGold(int gold){
+  public void addGold(int gold){
   }
 
   public void addToInventory(String item){

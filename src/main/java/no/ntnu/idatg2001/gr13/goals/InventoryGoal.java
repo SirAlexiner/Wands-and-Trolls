@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.gr13.goals;
 
+import java.util.HashSet;
 import java.util.List;
 import no.ntnu.idatg2001.gr13.Player;
 
@@ -12,6 +13,6 @@ public class InventoryGoal implements Goal {
 
   @Override
   public boolean isFulfilled(Player player) {
-    return false;
+    return new HashSet<>(player.getInventory()).containsAll(this.mandatoryItems);
   }
 }
