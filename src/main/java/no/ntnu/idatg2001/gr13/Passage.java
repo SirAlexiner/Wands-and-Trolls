@@ -9,15 +9,15 @@ import lombok.Getter;
  */
 public class Passage {
   @Getter
-  private String content;
-  @Getter
   private String title;
+  @Getter
+  private String content;
   @Getter
   private List<Link> links = new ArrayList<>();
 
-  public Passage(String content, String title) {
-    this.content = content;
+  public Passage(String title, String content) {
     this.title = title;
+    this.content = content;
   }
 
   /**

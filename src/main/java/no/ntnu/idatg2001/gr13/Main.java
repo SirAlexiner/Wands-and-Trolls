@@ -10,6 +10,7 @@ public class Main {
 
   public static void main(String[] args) {
     Story story = StoryFileHandler.readFromFile(".paths");
+    StoryFileHandler.writeToFile(story, "test.paths");
     //Game game = Game.setup();
     //System.out.println("Hello " + game.getPlayer().getName() + ".");
     /*System.out.println(

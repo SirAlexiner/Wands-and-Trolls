@@ -19,7 +19,12 @@ public class StoryFileHandler
     private static Story story = null;
     private static Passage passage = null;
     private static Link link = null;
-
+    /**
+     * The methods take in a story object and a file name, and writes the story object to the file
+     *
+     * @param story The story object that you want to write to a file.
+     * @param fileName The name of the file to write to.
+     */
     public static void writeToFile(Story story, String fileName){
         // Try-with-resource-statement"
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
@@ -27,20 +32,18 @@ public class StoryFileHandler
             {
                 for (Passage passage: story.getPassages())
                 {
-                    // Writes the reference to the passage.
-                    writer.write("::" + passage.getContent() + "\n");
-
+                    // Writes the title of the passage.
+                    writer.write("::" + passage.getTitle() + "\n");
                     // Writes the content of the passage
-                    writer.write(passage.getTitle() + "\n");
+                    writer.write(passage.getContent() + "\n");
 
                     for (Link link : passage.getLinks()) {
-                        // Writes the reference of the link
-                        writer.write("[" + "]" + "("  + link.getReference() + ")");
-
+                        // Writes the text and reference of the link
+                        writer.write("[" + link.getText() + "]" + "("  + link.getReference() + ")\n");
                         for (Action action : link.getActions()) {
-                            writer.write("=" + action.toString() + ";");
+                            // Writes the type and value of the action
+                            writer.write("=" + action.getActionType() + ";" + action.getActionValue() + "\n");
                         }
-
                     }
                     writer.write("\n");
                 }
@@ -51,6 +54,12 @@ public class StoryFileHandler
             System.err.println("There was a problem writing to" + fileName);
         }
     }
+    /**
+     * The method reads a file and creates a story object from the file.
+     *
+     * @param fileName The name of the file to read from.
+     * @return A story object.
+     */
     public static Story readFromFile(String fileName){
         String lineOfText;
         try(BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
