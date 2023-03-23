@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 
 /**
@@ -68,13 +69,25 @@ public class Passage {
     return ( ("::") + this.title + ("\n") + this.content);
   }
 
-  /*
   @Override
-  public boolean equals(Object object) {
-  }
-  @Override
-  public int hashCode() {
+  public boolean equals(Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass())
+    {
+      return false;
+    }
+    Passage passage = (Passage) o;
+    return title.equals(passage.title) && content.equals(passage.content) &&
+        links.equals(passage.links);
   }
 
-   */
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(title, content, links);
+  }
 }

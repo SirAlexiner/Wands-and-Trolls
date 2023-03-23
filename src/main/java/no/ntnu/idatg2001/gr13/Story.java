@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.gr13;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import lombok.Getter;
 
 /**
@@ -30,10 +31,30 @@ public class Story {
     passages.put(new Link(passage.getTitle(), passage.getContent()), passage);
   }
 
+  @Override
+  public boolean equals(Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass())
+    {
+      return false;
+    }
+    Story story = (Story) o;
+    return title.equals(story.title) && Objects.equals(passages, story.passages) &&
+        openingPassage.equals(story.openingPassage);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(title, passages, openingPassage);
+  }
 
   /**
    * Given a link, return the passage that the link points to.
-   *
    * @param link The link that the passage is associated with.
    * @return The passage that is associated with the link.
    */
