@@ -7,7 +7,7 @@ import java.util.Objects;
 import lombok.Getter;
 
 /**
- *  A class representing a story, , part of the WiNG application.
+ *  A class representing a story, part of the WiNG application.
  */
 public class Story {
   @Getter
@@ -28,9 +28,10 @@ public class Story {
    */
 
   public void addPassage(Passage passage){
-    passages.put(new Link(passage.getTitle(), passage.getContent()), passage);
+    passages.put(new Link("", passage.getTitle()), passage);
   }
 
+  //TODO not part of the remarks on this task, but should this at all use equals method?
   @Override
   public boolean equals(Object o)
   {
@@ -43,7 +44,8 @@ public class Story {
       return false;
     }
     Story story = (Story) o;
-    return title.equals(story.title) && Objects.equals(passages, story.passages) &&
+    // TODO for-loop with passagesList
+    return title.equals(story.title) && Objects.equals(passages.size(), story.passages.size()) &&
         openingPassage.equals(story.openingPassage);
   }
 

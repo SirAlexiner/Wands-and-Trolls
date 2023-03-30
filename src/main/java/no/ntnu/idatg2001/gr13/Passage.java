@@ -81,13 +81,12 @@ public class Passage {
       return false;
     }
     Passage passage = (Passage) o;
-    return title.equals(passage.title) && content.equals(passage.content) &&
-        links.equals(passage.links);
+    return title.equals(passage.title);
   }
 
   @Override
   public int hashCode()
   {
-    return Objects.hash(title, content, links);
+    return Objects.hash(title);
   }
 }

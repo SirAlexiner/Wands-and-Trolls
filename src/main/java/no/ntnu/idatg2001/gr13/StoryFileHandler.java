@@ -14,6 +14,9 @@ import no.ntnu.idatg2001.gr13.actions.HealthAction;
 import no.ntnu.idatg2001.gr13.actions.InventoryAction;
 import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 
+/**
+ *
+ */
 public class StoryFileHandler
 {
     /**
@@ -62,6 +65,7 @@ public class StoryFileHandler
         Story story = null;
         Passage passage = null;
         Link link = null;
+        //TODO must fix passage content implementation
         try(BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
             String titleOfGame = reader.readLine();
             while ((lineOfText = reader.readLine()) != null){

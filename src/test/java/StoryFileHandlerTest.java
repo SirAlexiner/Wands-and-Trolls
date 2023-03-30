@@ -1,9 +1,13 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import no.ntnu.idatg2001.gr13.Link;
 import no.ntnu.idatg2001.gr13.Passage;
 import no.ntnu.idatg2001.gr13.Story;
 import no.ntnu.idatg2001.gr13.StoryFileHandler;
 import no.ntnu.idatg2001.gr13.goals.GoldGoals;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,13 +37,13 @@ class StoryFileHandlerTest
 
         // Create 1 passage
         passage = new Passage("Enter this passage", "the content of this passage");
-        passage.addLink(enterLink = new Link("Enter test link", "exit test link reference"));
+        passage.addLink(enterLink = new Link("Enter test link", "enter test link reference"));
         passage.addLink(exitLink = new Link("Exit test link", "exit test link reference"));
 
         // Create 2 passage
         secondPassage =
             new Passage("Go Left", "You've entered the room to the left and run into the troll");
-        secondPassage.addLink(new Link("Enter test number 2 link", "exit test link number 2 reference"));
+        secondPassage.addLink(new Link("Enter test number 2 link", "enter test link number 2 reference"));
         secondPassage.addLink(new Link("Exit test number 2 link", "exit test link number 2 reference"));
 
         // Goals
@@ -59,49 +63,45 @@ class StoryFileHandlerTest
     void testReadFromFileSame()
     {
         // Reads two stories that are equal. Positive test.
-        Assertions.assertEquals(testStory, sameTestStory);
-        Assertions.assertSame(testStory, testStory);
+        assertEquals(testStory, sameTestStory);
+        assertSame(testStory, testStory);
     }
 
     @Test
     void testReadFromFileDifferent()
     {
         // Negative test
-        Assertions.assertNotSame(testStory, differentStory);
+        assertNotSame(testStory, differentStory);
     }
 
+    // TODO this test might needs some additional functionality.
     @Test
+    /*
+    Test if the objects that are written and read are the same.
+     */
     void testWriteToFile(){
+        // Writes a story to a "filename"
         StoryFileHandler.writeToFile(story, differentFileNameTest);
+        // The "differentStory" object is created from the previous line.
+        differentStory = StoryFileHandler.readFromFile(differentFileNameTest);
 
-        Assertions.assertEquals(differentStory.getPassage(enterLink), story.getPassage(enterLink));
-        Assertions.assertEquals(differentStory.getPassage(exitLink), story.getPassage(exitLink));
+        Passage differentStoryPassage = differentStory.getPassage(enterLink);
+        Passage storyPassage = story.getPassage(enterLink);
+        // Checks if the objects are the same using the overwritten equals.
+        assertEquals(differentStoryPassage, storyPassage);
+        assertEquals(story, differentStory);
+        assertNotEquals(differentStory, testStory);
+        // Checks if the story title is the same.
+        assertEquals(story.getTitle(), differentStory.getTitle());
 
-        Assertions.assertNotSame(differentStory.getPassage(enterLink), story.getPassage(exitLink));
+        // Checks if every object inside the list in the different story are the same
+        for (int i = 0; i < story.getOpeningPassage().getLinks().size(); i++)
+        {
+            Link link = story.getOpeningPassage().getLinks().get(i);
+            Link differentLink = differentStory.getOpeningPassage().getLinks().get(i);
+            assertEquals(link, differentLink);
+
+            assertEquals(link.getActions(), differentLink.getActions());
+        }
     }
-//    @Test
-//    void testWriteToFile()
-//    {
-//
-//        // Creates player
-//        Player player = new Player("Test Player", 1, 2, 3);
-//
-//        StoryFileHandler.writeToFile(story, "src/test/resources/testDifferentStory.paths");
-//
-//        // TODO story object is not the same, returns therefore false
-//        if (story.equals(differentStory))
-//        {
-//            assert true;
-//        } else
-//        {
-//            assert false;
-//        }
-//       // Assertions.assertEquals(StoryFileHandler.readFromFile("src/test/resources/testDifferentStory.paths"), StoryFileHandler.readFromFile("src/test/resources/test.paths"));
-//
-//        // TODO returns same Story object
-//        //Assertions.assertNotEquals(StoryFileHandler.readFromFile("src/test/resources/testOther.paths"), StoryFileHandler.readFromFile("src/test/resources/testDifferentStory.paths"));
-//
-//        //Assertions.assertSame(StoryFileHandler.readFromFile("src/test/resources/testOther.paths"),
-//         //   StoryFileHandler.readFromFile("src/test/resources/testDifferentStory.paths"));
-//    }
 }
