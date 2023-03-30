@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import no.ntnu.idatg2001.gr13.Link;
@@ -11,12 +13,31 @@ import org.junit.jupiter.api.Test;
 class LinkTest {
 
     Link link;
+    Link linkTest;
+    Link linkCorrect;
+    Link linkNotCorrect;
 
     @BeforeEach
     void setUp(){
         link = new Link("Test link", "test reference");
+        linkTest = new Link("Arthur", "Room 1");
+        linkCorrect = new Link("Burger", "Room 1");
+        linkNotCorrect = new Link("Torgrim", "Room 3");
     }
 
+    @Test
+    void correctEqualsTest(){
+        boolean expectedVal = true;
+        boolean returnedVal = linkTest.equals(linkCorrect);
+        assertEquals(expectedVal,returnedVal);
+    }
+
+    @Test
+    void notCorrectEqualsTest(){
+        boolean expectedVal = false;
+        boolean returnedVal = linkTest.equals(linkNotCorrect);
+        assertEquals(expectedVal,returnedVal);
+    }
     @Test
     /*
       Positive and negative test for addAction. Checks the size of the list.

@@ -6,7 +6,7 @@ class HashCodeContractTest {
   @Test
   void equalsHashCodeContracts() {
     EqualsVerifier.forClass(Link.class)
-        .withIgnoredFields("action")
+        .withOnlyTheseFields("reference")
         .verify();
   }
 }
