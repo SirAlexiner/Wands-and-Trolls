@@ -1,6 +1,5 @@
 import no.ntnu.idatg2001.gr13.Link;
 import no.ntnu.idatg2001.gr13.Passage;
-import no.ntnu.idatg2001.gr13.Player;
 import no.ntnu.idatg2001.gr13.Story;
 import no.ntnu.idatg2001.gr13.StoryFileHandler;
 import no.ntnu.idatg2001.gr13.goals.GoldGoals;
@@ -17,6 +16,10 @@ class StoryFileHandlerTest
     Story testStory;
     Story sameTestStory;
     Story differentStory;
+    Passage passage;
+    Passage secondPassage;
+    Link enterLink;
+    Link exitLink;
 
     @BeforeEach
     void setUp(){
@@ -29,15 +32,15 @@ class StoryFileHandlerTest
         differentStory = StoryFileHandler.readFromFile(differentFileNameTest);
 
         // Create 1 passage
-        Passage passage = new Passage("Enter this passage", "the content of this passage");
-        passage.addLink(new Link("Enter test link", "exit test link reference"));
-        passage.addLink(new Link("Exit test link", "exit test link reference"));
+        passage = new Passage("Enter this passage", "the content of this passage");
+        passage.addLink(enterLink = new Link("Enter test link", "exit test link reference"));
+        passage.addLink(exitLink = new Link("Exit test link", "exit test link reference"));
 
         // Create 2 passage
-        Passage passage1 =
+        secondPassage =
             new Passage("Go Left", "You've entered the room to the left and run into the troll");
-        passage1.addLink(new Link("Enter test number 2 link", "exit test link number 2 reference"));
-        passage1.addLink(new Link("Exit test number 2 link", "exit test link number 2 reference"));
+        secondPassage.addLink(new Link("Enter test number 2 link", "exit test link number 2 reference"));
+        secondPassage.addLink(new Link("Exit test number 2 link", "exit test link number 2 reference"));
 
         // Goals
         GoldGoals gold = new GoldGoals(50);
@@ -46,7 +49,7 @@ class StoryFileHandlerTest
         story = new Story("Title of this test story", passage);
 
         story.addPassage(passage);
-        story.addPassage(passage1);
+        story.addPassage(secondPassage);
 
     }
     /**
@@ -57,6 +60,7 @@ class StoryFileHandlerTest
     {
         // Reads two stories that are equal. Positive test.
         Assertions.assertEquals(testStory, sameTestStory);
+        Assertions.assertSame(testStory, testStory);
     }
 
     @Test
@@ -66,6 +70,15 @@ class StoryFileHandlerTest
         Assertions.assertNotSame(testStory, differentStory);
     }
 
+    @Test
+    void testWriteToFile(){
+        StoryFileHandler.writeToFile(story, differentFileNameTest);
+
+        Assertions.assertEquals(differentStory.getPassage(enterLink), story.getPassage(enterLink));
+        Assertions.assertEquals(differentStory.getPassage(exitLink), story.getPassage(exitLink));
+
+        Assertions.assertNotSame(differentStory.getPassage(enterLink), story.getPassage(exitLink));
+    }
 //    @Test
 //    void testWriteToFile()
 //    {
