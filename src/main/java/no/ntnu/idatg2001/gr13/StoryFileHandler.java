@@ -16,9 +16,6 @@ import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 
 public class StoryFileHandler
 {
-    private static Story story = null;
-    private static Passage passage = null;
-    private static Link link = null;
     /**
      * The methods take in a story object and a file name, and writes the story object to the file
      *
@@ -62,6 +59,9 @@ public class StoryFileHandler
      */
     public static Story readFromFile(String fileName){
         String lineOfText;
+        Story story = null;
+        Passage passage = null;
+        Link link = null;
         try(BufferedReader reader = Files.newBufferedReader(Path.of(fileName))) {
             String titleOfGame = reader.readLine();
             while ((lineOfText = reader.readLine()) != null){
