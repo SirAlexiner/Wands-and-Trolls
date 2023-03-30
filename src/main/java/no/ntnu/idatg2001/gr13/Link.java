@@ -39,7 +39,6 @@ public class Link {
    *
    * @return The method is returning a boolean value.
    */
-  // Overriding the toString method.
   public boolean hasAction() {
     return !actions.isEmpty();
   }

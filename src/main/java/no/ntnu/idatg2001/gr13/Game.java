@@ -58,9 +58,6 @@ public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal
 
     return new Game(player, story, goals);
      */
-    Passage noobBeginning = new Passage("Enter NOOB cav3", "");
-    Story story = new Story("NOOB gaming", noobBeginning);
-    Player player = new Player("Torgrom", 1, 0, 0);
 
 
     // Read from file '.paths'

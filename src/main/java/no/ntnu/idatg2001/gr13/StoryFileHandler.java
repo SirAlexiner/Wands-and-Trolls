@@ -72,11 +72,8 @@ public class StoryFileHandler
                     if (story == null) {
                         story = new Story(titleOfGame, passage);
                     }
-
                     story.addPassage(passage);
-
                 }
-                // TODO can use scanner and delimiter() instead of bufferedReader.
                 if (lineOfText.startsWith("[") && passage != null){
                     String[] line = lineOfText.split("\\[");
                     String[] text = line[1].split("]");
