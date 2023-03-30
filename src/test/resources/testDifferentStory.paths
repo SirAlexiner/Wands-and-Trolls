@@ -1,0 +1,12 @@
+Title of this test story
+
+::Go Left
+You've entered the room to the left and run into the troll
+[Enter test number 2 link](exit test link number 2 reference)
+[Exit test number 2 link](exit test link number 2 reference)
+
+::Enter this passage
+the content of this passage
+[Enter test link](exit test link reference)
+[Exit test link](exit test link reference)
+
