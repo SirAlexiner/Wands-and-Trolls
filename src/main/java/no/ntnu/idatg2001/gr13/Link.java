@@ -15,7 +15,7 @@ public class Link {
   private final String reference;
 
   private final List<Action> actions;
-  // Thing to be noted is that reference is the reference to the "passage object".
+  // To be noted is that reference is the reference to the "passage object".
   public Link(String text, String reference) {
     this.text = text;
     this.reference = reference;

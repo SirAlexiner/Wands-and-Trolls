@@ -81,4 +81,15 @@ class LinkTest {
         link.addAction(inventoryAction);
         Assertions.assertTrue(link.hasAction());
     }
+
+    @Test
+    void testToString(){
+        String text = link.getText();
+        String reference = link.getReference();
+
+        String howItShouldLook = "[" + text + "]" + "(" + reference + ")";
+        String howItLooks = link.toString();
+
+        assertEquals(howItShouldLook, howItLooks);
+    }
 }
