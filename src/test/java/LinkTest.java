@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,10 +87,12 @@ class LinkTest {
     void testToString(){
         String text = link.getText();
         String reference = link.getReference();
-
+        // Positive test
         String howItShouldLook = "[" + text + "]" + "(" + reference + ")";
         String howItLooks = link.toString();
-
+        // Negative test
+        String howItShouldNotLook = "[" + reference + "]" + "(" + text + ")";
         assertEquals(howItShouldLook, howItLooks);
+        assertNotEquals(howItShouldNotLook, howItLooks);
     }
 }
