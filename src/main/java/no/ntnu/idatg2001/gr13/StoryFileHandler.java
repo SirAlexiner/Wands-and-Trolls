@@ -34,17 +34,13 @@ public class StoryFileHandler
      * @param fileName The name of the file to write to.
      */
     public static void writeToFile(Story story, String fileName){
-        // Try-with-resource-statement"
+        // Try-with-resource-statement
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
             writer.write(story.getTitle() + "\n\n");
             {
                 for (Passage passage: story.getPassages())
                 {
-                    // Writes the title of the passage.
-                    writer.write("::" + passage.getTitle() + "\n");
-                    // Writes the content of the passage
-                    writer.write(passage.getContent() + "\n");
-
+                    writePassages(passage, writer);
                     for (Link link : passage.getLinks()) {
                         // Writes the text and reference of the link
                         writer.write("[" + link.getText() + "]" + "("  + link.getReference() + ")\n");
@@ -55,12 +51,26 @@ public class StoryFileHandler
                     }
                     writer.write("\n");
                 }
-
             }
         }
         catch (IOException e){
             System.err.println("There was a problem writing to" + fileName);
         }
+    }
+
+    /**
+     * The method takes a Passage object and writes is using the "writer".
+     *
+     * @param passage the Passage to be written
+     * @param writer the writer to write
+     * @throws IOException if an input/output occurs while writing to the file
+     */
+    public static void writePassages(Passage passage, BufferedWriter writer) throws IOException
+    {
+            // Writes the title of the passage.
+            writer.write("::" + passage.getTitle() + "\n");
+            // Writes the content of the passage
+            writer.write(passage.getContent() + "\n");
     }
     /**
      * The method reads a file and creates a story object from the file.
