@@ -37,24 +37,31 @@ public class StoryFileHandler
         // Try-with-resource-statement
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
             writer.write(story.getTitle() + "\n\n");
-            {
-                for (Passage passage: story.getPassages())
-                {
-                    writePassages(passage, writer);
-                    for (Link link : passage.getLinks()) {
-                        // Writes the text and reference of the link
-                        writer.write("[" + link.getText() + "]" + "("  + link.getReference() + ")\n");
-                        for (Action action : link.getActions()) {
-                            // Writes the type and value of the action
-                            writer.write("=" + action.getActionType() + ";" + action.getActionValue() + "\n");
-                        }
-                    }
-                    writer.write("\n");
-                }
-            }
+            writeStory(story, writer);
         }
         catch (IOException e){
             System.err.println("There was a problem writing to" + fileName);
+        }
+    }
+
+    /**
+     * The method takes a Story object and writes it using the "writer".
+     *
+     * @param story the Story object to be written
+     * @param writer the writer to write
+     * @throws IOException if an input/output occurs while writing to the file
+     */
+    public static void writeStory(Story story, BufferedWriter writer) throws IOException{
+        for (Passage passage: story.getPassages())
+        {
+            writePassages(passage, writer);
+            for (Link link : passage.getLinks()) {
+                writeLinks(link, writer);
+                for (Action action : link.getActions()) {
+                    writeActions(action, writer);
+                }
+            }
+            writer.write("\n");
         }
     }
 
@@ -67,10 +74,35 @@ public class StoryFileHandler
      */
     public static void writePassages(Passage passage, BufferedWriter writer) throws IOException
     {
-            // Writes the title of the passage.
-            writer.write("::" + passage.getTitle() + "\n");
-            // Writes the content of the passage
-            writer.write(passage.getContent() + "\n");
+        // Writes the title of the passage.
+        writer.write("::" + passage.getTitle() + "\n");
+        // Writes the content of the passage
+        writer.write(passage.getContent() + "\n");
+    }
+
+    /**
+     * The method takes a Link object and writes is using the "writer".
+     *
+     * @param link the Link to be written
+     * @param writer the writer to write
+     * @throws IOException if an input/output occurs while writing to the file
+     */
+    public static void writeLinks(Link link, BufferedWriter writer) throws IOException
+    {
+        // Writes the text and reference of the link
+        writer.write("[" + link.getText() + "]" + "("  + link.getReference() + ")\n");
+    }
+
+    /**
+     * The method takes a Action object and writes is using the "writer".
+     *
+     * @param action the Action to be written
+     * @param writer the writer to write
+     * @throws IOException if an input/output occurs while writing to the file
+     */
+    public static void writeActions(Action action, BufferedWriter writer)throws IOException{
+        // Writes the type and value of the action
+        writer.write("=" + action.getActionType() + ";" + action.getActionValue() + "\n");
     }
     /**
      * The method reads a file and creates a story object from the file.
