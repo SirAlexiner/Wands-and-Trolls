@@ -15,12 +15,20 @@ import no.ntnu.idatg2001.gr13.actions.InventoryAction;
 import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 
 /**
+ * This class is part of the "WiNG" application, this class acts as a file handler.
+ * Includes methods to read and write to a CSV file.
  *
+ * @author Arthur Borger Thorkildsen
+ * @author Torgrim Thorsen
+ * @version 23-10-2022
  */
 public class StoryFileHandler
 {
+    private StoryFileHandler(){
+        // empty, private constructor
+    }
     /**
-     * The methods take in a story object and a file name, and writes the story object to the file
+     * The methods take in a story object and a file name, and writes the story object to the file.
      *
      * @param story The story object that you want to write to a file.
      * @param fileName The name of the file to write to.
