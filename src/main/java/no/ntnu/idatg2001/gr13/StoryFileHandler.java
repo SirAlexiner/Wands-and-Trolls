@@ -5,6 +5,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,7 +21,7 @@ import no.ntnu.idatg2001.gr13.actions.ScoreAction;
  *
  * @author Arthur Borger Thorkildsen
  * @author Torgrim Thorsen
- * @version 23-10-2022
+ * @version 02-04-2023
  */
 public class StoryFileHandler
 {
@@ -51,7 +52,34 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writeStory(Story story, BufferedWriter writer) throws IOException{
+    public static void writeStory(Story story, BufferedWriter writer) {
+        try {
+            story.getPassages().forEach(passage -> {
+                try {
+                    writePassages(passage, writer);
+                    passage.getLinks().forEach(link -> {
+                        try {
+                            writeLinks(link, writer);
+                            link.getActions().forEach(action -> {
+                                try {
+                                    writeActions(action, writer);
+                                } catch (IOException e) {
+                                    throw new UncheckedIOException(e);
+                                }
+                            });
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    });
+                    writer.write("\n");
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        } catch (UncheckedIOException e) {
+            System.out.println("Error in write story");
+        }
+        /*
         for (Passage passage: story.getPassages())
         {
             writePassages(passage, writer);
@@ -63,6 +91,8 @@ public class StoryFileHandler
             }
             writer.write("\n");
         }
+
+         */
     }
 
     /**
