@@ -10,11 +10,11 @@ import lombok.Getter;
  */
 public class Passage {
   @Getter
-  private String title;
+  private final String title;
   @Getter
-  private String content;
+  private final String content;
   @Getter
-  private List<Link> links = new ArrayList<>();
+  private final List<Link> links = new ArrayList<>();
 
   public Passage(String title, String content) {
     this.title = title;
@@ -81,7 +81,7 @@ public class Passage {
       return false;
     }
     Passage passage = (Passage) o;
-    return title.equals(passage.title);
+    return  Objects.equals(title, passage.title);
   }
 
   @Override
