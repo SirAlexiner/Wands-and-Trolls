@@ -22,13 +22,16 @@ public class Passage {
   }
 
   /**
-   * A method for adding a Link to a list.
+   * A method for adding a Link to a list. Checks if the
+   * link object already exist in the list.
    *
    * @param link The link to be added to the list.
    * @return A boolean value.
    */
   public boolean addLink(Link link) {
-    return links.add(link);
+    if (links.contains(link)){
+      return false;
+    } else return links.add(link);
   }
 
   /**
