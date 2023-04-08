@@ -1,25 +1,28 @@
 package no.ntnu.idatg2001.gr13;
 
+import java.security.Key;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.Value;
 
 /**
  *  A class representing a story, part of the WiNG application.
  */
 public class Story {
   @Getter
-  private String title;
-  private Map<Link,Passage> passages = new HashMap<>();
+  private final String title;
+  private final Map<Link,Passage> passages;
   @Getter
-  private Passage openingPassage;
+  private final Passage openingPassage;
 
   // Constructor
   public Story(String title, Passage openingPassage) {
     this.title = title;
     this.openingPassage = openingPassage;
+    this.passages = new HashMap<>();
   }
 
   /**
@@ -33,20 +36,29 @@ public class Story {
 
   //TODO not part of the remarks on this task, but should this at all use equals method?
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Story story = (Story) o;
-    // TODO for-loop with passagesList
-    return title.equals(story.title) && Objects.equals(passages.size(), story.passages.size()) &&
-        openingPassage.equals(story.openingPassage);
+    if (!Objects.equals(title, story.title)) {
+      return false;
+    }
+    if (!Objects.equals(passages, story.passages)) {
+      return false;
+    }
+    for (Map.Entry<Link, Passage> entry : passages.entrySet()) {
+      Link key = entry.getKey();
+      Passage value = entry.getValue();
+      Passage otherValue = story.passages.get(key);
+      if (!Objects.equals(value, otherValue)) {
+        return false;
+      }
+    }
+    return Objects.equals(openingPassage, story.openingPassage);
   }
 
   @Override
