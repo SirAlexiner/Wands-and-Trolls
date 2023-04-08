@@ -41,4 +41,14 @@ class PassageTest {
         boolean notSuccess = passage.addLink(link);
         assertFalse(notSuccess);
     }
+
+    @Test
+    void testHasLinks(){
+        boolean listIsEmpty = passage.hasLinks();
+        assertFalse(listIsEmpty);
+
+        passage.addLink(link);
+        boolean listIsNotEmpty = passage.hasLinks();
+        assertTrue(listIsNotEmpty);
+    }
 }
