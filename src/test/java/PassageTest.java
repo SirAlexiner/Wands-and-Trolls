@@ -1,4 +1,3 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Link;
@@ -50,5 +49,16 @@ class PassageTest {
         passage.addLink(link);
         boolean listIsNotEmpty = passage.hasLinks();
         assertTrue(listIsNotEmpty);
+    }
+
+    @Test
+    void testGetLink(){
+        passage.addLink(link);
+        String emptyCommand = "";
+        assertNull(passage.getLink(emptyCommand));
+
+        passage.addLink(otherLink);
+        String commandForLink = "other reference";
+        assertNotNull(passage.getLink(commandForLink));
     }
 }
