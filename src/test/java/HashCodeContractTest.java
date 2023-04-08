@@ -12,7 +12,7 @@ class HashCodeContractTest {
   }
 
   @Test
-  void equalsPassageObjectTest() {
+  void equalsAndHashCodeForPassageObjectTest() {
     EqualsVerifier.forClass(Passage.class)
             .withOnlyTheseFields("title")
             .usingGetClass()
