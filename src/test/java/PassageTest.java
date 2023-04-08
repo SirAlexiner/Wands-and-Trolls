@@ -61,4 +61,13 @@ class PassageTest {
         String commandForLink = "other reference";
         assertNotNull(passage.getLink(commandForLink));
     }
+
+    @Test
+    void testToString() {
+        String correctFormat = "::" + title + "\n" + content;
+        assertEquals(correctFormat, passage.toString());
+
+        String notCorrectFormat = "::" + content + "\n" + title;
+        assertNotEquals(notCorrectFormat, passage.toString());
+    }
 }
