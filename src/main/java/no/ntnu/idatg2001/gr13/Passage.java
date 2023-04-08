@@ -54,7 +54,7 @@ public class Passage {
     if (this.hasLinks()) {
       for (Link link : this.getLinks()
       ) {
-        if (link.toString().equalsIgnoreCase(command)) {
+        if (link.getReference().equalsIgnoreCase(command)) {
           return link;
         }
       }
