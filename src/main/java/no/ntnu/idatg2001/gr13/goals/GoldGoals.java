@@ -3,7 +3,7 @@ package no.ntnu.idatg2001.gr13.goals;
 import no.ntnu.idatg2001.gr13.Player;
 
 public class GoldGoals implements Goal {
-  private int minimumGold;
+  private final int minimumGold;
 
   public GoldGoals(int minimumGold) {
     this.minimumGold = minimumGold;

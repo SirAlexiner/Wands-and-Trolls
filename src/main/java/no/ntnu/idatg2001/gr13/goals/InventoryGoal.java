@@ -5,7 +5,7 @@ import java.util.List;
 import no.ntnu.idatg2001.gr13.Player;
 
 public class InventoryGoal implements Goal {
-  private List<String> mandatoryItems;
+  private final List<String> mandatoryItems;
 
   public InventoryGoal(List<String> mandatoryItems) {
     this.mandatoryItems = mandatoryItems;
