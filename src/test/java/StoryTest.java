@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.*;
+
 import no.ntnu.idatg2001.gr13.Link;
 import no.ntnu.idatg2001.gr13.Passage;
 import no.ntnu.idatg2001.gr13.Story;
@@ -6,9 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 
 class StoryTest
 {
