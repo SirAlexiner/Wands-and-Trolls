@@ -4,7 +4,7 @@ import no.ntnu.idatg2001.gr13.Player;
 
 public class HealthAction implements Action{
 
-  private int health;
+  private final int health;
 
   public HealthAction(int health) {
     this.health = health;
@@ -21,6 +21,6 @@ public class HealthAction implements Action{
   }
   @Override
   public String getActionValue(){
-    return "" + this.health;
+    return String.valueOf(this.health);
   }
 }
