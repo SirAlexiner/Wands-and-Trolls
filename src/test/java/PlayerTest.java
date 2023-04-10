@@ -27,8 +27,11 @@ class PlayerTest {
         player.addHealth(newHealth);
         int actual = player.getHealth();
         int expected = 110;
-
+        // Positive
         assertEquals(expected, actual);
+        //Negative
+        int unexpected = 100 + 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
@@ -37,8 +40,11 @@ class PlayerTest {
         player.addGold(newAmountOfGold);
         int actual = player.getGold();
         int expected = 109;
-
+        // Positive
         assertEquals(expected, actual);
+        //Negative
+        int unexpected = 100 + 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
@@ -73,5 +79,19 @@ class PlayerTest {
         player.addToInventory("Different item");
         List<String> unexpected = inventory;
         assertNotEquals(unexpected, actual);
+    }
+
+    @Test
+    void testAddScore() {
+        int newScore = 100;
+        player.addScore(newScore);
+        int actual = player.getScore();
+        int expected = 100;
+        //Positive
+        assertEquals(expected, actual);
+        //Negative
+        int unexpected = 100 + 10;
+        assertNotEquals(unexpected, actual);
+
     }
 }
