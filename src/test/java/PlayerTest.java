@@ -30,7 +30,7 @@ class PlayerTest {
         // Positive
         assertEquals(expected, actual);
         //Negative
-        int unexpected = 100 + 10;
+        int unexpected = expected + 10;
         assertNotEquals(unexpected, actual);
     }
 

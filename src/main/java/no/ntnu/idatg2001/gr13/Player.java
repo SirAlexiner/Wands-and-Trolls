@@ -9,13 +9,13 @@ import lombok.Getter;
  */
 public class Player {
   @Getter
-  private String name;
+  private final String name;
   @Getter
   private int health;
   @Getter
   private int gold;
   @Getter
-  private List<String> inventory = new ArrayList<>();
+  private final List<String> inventory = new ArrayList<>();
   @Getter
   private int score;
 
