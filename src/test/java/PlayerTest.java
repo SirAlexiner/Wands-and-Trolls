@@ -11,7 +11,7 @@ class PlayerTest {
     Player player;
     String name = "Test Player";
     int health = 10;
-    int gold = 0;
+    int gold = 9;
     List<String> inventory = new ArrayList<>();
     int score = 0;
 
@@ -26,6 +26,16 @@ class PlayerTest {
         player.addHealth(newHealth);
         int actual = player.getHealth();
         int expected = 110;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testAddGold() {
+        int newAmountOfGold = 100;
+        player.addGold(newAmountOfGold);
+        int actual = player.getGold();
+        int expected = 109;
 
         assertEquals(expected, actual);
     }

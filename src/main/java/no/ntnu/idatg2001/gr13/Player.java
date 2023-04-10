@@ -33,6 +33,7 @@ public class Player {
   }
 
   public void addGold(int gold){
+    this.gold = getGold() + gold;
   }
 
   public void addToInventory(String item){
