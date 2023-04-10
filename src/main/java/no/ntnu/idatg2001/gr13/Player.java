@@ -36,6 +36,10 @@ public class Player {
     this.gold = getGold() + gold;
   }
 
+  public void addScore(int score){
+    this.score = getScore() + score;
+  }
+
   public void addToInventory(String item){
     this.inventory.add(item);
   }
