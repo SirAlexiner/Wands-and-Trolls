@@ -37,8 +37,10 @@ public class Player {
   }
 
   public void addToInventory(String item){
+    this.inventory.add(item);
   }
 
   public void removeFromInventory(String item){
+    this.inventory.remove(item);
   }
 }

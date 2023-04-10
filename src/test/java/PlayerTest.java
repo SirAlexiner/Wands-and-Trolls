@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 class PlayerTest {
@@ -38,5 +39,39 @@ class PlayerTest {
         int expected = 109;
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testAddToInventory() {
+        // Positive
+        String item = "Random item";
+        inventory.add(item);
+        player.addToInventory(item);
+        List<String> expected = inventory;
+        List<String> actual = player.getInventory();
+        assertEquals(expected, actual);
+
+        // Negative
+        String differentItem = "Different item";
+        inventory.add(differentItem);
+        assertNotEquals(expected, actual);
+    }
+
+    @Test
+    void testRemoveFromInventory() {
+        String item = "Random item";
+        inventory.add(item);
+        player.addToInventory(item);
+        inventory.remove(0);
+        player.removeFromInventory(item);
+
+        List<String> actual = player.getInventory();
+        List<String> expected = inventory;
+        // Positive
+        assertEquals(expected, actual);
+        // Negative
+        player.addToInventory("Different item");
+        List<String> unexpected = inventory;
+        assertNotEquals(unexpected, actual);
     }
 }
