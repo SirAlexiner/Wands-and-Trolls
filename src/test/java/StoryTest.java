@@ -16,7 +16,9 @@ class StoryTest
     Passage otherPassage;
     Passage openingPassage;
     Link link;
+    Link otherLink;
     Story story;
+    Story otherStory;
     Map<Link, Passage> passages;
     @BeforeEach
     void setUp(){
@@ -25,6 +27,7 @@ class StoryTest
         otherPassage = new Passage("Other passage title", "other passage content");
         passages = new HashMap<>();
         link = new Link("Title link", "Reference link");
+        otherLink = new Link("Title other link", "Other reference link");
         story = new Story("Title of story", openingPassage);
     }
 
@@ -41,6 +44,7 @@ class StoryTest
 
     @Test
     void testGetPassage() {
+        // TODO check this implementation
         /*passage.addLink(link);
         story.addPassage(passage);
 
@@ -48,5 +52,20 @@ class StoryTest
 
        assertNotNull(passageToBeFoundInList);
          */
+    }
+
+    @Test
+    void testGetPassages() {
+        otherStory = new Story("Other story title", openingPassage);
+        passages.put(link, passage);
+
+        passage.addLink(link);
+
+        otherStory.addPassage(passage);
+        story.addPassage(passage);
+
+        String expected = otherStory.getPassages().toString();
+        String actual = story.getPassages().toString();
+        assertEquals(expected, actual);
     }
 }
