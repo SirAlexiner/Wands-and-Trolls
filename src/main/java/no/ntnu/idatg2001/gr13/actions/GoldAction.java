@@ -12,7 +12,7 @@ public class GoldAction implements Action{
 
   @Override
   public boolean canExecute(Player player) {
-    return false;
+    return player.getInventory().contains(String.valueOf(gold));
   }
 
   @Override

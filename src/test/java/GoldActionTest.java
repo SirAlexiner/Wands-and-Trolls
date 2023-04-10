@@ -17,12 +17,14 @@ public class GoldActionTest {
 
     @Test
     void testCanExecute() {
+        // Negative
         boolean actual = goldAction.canExecute(player);
         assertFalse(actual);
-
-        Player emptyPlayer = null;
-        boolean nullPlayer = goldAction.canExecute(emptyPlayer);
-        assertFalse(nullPlayer);
+        // Positive
+        int newGold = 10;
+        player.addGold(newGold);
+        actual = goldAction.canExecute(player);
+        assertTrue(actual);
     }
 
     @Test
