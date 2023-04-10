@@ -4,7 +4,7 @@ import no.ntnu.idatg2001.gr13.Player;
 
 public class ScoreAction implements Action{
 
-  private int points;
+  private final int points;
 
   public ScoreAction(int points) {
     this.points = points;
@@ -22,6 +22,6 @@ public class ScoreAction implements Action{
 
   @Override
   public String getActionValue(){
-    return "" + this.points;
+    return String.valueOf(this.points);
   }
 }
