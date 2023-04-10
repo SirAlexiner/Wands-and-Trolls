@@ -16,8 +16,13 @@ class InventoryActionTest {
 
     @Test
     void testCanExecute() {
+        //Negative
         boolean actual = inventoryAction.canExecute(player);
         assertFalse(actual);
+        // Positive
+        player.addToInventory(item);
+        actual = inventoryAction.canExecute(player);
+        assertTrue(actual);
     }
 
     @Test

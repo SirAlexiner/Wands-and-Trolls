@@ -5,7 +5,7 @@ import no.ntnu.idatg2001.gr13.actions.Action;
 
 public class InventoryAction implements Action {
 
-  private String item;
+  private final String item;
 
   public InventoryAction(String item) {
     this.item = item;
