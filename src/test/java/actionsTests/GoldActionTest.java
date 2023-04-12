@@ -43,7 +43,7 @@ class GoldActionTest {
 
     @Test
     void testGetActionValue() {
-        String expected = "0";
+        String expected = "10";
         String actual = goldAction.getActionValue();
         // Positive
         assertEquals(expected, actual);
