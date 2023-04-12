@@ -11,9 +11,10 @@ public class GoldAction implements Action{
   }
 
   @Override
-  public boolean canExecute(Player player) {
-    return player.getInventory().contains(String.valueOf(gold));
+  public void execute(Player player) {
+    player.addGold(gold);
   }
+
 
   @Override
   public String getActionType(){
@@ -23,5 +24,10 @@ public class GoldAction implements Action{
   @Override
   public String getActionValue(){
     return String.valueOf(this.gold);
+  }
+
+  @Override
+  public boolean isFulFilled(Player player){
+    return player.getGold() >= gold;
   }
 }
