@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Player;
 import no.ntnu.idatg2001.gr13.actions.GoldAction;
-import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,5 +50,15 @@ class GoldActionTest {
         // Negative
         String unexpected = "Health";
         assertNotEquals(unexpected, actual);
+    }
+    @Test
+    void testIsFulFilled() {
+        goldAction.execute(player);
+        player.addGold(-11);
+        // Negative
+        assertFalse(goldAction.isFulFilled(player));
+        // Positive
+        player.addGold(10);
+        assertTrue(goldAction.isFulFilled(player));
     }
 }
