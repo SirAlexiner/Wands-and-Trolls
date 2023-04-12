@@ -3,6 +3,7 @@ package actionsTests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Player;
+import no.ntnu.idatg2001.gr13.actions.HealthAction;
 import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +18,16 @@ class ScoreActionTest {
     }
 
     @Test
-    void testCanExecute() {
-        boolean actual = scoreAction.canExecute(player);
-        assertFalse(actual);
-
-        Player emptyPlayer = null;
-        boolean nullPlayer = scoreAction.canExecute(emptyPlayer);
-        assertFalse(nullPlayer);
+    void testExecute() {
+        ScoreAction otherScoreAction = new ScoreAction(100);
+        otherScoreAction.execute(player);
+        int actual = player.getScore();
+        int expected = 100;
+        // Positive
+        assertEquals(expected, actual);
+        // Negative
+        int unexpected = 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
