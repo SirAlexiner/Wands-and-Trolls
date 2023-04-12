@@ -1,6 +1,4 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import no.ntnu.idatg2001.gr13.Player;
@@ -42,6 +40,17 @@ class GoalsTest
 
         player.addGold(-1);
         conditionToBeChecked = goldGoals.isFulfilled(player);
+        assertFalse(conditionToBeChecked);
+    }
+
+    @Test
+    void testIsFulFilledHealthGoals(){
+        healthGoal = new HealthGoal(health);
+        conditionToBeChecked = healthGoal.isFulfilled(player);
+        assertTrue(conditionToBeChecked);
+
+        player.addHealth(-1);
+        conditionToBeChecked = healthGoal.isFulfilled(player);
         assertFalse(conditionToBeChecked);
     }
 }
