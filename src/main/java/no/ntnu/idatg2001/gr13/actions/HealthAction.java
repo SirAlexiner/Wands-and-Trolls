@@ -12,7 +12,7 @@ public class HealthAction implements Action{
 
   @Override
   public void execute(Player player) {
-    player.addScore(health);
+    player.addHealth(health);
   }
 
   @Override
