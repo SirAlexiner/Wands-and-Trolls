@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.gr13.actions;
 
 import java.util.List;
 import no.ntnu.idatg2001.gr13.Player;
-import no.ntnu.idatg2001.gr13.actions.Action;
 
 public class InventoryAction implements Action {
 
@@ -28,6 +27,7 @@ public class InventoryAction implements Action {
   }
   @Override
   public boolean isFulFilled(Player player){
-    return false;
+    List<String> inventory = player.getInventory();
+    return inventory.contains(item);
   }
 }
