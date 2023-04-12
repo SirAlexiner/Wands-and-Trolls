@@ -19,7 +19,7 @@ class GoalsTest
     int score = 10;
     String sword = "Sword";
     String shield = "Shield";
-    List<String> expectedInventory;
+    List<String> inventory;
     Player player;
     GoldGoals goldGoals;
     HealthGoal healthGoal;
@@ -29,7 +29,7 @@ class GoalsTest
     @BeforeEach
     void setUp(){
         player = new Player("Test Player", health, gold, score);
-        expectedInventory = new ArrayList<>();
+        inventory = new ArrayList<>();
     }
 
     @Test
@@ -61,6 +61,23 @@ class GoalsTest
 
         player.addScore(-1);
         conditionToBeChecked = scoreGoal.isFulfilled(player);
+        assertFalse(conditionToBeChecked);
+    }
+
+    @Test
+    void testIsFulFilledInventoryGoals() {
+        player.addToInventory(sword);
+        player.addToInventory(shield);
+
+        inventory.add(sword);
+        inventory.add(shield);
+        inventoryGoal = new InventoryGoal(inventory);
+
+        boolean conditionToBeChecked = inventoryGoal.isFulfilled(player);
+        assertTrue(conditionToBeChecked);
+
+        player.removeFromInventory(sword);
+        conditionToBeChecked = inventoryGoal.isFulfilled(player);
         assertFalse(conditionToBeChecked);
     }
 }
