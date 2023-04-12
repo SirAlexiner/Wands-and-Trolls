@@ -53,4 +53,14 @@ class GoalsTest
         conditionToBeChecked = healthGoal.isFulfilled(player);
         assertFalse(conditionToBeChecked);
     }
+    @Test
+    void testIsFulFilledScoreGoals(){
+        scoreGoal = new ScoreGoal(score);
+        conditionToBeChecked = scoreGoal.isFulfilled(player);
+        assertTrue(conditionToBeChecked);
+
+        player.addScore(-1);
+        conditionToBeChecked = scoreGoal.isFulfilled(player);
+        assertFalse(conditionToBeChecked);
+    }
 }
