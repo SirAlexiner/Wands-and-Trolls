@@ -7,23 +7,24 @@ import no.ntnu.idatg2001.gr13.actions.HealthAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 class HealthActionTest {
-    int health = 0;
     Player player;
     HealthAction healthAction;
     @BeforeEach
     void setUp(){
-        player = new Player("Test Player", health, 10, 10);
-        healthAction = new HealthAction(health);
+        player = new Player("Test Player", 0, 10, 10);
     }
 
     @Test
-    void testCanExecute() {
-        boolean actual = healthAction.canExecute(player);
-        assertFalse(actual);
-
-        Player emptyPlayer = null;
-        boolean nullPlayer = healthAction.canExecute(emptyPlayer);
-        assertFalse(nullPlayer);
+    void testExecute() {
+        healthAction = new HealthAction(100);
+        healthAction.execute(player);
+        int actual = player.getHealth();
+        int expected = 100;
+        // Positive
+        assertEquals(expected, actual);
+        // Negative
+        int unexpected = 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
