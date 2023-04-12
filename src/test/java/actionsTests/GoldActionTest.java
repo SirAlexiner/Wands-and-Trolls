@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Player;
 import no.ntnu.idatg2001.gr13.actions.GoldAction;
+import no.ntnu.idatg2001.gr13.actions.ScoreAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GoldActionTest {
-    int gold = 0;
+    int gold = 10;
     Player player;
     GoldAction goldAction;
     @BeforeEach
@@ -18,15 +19,16 @@ class GoldActionTest {
     }
 
     @Test
-    void testCanExecute() {
-        // Negative
-        boolean actual = goldAction.canExecute(player);
-        assertFalse(actual);
+    void testExecute() {
+        GoldAction otherGoldAction = new GoldAction(100);
+        otherGoldAction.execute(player);
+        int actual = player.getGold();
+        int expected = 100 + gold;
         // Positive
-        int newGold = 10;
-        player.addGold(newGold);
-        actual = goldAction.canExecute(player);
-        assertTrue(actual);
+        assertEquals(expected, actual);
+        // Negative
+        int unexpected = 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
