@@ -12,12 +12,13 @@ class HealthActionTest {
     @BeforeEach
     void setUp(){
         player = new Player("Test Player", 0, 10, 10);
+        healthAction = new HealthAction(0);
     }
 
     @Test
     void testExecute() {
-        healthAction = new HealthAction(100);
-        healthAction.execute(player);
+        HealthAction otherHealthAction = new HealthAction(100);
+        otherHealthAction.execute(player);
         int actual = player.getHealth();
         int expected = 100;
         // Positive
@@ -47,5 +48,17 @@ class HealthActionTest {
         // Negative
         String unexpected = "Gold";
         assertNotEquals(unexpected, actual);
+    }
+
+    @Test
+    void testIsFulFilled() {
+        HealthAction healthGoal = new HealthAction(0);
+        healthGoal.execute(player);
+        player.addHealth(-1);
+        // Positive
+        assertTrue(healthGoal.isFulFilled(player), "Player died");
+        // Negative
+        player.addHealth(10);
+        assertFalse(healthGoal.isFulFilled(player), "Player is alive");
     }
 }
