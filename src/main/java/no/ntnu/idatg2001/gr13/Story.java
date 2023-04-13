@@ -26,10 +26,21 @@ public class Story {
   }
 
   /**
+   * A method to remove a specified passage from Passages. The
+   * passage will not be removed if other passages links to the passage.
+   * @param link
+   */
+  public void removePassage(Link link){
+    boolean isReferenced = passages.values().stream()
+            .anyMatch(passage -> passage.getLinks().contains(link));
+    if (!isReferenced){
+      passages.remove(link);
+    }
+  }
+  /**
    * A method for putting the passage into a Map.
    * @param passage to be added to the Map.
    */
-
   public void addPassage(Passage passage){
     passages.put(new Link("", passage.getTitle()), passage);
   }
