@@ -1,12 +1,12 @@
 package no.ntnu.idatg2001.gr13;
 
-import java.security.Key;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import lombok.Getter;
-import lombok.Value;
 
 /**
  *  A class representing a story, part of the WiNG application.
@@ -30,12 +30,20 @@ public class Story {
    * passage will not be removed if other passages links to the passage.
    * @param link
    */
-  public void removePassage(Link link){
-    boolean isReferenced = passages.values().stream()
-            .anyMatch(passage -> passage.getLinks().contains(link));
-    if (!isReferenced){
+  public void removePassage(Link link) throws IllegalStateException{
+    AtomicBoolean isReferenced = new AtomicBoolean(false);
+    passages.values().stream()
+            .forEach(passage -> {
+              isReferenced.set(passage.getLinks().contains(link));
+              // TODO Link reference match passage title
+            });
+    if (!isReferenced.get()){
       passages.remove(link);
     }
+    else {
+      throw new IllegalStateException("Passage is being linked to, cannot remove");
+    }
+
   }
   /**
    * A method for putting the passage into a Map.
