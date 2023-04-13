@@ -1,10 +1,8 @@
 package no.ntnu.idatg2001.gr13;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 import lombok.Getter;
 
@@ -43,7 +41,22 @@ public class Story {
     else {
       throw new IllegalStateException("Passage is being linked to, cannot remove");
     }
+  }
 
+  /**
+   *
+   */
+  public List<Link> getBrokenLinks() {
+    ArrayList<Link> container = new ArrayList<>();
+
+    Stream<Passage> unFiltered = passages.values().stream();
+    unFiltered.forEach(p -> p.getLinks().stream().forEach(link ->
+    {
+      if (getPassage(link) == null) {
+        container.add(link);
+      }
+    }));
+    return container;
   }
   /**
    * A method for putting the passage into a Map.
