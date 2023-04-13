@@ -7,11 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class StoryTest
 {
     Passage passage;
+    Passage leftPassage;
+    Passage rightPassage;
     Passage otherPassage;
     Passage openingPassage;
     Link link;
@@ -24,10 +27,30 @@ class StoryTest
         passage = new Passage("Passage title", "passage content");
         openingPassage = new Passage("Opening passage title", "opening passage content");
         otherPassage = new Passage("Other passage title", "other passage content");
+        leftPassage = new Passage("left passage title", "left passage content");
         passages = new HashMap<>();
         link = new Link("Title link", "Reference link");
         otherLink = new Link("Title other link", "Other reference link");
         story = new Story("Title of story", openingPassage);
+    }
+
+    @Test
+    void testRemovePassage(){
+        story.addPassage(openingPassage);
+        passage.addLink(link);
+        otherPassage.addLink(link);
+
+        int expected = story.getPassages().size();
+        story.removePassage(link);
+        int actual = story.getPassages().size();
+        assertEquals(expected, actual); // Checks if the to list are the same size
+
+        story.addPassage(leftPassage);
+        int unExpected = story.getPassages().size();
+
+        story.removePassage(otherLink);
+        actual = story.getPassages().size();
+        assertNotEquals(unExpected, actual); // Checks that the list are not the same size
     }
 
     @Test
