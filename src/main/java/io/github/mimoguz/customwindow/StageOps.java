@@ -1,5 +1,6 @@
 package io.github.mimoguz.customwindow;
 
+import com.sun.jna.*;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinError;
@@ -28,7 +29,7 @@ public class StageOps {
   private interface DwmSupport extends Library {
     DwmSupport INSTANCE = Native.load("dwmapi", DwmSupport.class);
     @SuppressWarnings({"checkstyle:EmptyLineSeparator", "checkstyle:MethodName"})
-    WinNT.HRESULT DwmSetWindowAttribute(
+    WinNT.HRESULT dwmSetWindowAttribute(
         WinDef.HWND hwnd,
         int dwAttribute,
         PointerType pvAttribute,
@@ -50,7 +51,7 @@ public class StageOps {
       return;
     }
     isOk(
-        DwmSupport.INSTANCE.DwmSetWindowAttribute(
+        DwmSupport.INSTANCE.dwmSetWindowAttribute(
             handle.value,
             attribute.value,
             new WinDef.DWORDByReference(new WinDef.DWORD(value)),
@@ -116,4 +117,3 @@ public class StageOps {
         | floatingTo8Bit(color.getRed());
   }
 }
-/*
