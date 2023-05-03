@@ -27,6 +27,13 @@
         <controlsfx.version>11.1.1</controlsfx.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -62,6 +69,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.github.Dansoftowner</groupId>
+            <artifactId>jSystemThemeDetector</artifactId>
+            <version>3.8</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.mkpaz</groupId>
+            <artifactId>atlantafx-base</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
             <version>3.13.2</version>
@@ -72,36 +89,44 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>no.ntnu.idatg2001.gr13.Main</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.openjfx</groupId>-->
-<!--                <artifactId>javafx-maven-plugin</artifactId>-->
-<!--                <version>${javafx-maven-plugin.version}</version>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash;Path til main klasse (filen som har public static void main...)-->
-<!--                        >høyreklikk på filen-->
-<!--                        >klikk på: kopier path/referanse-->
-<!--                        >klikk på: kopier referanse    (nederst)-->
-<!--                        Lim inn under mellom <mainClass></mainClass>-->
-<!--                    &ndash;&gt;-->
-<!--                    <mainClass>wargames/no.ntnu.idatg2001.wargames.RunJarMain</mainClass>-->
-<!--                    &lt;!&ndash;-->
-<!--                    Tillegg for JLink-->
-<!--                    &ndash;&gt;-->
-<!--                    <jlinkImageName>LiteratureApp</jlinkImageName>-->
-<!--                    <launcher>TableViewDemo</launcher>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.openjfx</groupId>-->
+            <!--                <artifactId>javafx-maven-plugin</artifactId>-->
+            <!--                <version>${javafx-maven-plugin.version}</version>-->
+            <!--                <configuration>-->
+            <!--                    &lt;!&ndash;Path til main klasse (filen som har public static void main...)-->
+            <!--                        >høyreklikk på filen-->
+            <!--                        >klikk på: kopier path/referanse-->
+            <!--                        >klikk på: kopier referanse    (nederst)-->
+            <!--                        Lim inn under mellom <mainClass></mainClass>-->
+            <!--                    &ndash;&gt;-->
+            <!--                    <mainClass>wargames/no.ntnu.idatg2001.wargames.RunJarMain</mainClass>-->
+            <!--                    &lt;!&ndash;-->
+            <!--                    Tillegg for JLink-->
+            <!--                    &ndash;&gt;-->
+            <!--                    <jlinkImageName>LiteratureApp</jlinkImageName>-->
+            <!--                    <launcher>TableViewDemo</launcher>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
             <!--
                 Surefire is the test-plugin for Maven. Surefire will use whatever
-                test engine (JUnit4, JUnit5, TestNG etc) added as dependency
+                test engine (JUnit4, JUnit5, TestNG etc.) added as dependency
                 to the project.
                 The default version of surefire that comes bundled with maven is 2.12.4.
                 This version only supports up to JUnit4.
-                Hence to be able to run JUnit 5 tests, we need to add a newer version of
+                Hence, to be able to run JUnit 5 tests, we need to add a newer version of
                 the Surefire plugin, like 3.0.0-M5
             -->
             <plugin>
