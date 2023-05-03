@@ -59,18 +59,19 @@ public class LoadStoryView extends Application {
         FxManager.setup(stage);
 
 
-        root.setLeft(listViewBox);
+        root.setLeft(layoutTableColumn());
 
         stage.show();
     }
 
-    public void layoutTableColumn() {
+    public GridPane layoutTableColumn() {
         setupTableColumn();
         gridPane = new GridPane();
-        gridPane.setPadding(new Insets(10));
+        gridPane.setPadding(new Insets(70));
         gridPane.getChildren().addAll(listViewBox);
         gridPane.setAlignment(Pos.CENTER_LEFT);
-
+        gridPane.setGridLinesVisible(true);
+        return gridPane;
     }
 
 
