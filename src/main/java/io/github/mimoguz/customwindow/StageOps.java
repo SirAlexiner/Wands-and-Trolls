@@ -29,7 +29,7 @@ public class StageOps {
   private interface DwmSupport extends Library {
     DwmSupport INSTANCE = Native.load("dwmapi", DwmSupport.class);
     @SuppressWarnings({"checkstyle:EmptyLineSeparator", "checkstyle:MethodName"})
-    WinNT.HRESULT dwmSetWindowAttribute(
+    WinNT.HRESULT DwmSetWindowAttribute(
         WinDef.HWND hwnd,
         int dwAttribute,
         PointerType pvAttribute,
@@ -45,13 +45,13 @@ public class StageOps {
    * @param attribute dwAttribute
    * @param value     pvAttribute
    */
-  private static void dwmSetIntValue(final WindowHandle handle, final DwmAttribute attribute,
+  private static void DwmSetIntValue(final WindowHandle handle, final DwmAttribute attribute,
                                      final int value) {
     if (handle == null) {
       return;
     }
     isOk(
-        DwmSupport.INSTANCE.dwmSetWindowAttribute(
+        DwmSupport.INSTANCE.DwmSetWindowAttribute(
             handle.value,
             attribute.value,
             new WinDef.DWORDByReference(new WinDef.DWORD(value)),
@@ -89,7 +89,7 @@ public class StageOps {
    * @param color  Border color
    */
   public static void setBorderColor(final WindowHandle handle, final Color color) {
-    dwmSetIntValue(handle, DwmAttribute.DWMWA_BORDER_COLOR, rgb(color));
+    DwmSetIntValue(handle, DwmAttribute.DWMWA_BORDER_COLOR, rgb(color));
   }
 
   /**
@@ -100,7 +100,7 @@ public class StageOps {
    * @param color  Caption color
    */
   public static void setCaptionColor(final WindowHandle handle, final Color color) {
-    dwmSetIntValue(handle, DwmAttribute.DWMWA_CAPTION_COLOR, rgb(color));
+    DwmSetIntValue(handle, DwmAttribute.DWMWA_CAPTION_COLOR, rgb(color));
   }
 
   private static int floatingTo8Bit(final double n) {
