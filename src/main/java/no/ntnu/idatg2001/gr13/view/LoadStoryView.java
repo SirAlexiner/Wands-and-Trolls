@@ -2,12 +2,11 @@ package no.ntnu.idatg2001.gr13.view;
 
 import io.github.siralexiner.fxmanager.FxManager;
 import javafx.application.Application;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -15,31 +14,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.kordamp.ikonli.feather.Feather;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 
 public class LoadStoryView extends Application {
     private BorderPane root;
     private ToggleButton buttonEnableDarkMode;
-    private TableView<String> storyTableView;
-    private TableColumn<String, String> tableColumn;
-    private ObservableList<String> list;
     private Scene scene;
-    private Stage window;
-    private GridPane gridPane;
+    private Stage stage;
     private GridPane darkModeGrid;
-    private BorderPane borderPane;
-    private HBox hBox;
     private VBox listViewBox;
 
-    private Tooltip tooltip;
 
     @Override
     public void start(Stage stage) throws Exception {
-        try {
-            setUp(stage);
-        } catch (Exception e) {
-            System.out.println("error");
-        }
+        setUp();
     }
 
     @Override
@@ -47,17 +37,17 @@ public class LoadStoryView extends Application {
         System.exit(0);
     }
 
-    public void setUp(Stage stage) {
+    public void setUp() {
+        stage = new Stage();
         root = new BorderPane();
 
         layoutTableColumn();
-
 
         scene = new Scene(root, 800, 400);
         stage.setScene(scene);
         stage.setTitle("WiNG");
         FxManager.setup(stage);
-
+        buttonDarkMode(stage);
 
         root.setLeft(layoutTableColumn());
 
@@ -66,7 +56,7 @@ public class LoadStoryView extends Application {
 
     public GridPane layoutTableColumn() {
         setupTableColumn();
-        gridPane = new GridPane();
+        GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(70));
         gridPane.getChildren().addAll(listViewBox);
         gridPane.setAlignment(Pos.CENTER_LEFT);
@@ -90,4 +80,33 @@ public class LoadStoryView extends Application {
         listViewBox.getChildren().add(listView);
     }
 
+    private void buttonDarkMode(Stage primaryStage) {
+        // dark mode / light mode / following OS-theme
+       // FxManager.setup(primaryStage);
+        buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
+        darkModeGrid = new GridPane();
+
+        // Setting buttonPlacement for darkMode
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(darkModeGrid);
+        darkModeGrid.setAlignment(Pos.TOP_RIGHT);
+        darkModeGrid.setVgap(10);
+        darkModeGrid.setHgap(10);
+        darkModeGrid.setPadding(new Insets(10));
+
+        darkModeGrid.getChildren().addAll(buttonEnableDarkMode);
+        root.setTop(darkModeGrid);
+
+        buttonEnableDarkMode.setOnAction(this::darkModeButtonOnPressed);
+    }
+
+    public void darkModeButtonOnPressed(ActionEvent event){
+        FxManager.enableDarkMode(stage);
+        if (buttonEnableDarkMode.isSelected()){
+            FxManager.enableLightMode(stage);
+        }
+        else {
+            FxManager.enableDarkMode(stage);
+        }
+    }
 }
