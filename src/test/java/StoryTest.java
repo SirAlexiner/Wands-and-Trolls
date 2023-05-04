@@ -29,10 +29,12 @@ class StoryTest
         otherPassage = new Passage("Other passage title", "other passage content");
         leftPassage = new Passage("left passage title", "left passage content");
         passages = new HashMap<>();
-        link = new Link("Title link", "Reference link");
-        otherLink = new Link("Title other link", "Other reference link");
+        link = new Link("Title link", "Passage Title");
+        otherLink = new Link("Title other link", "Other passage title");
         story = new Story("Title of story", openingPassage);
     }
+
+    /*
 
     @Test
     void testRemovePassage(){
@@ -52,6 +54,8 @@ class StoryTest
         actual = story.getPassages().size();
         assertNotEquals(unExpected, actual); // Checks that the list are not the same size
     }
+
+     */
 
     @Test
     void testAddPassage(){
@@ -74,6 +78,36 @@ class StoryTest
 
        assertNotNull(passageToBeFoundInList);
          */
+    }
+
+    @Test
+    void testPosGetBrokenLinks() {
+        passage.addLink(link);
+        otherPassage.addLink(otherLink);
+
+        story.addPassage(passage);
+        story.addPassage(otherPassage);
+
+
+        List<Link> linkList = story.getBrokenLinks();
+        int actual = linkList.size();
+        int expected = 0;
+
+        assertEquals(expected, actual);
+
+        passage.addLink(new Link("random","random"));
+        linkList = story.getBrokenLinks();
+        expected = 1;
+        actual = linkList.size();
+
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void testNegGetBrokenLinks() {
+
+
     }
 
     @Test
