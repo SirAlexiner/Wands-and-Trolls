@@ -1,8 +1,7 @@
 package no.ntnu.idatg2001.gr13;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 
@@ -28,14 +27,14 @@ public class Story {
    * passage will not be removed if other passages links to the passage.
    * @param link
    */
+  /*
   public void removePassage(Link link) throws IllegalStateException{
-    AtomicBoolean isReferenced = new AtomicBoolean(false);
     passages.values().stream()
             .forEach(passage -> {
-              isReferenced.set(passage.getLinks().contains(link));
+              passage.getLinks().contains(link);
               // TODO Link reference match passage title
             });
-    if (!isReferenced.get()){
+    if (){
       passages.remove(link);
     }
     else {
@@ -43,27 +42,99 @@ public class Story {
     }
   }
 
+   */
+
   /**
    *
    */
-  public List<Link> getBrokenLinks() {
-    ArrayList<Link> container = new ArrayList<>();
+  public List<Link> getBrokenLinks4() {
+    List<Link> brokenLinks = new ArrayList<>();
+    Set<Link> allLinks = new HashSet<>(passages.keySet());
 
-    Stream<Passage> unFiltered = passages.values().stream();
-    unFiltered.forEach(p -> p.getLinks().stream().forEach(link ->
-    {
-      if (getPassage(link) == null) {
-        container.add(link);
+    passages.values().forEach(passage -> allLinks.addAll(passage.getLinks()));
+
+    for (Link link : allLinks) {
+      if (!passages.containsKey(link)) {
+        brokenLinks.add(link);
       }
-    }));
-    return container;
+    }
+    return brokenLinks;
   }
+
+  public List<Link> getBrokenLinks() {
+    List<Link> brokenLinks = new ArrayList<>();
+    List<String> passageTitleList = new ArrayList<>();
+    List<Link> linkReferenceList;
+
+    linkReferenceList = new ArrayList<>(passages.keySet());
+    // adds to a list of links
+    passages.values().forEach(passage -> //if (passages.get(link) == null) {
+            //}
+            linkReferenceList.addAll(passage.getLinks()));
+    /*
+
+    // for each passage in the map
+    for (Passage passage : passages.values()) {
+      passageTitleList.add(passage.getTitle());
+      // for each link in passage arraylist
+      for (Link link : passages.keySet()) {
+        linkReferenceList.add(link.getReference());
+        // if the link reference matches any item
+        if (linkReferenceList.equals(passageTitleList)) {
+          brokenLinks.add(link);
+        }
+        //if (getPassage(link) == null) {
+        //  brokenLinks.add(link);
+        //}
+      }
+    }
+
+     */
+    for (Link link : linkReferenceList) {
+      if (!passages.containsKey(link)) {
+        brokenLinks.add(link);
+      }
+    }
+    return brokenLinks;
+  }
+
+  public List<Link> getBrokenLinks2() {
+    List<Link> brokenLinks = new ArrayList<>();
+
+    // Iterate over all entries (i.e., key-value pairs) in the map
+    for (Map.Entry<Link, Passage> entry : passages.entrySet()) {
+      Link link = entry.getKey();
+      Passage passage = entry.getValue();
+
+      // Check if the link's reference is a valid passage title in the map
+      if (!passages.containsKey(new Link(link.getReference(), link.getReference()))) {
+        brokenLinks.add(link);
+      }
+    }
+
+    return brokenLinks;
+  }
+
+  public List<Link> getBrokenLinks3() {
+    List<Link> matchingLinks = new ArrayList<>();
+    for (Passage passage : passages.values()) {
+      for (Link link : passage.getLinks()) {
+        if (passages.containsKey(link) && passages.get(link).getTitle().equals(link.getReference())) {
+          matchingLinks.add(link);
+        }
+      }
+    }
+    return matchingLinks;
+  }
+
+
+
   /**
    * A method for putting the passage into a Map.
    * @param passage to be added to the Map.
    */
   public void addPassage(Passage passage){
-    passages.put(new Link("", passage.getTitle()), passage);
+    passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
   }
 
   //TODO not part of the remarks on this task, but should this at all use equals method?

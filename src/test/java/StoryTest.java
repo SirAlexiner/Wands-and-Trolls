@@ -81,33 +81,29 @@ class StoryTest
     }
 
     @Test
-    void testPosGetBrokenLinks() {
-        passage.addLink(link);
-        otherPassage.addLink(otherLink);
+    void testGetBrokenLinks() {
+        Passage testPassage = new Passage("TITLE", "CONTENT");
+        Passage comparingPassage = new Passage("OTHER TITLE", "OTHER CONTENT");
 
-        story.addPassage(passage);
-        story.addPassage(otherPassage);
+        Link testLink = new Link("TITLE", "TITLE");
+        Link comparingLink = new Link("OTHER TITLE", "OTHER TITLE");
 
+        testPassage.addLink(testLink);
+        comparingPassage.addLink(comparingLink);
 
-        List<Link> linkList = story.getBrokenLinks();
-        int actual = linkList.size();
-        int expected = 0;
+        story.addPassage(testPassage);
+        story.addPassage(comparingPassage);
 
-        assertEquals(expected, actual);
+        int actual = story.getBrokenLinks4().size();
 
-        passage.addLink(new Link("random","random"));
-        linkList = story.getBrokenLinks();
-        expected = 1;
-        actual = linkList.size();
+        assertEquals(0, actual);
 
-        assertEquals(expected, actual);
-
-    }
-
-    @Test
-    void testNegGetBrokenLinks() {
+        Link wrong = new Link("WRONG", "WRONG");
+        testPassage.addLink(wrong);
+        actual = story.getBrokenLinks4().size();
 
 
+        assertEquals(1, actual);
     }
 
     @Test
