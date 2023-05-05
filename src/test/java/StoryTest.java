@@ -94,13 +94,13 @@ class StoryTest
         story.addPassage(testPassage);
         story.addPassage(comparingPassage);
 
-        int actual = story.getBrokenLinks4().size();
+        int actual = story.getBrokenLinks().size();
 
         assertEquals(0, actual);
 
         Link wrong = new Link("WRONG", "WRONG");
         testPassage.addLink(wrong);
-        actual = story.getBrokenLinks4().size();
+        actual = story.getBrokenLinks().size();
 
 
         assertEquals(1, actual);
