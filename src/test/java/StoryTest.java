@@ -6,8 +6,6 @@ import no.ntnu.idatg2001.gr13.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 class StoryTest
@@ -17,20 +15,31 @@ class StoryTest
     Passage rightPassage;
     Passage otherPassage;
     Passage openingPassage;
-    Link link;
+    Link passageLink;
+    Link leftLink;
     Link otherLink;
+    Link openingLink;
     Story story;
     Story otherStory;
     Map<Link, Passage> passages;
     @BeforeEach
     void setUp(){
-        passage = new Passage("Passage title", "passage content");
-        openingPassage = new Passage("Opening passage title", "opening passage content");
-        otherPassage = new Passage("Other passage title", "other passage content");
-        leftPassage = new Passage("left passage title", "left passage content");
-        passages = new HashMap<>();
-        link = new Link("Title link", "Passage Title");
-        otherLink = new Link("Title other link", "Other passage title");
+        String content = "content";
+        String passageTitle = "Passage title";
+        String openingPassageTitle = "Opening passage title";
+        String otherPassageTitle = "Other passage title";
+        String leftPassageTitle = "left passage title";
+
+        passage = new Passage(passageTitle, content);
+        openingPassage = new Passage(openingPassageTitle, content);
+        otherPassage = new Passage(otherPassageTitle, content);
+        leftPassage = new Passage(leftPassageTitle, content);
+
+        passageLink = new Link("Title link", passageTitle);
+        openingLink = new Link("Text of opening link", openingPassageTitle);
+        otherLink = new Link("Title other link", otherPassageTitle);
+        leftLink = new Link("Text left link", leftPassageTitle);
+
         story = new Story("Title of story", openingPassage);
     }
 
@@ -81,6 +90,34 @@ class StoryTest
     }
 
     @Test
+    void testNegRemovePassage() {
+        passage.addLink(leftLink);
+        story.addPassage(leftPassage);
+        story.addPassage(passage);
+
+        story.removePassage(leftLink);
+        int actual = story.getPassages().size();
+        int expected = 2;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testPosRemovePassage() {
+        story.addPassage(passage);
+        story.addPassage(leftPassage);
+
+        passage.addLink(leftLink);
+        leftPassage.addLink(leftLink);
+
+        story.removePassage(passageLink);
+        int expected = 1;
+        int actual = story.getPassages().size();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void testGetBrokenLinks() {
         Passage testPassage = new Passage("TITLE", "CONTENT");
         Passage comparingPassage = new Passage("OTHER TITLE", "OTHER CONTENT");
@@ -109,9 +146,9 @@ class StoryTest
     @Test
     void testGetPassages() {
         otherStory = new Story("Other story title", openingPassage);
-        passages.put(link, passage);
+        passages.put(passageLink, passage);
 
-        passage.addLink(link);
+        passage.addLink(passageLink);
 
         otherStory.addPassage(passage);
         story.addPassage(passage);

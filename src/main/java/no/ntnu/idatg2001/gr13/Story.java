@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.gr13;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.Getter;
 
@@ -27,25 +28,27 @@ public class Story {
    * passage will not be removed if other passages links to the passage.
    * @param link
    */
-  /*
   public void removePassage(Link link) throws IllegalStateException{
-    passages.values().stream()
-            .forEach(passage -> {
-              passage.getLinks().contains(link);
-              // TODO Link reference match passage title
-            });
-    if (){
-      passages.remove(link);
-    }
-    else {
-      throw new IllegalStateException("Passage is being linked to, cannot remove");
-    }
+    // The string of the passage to be removed
+    String passageToBeRemoved = passages.get(link).getTitle();
+    // Returns a list of links in each passage
+    Collection<Link> linksInPassages = passages.values().stream()
+            .map(Passage::getLinks)
+            .flatMap(Collection::stream)
+            .toList();
+    linksInPassages.stream()
+            // Removes the original link from the list since this will always match
+            .filter(l -> l != link)
+            // Filter on the link (l) reference and checks that link reference does not match the passage.
+            .filter(l -> !l.getReference().matches(passageToBeRemoved))
+            .forEach(passages::remove);
   }
 
-   */
+
 
   /**
-   *
+   * A method for getting Link objects that are not referring to any Passage Title.
+   * @return A list of broken Links.
    */
   public List<Link> getBrokenLinks() {
     List<Link> brokenLinks = new ArrayList<>();
