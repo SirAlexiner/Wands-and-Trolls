@@ -6,65 +6,129 @@ import no.ntnu.idatg2001.gr13.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+class StoryTest {
 
-class StoryTest
-{
-    Passage passage;
-    Passage otherPassage;
-    Passage openingPassage;
-    Link link;
-    Link otherLink;
-    Story story;
-    Story otherStory;
-    Map<Link, Passage> passages;
-    @BeforeEach
-    void setUp(){
-        passage = new Passage("Passage title", "passage content");
-        openingPassage = new Passage("Opening passage title", "opening passage content");
-        otherPassage = new Passage("Other passage title", "other passage content");
-        passages = new HashMap<>();
-        link = new Link("Title link", "Reference link");
-        otherLink = new Link("Title other link", "Other reference link");
-        story = new Story("Title of story", openingPassage);
-    }
+  Passage passage;
+  Passage leftPassage;
+  Passage otherPassage;
+  Passage openingPassage;
+  Link passageLink;
+  Link leftLink;
+  Link otherLink;
+  Link openingLink;
+  Link invalidLink;
+  Story story;
 
-    @Test
-    void testAddPassage(){
-        story.addPassage(otherPassage);
+  @BeforeEach
+  void setUp() {
+    String contentPassage = "Content of passage";
+    String contentOpeningPassage = "Content of Opening passage";
+    String contentOtherPassage = "Content of other passage";
+    String contentLeftPassage = "Content of left passage";
 
-        Passage retrivedPassage = story.getPassage(new Link("", "Other passage title"));
+    String passageTitle = "Passage title";
+    String openingPassageTitle = "Opening passage title";
+    String otherPassageTitle = "Other passage title";
+    String leftPassageTitle = "left passage title";
 
-        assertNotNull(retrivedPassage);
-        assertEquals("Other passage title", retrivedPassage.getTitle());
-        assertEquals("other passage content", retrivedPassage.getContent());
-    }
+    passage = new Passage(passageTitle, contentPassage);
+    openingPassage = new Passage(openingPassageTitle, contentOpeningPassage);
+    otherPassage = new Passage(otherPassageTitle, contentOtherPassage);
+    leftPassage = new Passage(leftPassageTitle, contentLeftPassage);
 
-    @Test
-    void testGetPassage() {
-        // TODO check this implementation
-        /*passage.addLink(link);
-        story.addPassage(passage);
+    passageLink = new Link("Title link", passageTitle);
+    openingLink = new Link("Text of opening link", openingPassageTitle);
+    otherLink = new Link("Title other link", otherPassageTitle);
+    leftLink = new Link("Text left link", leftPassageTitle);
+    invalidLink = new Link("Invalid Title", "Invalid Reference");
 
-        Passage passageToBeFoundInList = story.getPassage(link);
+    story = new Story("Title of story", openingPassage);
+  }
 
-       assertNotNull(passageToBeFoundInList);
-         */
-    }
+  @Test
+  void testAddPassage() {
+    story.addPassage(passage);
+    Passage retrivedPassage;
+    retrivedPassage = story.getPassage(passageLink);
 
-    @Test
-    void testGetPassages() {
-        otherStory = new Story("Other story title", openingPassage);
-        passages.put(link, passage);
+    assertNotNull(retrivedPassage);
+    assertEquals(passage.getTitle(), retrivedPassage.getTitle());
+    assertEquals(passage.getContent(), retrivedPassage.getContent());
+  }
 
-        passage.addLink(link);
+  @Test
+  void testPosGetPassage() {
+    passage.addLink(passageLink);
+    story.addPassage(passage);
+    Passage passageToBeFoundInList = story.getPassage(passageLink);
 
-        otherStory.addPassage(passage);
-        story.addPassage(passage);
+    assertDoesNotThrow(() -> story.getPassage(invalidLink));
+    assertNotNull(passageToBeFoundInList);
+  }
 
-        String expected = otherStory.getPassages().toString();
-        String actual = story.getPassages().toString();
-        assertEquals(expected, actual);
-    }
+  @Test
+  void testNegGetPassage() {
+    assertDoesNotThrow(() -> {
+      story.getPassage(invalidLink);
+    });
+  }
+
+  @Test
+  void testNegRemovePassage() {
+    story.addPassage(leftPassage);
+    story.addPassage(passage);
+    int expected = 2;
+
+    passage.addLink(leftLink);
+    story.removePassage(leftLink);
+    int actual = story.getPassages().size();
+
+    assertEquals(expected, actual);
+    // Edge case, the passage does not exist.
+    assertDoesNotThrow(() -> story.removePassage(invalidLink));
+  }
+
+  @Test
+  void testPosRemovePassage() {
+    story.addPassage(passage);
+    story.addPassage(leftPassage);
+
+    passage.addLink(leftLink);
+    leftPassage.addLink(leftLink);
+
+    story.removePassage(passageLink);
+    int expected = 1;
+    int actual = story.getPassages().size();
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  void testNegGetBrokenLinks() {
+    passage.addLink(passageLink);
+    otherPassage.addLink(passageLink);
+
+    story.addPassage(passage);
+    story.addPassage(otherPassage);
+
+    int expected = 0;
+    int actual = story.getBrokenLinks().size();
+
+    assertEquals(expected, actual);
+
+  }
+
+  @Test
+  void testPosGetBrokenLinks() {
+    passage.addLink(passageLink);
+    otherPassage.addLink(invalidLink);
+
+    story.addPassage(passage);
+    story.addPassage(otherPassage);
+
+    int actual = story.getBrokenLinks().size();
+    int expected = 1;
+
+    assertEquals(expected, actual);
+  }
 }
