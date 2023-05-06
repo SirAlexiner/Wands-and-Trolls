@@ -1,8 +1,6 @@
 package no.ntnu.idatg2001.gr13;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import lombok.Getter;
 
@@ -75,7 +73,6 @@ public class Story {
         passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
     }
 
-    //TODO not part of the remarks on this task, but should this at all use equals method?
     @Override
     public boolean equals(Object o) {
         if (this == o) {
