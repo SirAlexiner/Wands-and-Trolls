@@ -1,3 +1,5 @@
+package actionsTests;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Player;
@@ -15,13 +17,16 @@ class ScoreActionTest {
     }
 
     @Test
-    void testCanExecute() {
-        boolean actual = scoreAction.canExecute(player);
-        assertFalse(actual);
-
-        Player emptyPlayer = null;
-        boolean nullPlayer = scoreAction.canExecute(emptyPlayer);
-        assertFalse(nullPlayer);
+    void testExecute() {
+        ScoreAction otherScoreAction = new ScoreAction(100);
+        otherScoreAction.execute(player);
+        int actual = player.getScore();
+        int expected = 100;
+        // Positive
+        assertEquals(expected, actual);
+        // Negative
+        int unexpected = 10;
+        assertNotEquals(unexpected, actual);
     }
 
     @Test
@@ -44,6 +49,17 @@ class ScoreActionTest {
         // Negative
         String unexpected = "Gold";
         assertNotEquals(unexpected, actual);
+    }
+
+    @Test
+    void testIsFulFilled() {
+        scoreAction.execute(player);
+        player.addScore(-1);
+        // Negative
+        assertFalse(scoreAction.isFulFilled(player));
+        // Positive
+        player.addScore(10);
+        assertTrue(scoreAction.isFulFilled(player));
     }
 }
 

@@ -1,9 +1,15 @@
+package actionsTests;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import no.ntnu.idatg2001.gr13.Player;
 import no.ntnu.idatg2001.gr13.actions.InventoryAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 class InventoryActionTest {
     String item = "Item example";
     Player player;
@@ -15,13 +21,28 @@ class InventoryActionTest {
     }
 
     @Test
-    void testCanExecute() {
-        //Negative
-        boolean actual = inventoryAction.canExecute(player);
-        assertFalse(actual);
+    void testExecute() {
+        String otherItem = "Other item";
+        InventoryAction otherInventoryAction = new InventoryAction(otherItem);
+        otherInventoryAction.execute(player);
+        List<String> actual = player.getInventory();
+        List<String> expected = new ArrayList<>();
+        expected.add(otherItem);
+        // Positive
+        assertEquals(expected, actual);
+        // Negative
+        expected.remove(otherItem);
+        assertNotEquals(expected, actual);
+    }
+
+    @Test
+    void testIsFulFilled() {
+        // Negative
+        boolean notCorrect = inventoryAction.isFulFilled(player);
+        assertFalse(notCorrect);
         // Positive
         player.addToInventory(item);
-        actual = inventoryAction.canExecute(player);
+        boolean actual = inventoryAction.isFulFilled(player);
         assertTrue(actual);
     }
 

@@ -11,8 +11,8 @@ public class HealthAction implements Action{
   }
 
   @Override
-  public boolean canExecute(Player player) {
-    return false;
+  public void execute(Player player) {
+    player.addHealth(health);
   }
 
   @Override
@@ -22,5 +22,9 @@ public class HealthAction implements Action{
   @Override
   public String getActionValue(){
     return String.valueOf(this.health);
+  }
+  @Override
+  public boolean isFulFilled(Player player){
+    return player.getHealth() <= health;
   }
 }

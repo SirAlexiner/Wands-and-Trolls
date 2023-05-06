@@ -1,7 +1,7 @@
 package no.ntnu.idatg2001.gr13.actions;
 
+import java.util.List;
 import no.ntnu.idatg2001.gr13.Player;
-import no.ntnu.idatg2001.gr13.actions.Action;
 
 public class InventoryAction implements Action {
 
@@ -12,8 +12,8 @@ public class InventoryAction implements Action {
   }
 
   @Override
-  public boolean canExecute(Player player) {
-    return player.getInventory().contains(item);
+  public void execute(Player player) {
+    player.addToInventory(item);
   }
 
   @Override
@@ -24,5 +24,10 @@ public class InventoryAction implements Action {
   @Override
   public String getActionValue(){
     return this.item;
+  }
+  @Override
+  public boolean isFulFilled(Player player){
+    List<String> inventory = player.getInventory();
+    return inventory.contains(item);
   }
 }

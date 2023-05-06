@@ -11,10 +11,9 @@ public class ScoreAction implements Action{
   }
 
   @Override
-  public boolean canExecute(Player player) {
-    return false;
+  public void execute(Player player) {
+    player.addScore(points);
   }
-
   @Override
   public String getActionType(){
     return "Score";
@@ -23,5 +22,9 @@ public class ScoreAction implements Action{
   @Override
   public String getActionValue(){
     return String.valueOf(this.points);
+  }
+  @Override
+  public boolean isFulFilled(Player player){
+    return player.getScore() >= points;
   }
 }
