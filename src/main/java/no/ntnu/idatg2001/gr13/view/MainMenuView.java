@@ -2,19 +2,15 @@ package no.ntnu.idatg2001.gr13.view;
 
 import io.github.siralexiner.fxmanager.FxManager;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -22,14 +18,13 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import static atlantafx.base.theme.Styles.*;
+
 
 public class MainMenuView extends Application {
     private BorderPane root;
     private ToggleButton buttonEnableDarkMode;
-    private Scene scene;
     private Stage stage;
-    private GridPane darkModeGrid;
-    private HBox buttonLayout;
 
 
     @Override
@@ -53,7 +48,7 @@ public class MainMenuView extends Application {
         root.setBackground(background);
 
         // Add a listener to the scene to handle resizing events
-        scene = new Scene(root, 800, 400);
+        Scene scene = new Scene(root, 800, 400);
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double diagonalLength = calculateDiagonalLength(scene.getWidth(), scene.getHeight());
             root.setBackground(resizeBackgroundImage(background, diagonalLength));
@@ -117,22 +112,48 @@ public class MainMenuView extends Application {
     }
 
 
-    public void setUpButtons() {
+    public VBox setUpButtons() {
         // Creates buttons
-        Button newGameButton = new Button("New game");
-        Button loadGameButton = new Button("Load game");
-        Button settingsButton = new Button("Settings");
+        Button settingsButton = new Button("Settings", new FontIcon(Feather.SETTINGS));
+        settingsButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, ACCENT);
+        // Create a vertical box for the new game and load game buttons and the settings button
+        HBox topBox = topBoxButtons();
 
-        // Create a new vertical box
-        buttonLayout = new HBox(newGameButton, loadGameButton, settingsButton);
-        buttonLayout.setSpacing(20);
+        VBox vbox = new VBox(topBox, new Region(), settingsButton);
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.CENTER);
+
+        // Set the vertical grow priority of the spacer region to ALWAYS
+        VBox.setVgrow(new Region(), Priority.ALWAYS);
+
+        return vbox;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public HBox topBoxButtons() {
+        // Creates Buttons and styles them.
+        Button newGameButton = new Button("New Game", new FontIcon(Feather.PLAY));
+        newGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
+
+        Button loadGameButton = new Button("Load Game", new FontIcon(Feather.FOLDER));
+        loadGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
+
+        // Create a horizontal box for the new game and load game buttons
+        HBox topHBox = new HBox(newGameButton, loadGameButton);
+        topHBox.setSpacing(20);
+        topHBox.setAlignment(Pos.CENTER);
+
+        return topHBox;
     }
 
     public GridPane layoutButtons() {
         setUpButtons();
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(70));
-        gridPane.getChildren().addAll(buttonLayout);
+        gridPane.getChildren().addAll(setUpButtons());
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
         gridPane.setGridLinesVisible(false);
         return gridPane;
@@ -141,7 +162,7 @@ public class MainMenuView extends Application {
     private void buttonDarkMode() {
         // dark mode / light mode / following OS-theme
         buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
-        darkModeGrid = new GridPane();
+        GridPane darkModeGrid = new GridPane();
 
         // Setting buttonPlacement for darkMode
         BorderPane borderPane = new BorderPane();
@@ -166,4 +187,5 @@ public class MainMenuView extends Application {
             FxManager.enableDarkMode(stage);
         }
     }
+
 }
