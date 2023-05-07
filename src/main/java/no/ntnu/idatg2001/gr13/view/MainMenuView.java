@@ -5,12 +5,14 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -25,6 +27,7 @@ public class MainMenuView extends Application {
     private BorderPane root;
     private ToggleButton buttonEnableDarkMode;
     private Stage stage;
+    private static final String BACKGROUND_IMAGE = "WnT.png";
 
 
     @Override
@@ -40,77 +43,38 @@ public class MainMenuView extends Application {
     public void setUp() throws FileNotFoundException {
         stage = new Stage();
         root = new BorderPane();
-
-        // Load the background image with an initial size of 800x400
-        Background background = loadImageScene(800, 400);
-
-        // Set the background of the root pane
-        root.setBackground(background);
-
-        // Add a listener to the scene to handle resizing events
-        Scene scene = new Scene(root, 800, 400);
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double diagonalLength = calculateDiagonalLength(scene.getWidth(), scene.getHeight());
-            root.setBackground(resizeBackgroundImage(background, diagonalLength));
-        });
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double diagonalLength = calculateDiagonalLength(scene.getWidth(), scene.getHeight());
-            root.setBackground(resizeBackgroundImage(background, diagonalLength));
-        });
-
+        // Set up the stage
+        stage.setScene(setUpScene());
+        stage.setTitle("WiNG");
+        stage.setResizable(false);
+        stage.setFullScreen(true);
+        FxManager.setup(stage);
         // Add buttons to the center of the root pane
         root.setCenter(layoutButtons());
-
-        // Set up the stage
-        stage.setScene(scene);
-        stage.setTitle("WiNG");
-        FxManager.setup(stage);
         buttonDarkMode();
         stage.show();
     }
 
-    private Background resizeBackgroundImage(Background background, double diagonalLength) {
-        BackgroundImage backgroundImage = background.getImages().get(0);
-        Image image = backgroundImage.getImage();
-        double ratio = diagonalLength / Math.sqrt(Math.pow(image.getWidth(), 2) + Math.pow(image.getHeight(), 2));
-        double width = image.getWidth() * ratio;
-        double height = image.getHeight() * ratio;
-        BackgroundSize backgroundSize = new BackgroundSize(width, height, false, false, false, false);
-        BackgroundImage resizedBackgroundImage = new BackgroundImage(backgroundImage.getImage(),
-                backgroundImage.getRepeatX(),
-                backgroundImage.getRepeatY(),
-                backgroundImage.getPosition(),
-                backgroundSize);
-        return new Background(resizedBackgroundImage);
-    }
-    private double calculateDiagonalLength(double width, double height) {
-        return Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
-    }
-
-    public Background loadImageScene(double containerWidth, double containerHeight) throws FileNotFoundException {
-        FileInputStream input = new FileInputStream("WnT.png");
+    public Scene setUpScene() throws FileNotFoundException {
+        // Creates an image from the file
+        FileInputStream input = new FileInputStream(BACKGROUND_IMAGE);
         Image image = new Image(input);
 
-        // Create an ImageView and set its size to the container size
+        // Create an ImageView and set its size to the screen size
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(containerWidth);
-        imageView.setFitHeight(containerHeight);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        imageView.setFitWidth(screenBounds.getWidth());
+        imageView.setFitHeight(screenBounds.getHeight());
 
-        // Create a region and set its size to the container size
-        Region region = new Region();
-        region.setPrefSize(containerWidth, containerHeight);
-
-        // Set the background image of the region to the ImageView
-        region.setBackground(new Background(new BackgroundImage(imageView.getImage(),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(containerWidth, containerHeight, false, false, false, false))));
-
-        // Return the background
-        return region.getBackground();
+        BackgroundImage backgroundImage =
+                new BackgroundImage(image, null,
+                        null, null,
+                        new BackgroundSize(1.0, 1.0, true,
+                                true, false, false));
+        root.setBackground(new Background(backgroundImage));
+        // Set the scene to fullscreen
+        return new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
     }
-
 
     public VBox setUpButtons() {
         // Creates buttons
@@ -129,17 +93,20 @@ public class MainMenuView extends Application {
         return vbox;
     }
 
-    /**
-     *
-     * @return
-     */
-    public HBox topBoxButtons() {
+    public Button buttonStyler(String nameOfButton, Enum<Feather> icon, Enum<Feather> buttonStyle) {
         // Creates Buttons and styles them.
         Button newGameButton = new Button("New Game", new FontIcon(Feather.PLAY));
         newGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
 
         Button loadGameButton = new Button("Load Game", new FontIcon(Feather.FOLDER));
         loadGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
+    }
+
+    /**
+     * A method for creating a HBox containing two buttons.
+     * @return A HBox containing Buttons.
+     */
+    public HBox topBoxButtons() {
 
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
