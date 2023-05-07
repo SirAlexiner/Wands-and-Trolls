@@ -77,37 +77,33 @@ public class MainMenuView extends Application {
     }
 
     public VBox setUpButtons() {
-        // Creates buttons
-        Button settingsButton = new Button("Settings", new FontIcon(Feather.SETTINGS));
-        settingsButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, ACCENT);
-        // Create a vertical box for the new game and load game buttons and the settings button
+        // Create button
+        Button settingsButton = buttonCreator("Settings", Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
-
+        // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
         vbox.setSpacing(10);
         vbox.setAlignment(Pos.CENTER);
-
         // Set the vertical grow priority of the spacer region to ALWAYS
         VBox.setVgrow(new Region(), Priority.ALWAYS);
-
         return vbox;
     }
 
-    public Button buttonStyler(String nameOfButton, Enum<Feather> icon, Enum<Feather> buttonStyle) {
+    public Button buttonCreator(String nameOfButton, Feather buttonIcon, String buttonState) {
         // Creates Buttons and styles them.
-        Button newGameButton = new Button("New Game", new FontIcon(Feather.PLAY));
-        newGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
+        Button button = new Button(nameOfButton, new FontIcon(buttonIcon));
+        button.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, buttonState);
 
-        Button loadGameButton = new Button("Load Game", new FontIcon(Feather.FOLDER));
-        loadGameButton.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, SUCCESS);
+        return button;
     }
 
     /**
-     * A method for creating a HBox containing two buttons.
+     * A method for creating a "horizontal box" that contains two buttons.
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-
+        Button newGameButton = buttonCreator("New Game", Feather.PLAY, SUCCESS);
+        Button loadGameButton = buttonCreator("Load Game", Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
