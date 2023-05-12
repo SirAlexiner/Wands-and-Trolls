@@ -31,13 +31,12 @@ public class MainMenuView extends Application{
     private ToggleButton buttonEnableDarkMode;
     private Stage stage;
     private static final String BACKGROUND_IMAGE = "WnT.png";
-    private Locale locale;
 
 
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            locale = new Locale.Builder().setLanguage("no").setRegion("NO").build();
+            Locale locale = new Locale.Builder().setLanguage("no").setRegion("NO").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
             setUp();
         } catch (FileNotFoundException e) {
