@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import no.ntnu.idatg2001.gr13.controller.MainMenuController;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -26,9 +27,9 @@ import static atlantafx.base.theme.Styles.*;
 
 
 public class MainMenuView extends Application{
+    private MainMenuController mainMenuController;
     private ResourceBundle bundle;
     private BorderPane root;
-    private ToggleButton buttonEnableDarkMode;
     private Stage stage;
     private static final String BACKGROUND_IMAGE = "WnT.png";
 
@@ -53,6 +54,7 @@ public class MainMenuView extends Application{
     }
 
     public void setUp() throws FileNotFoundException {
+        mainMenuController = new MainMenuController();
         stage = new Stage();
         root = new BorderPane();
         // Set up the stage
@@ -136,7 +138,7 @@ public class MainMenuView extends Application{
 
     private void buttonDarkMode() {
         // dark mode / light mode / following OS-theme
-        buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
+        ToggleButton buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
         GridPane darkModeGrid = new GridPane();
 
         // Setting buttonPlacement for darkMode
@@ -150,17 +152,8 @@ public class MainMenuView extends Application{
         darkModeGrid.getChildren().addAll(buttonEnableDarkMode);
         root.setTop(darkModeGrid);
 
-        buttonEnableDarkMode.setOnAction(this::darkModeButtonOnPressed);
-    }
-
-    public void darkModeButtonOnPressed(ActionEvent event){
-        FxManager.enableDarkMode(stage);
-        if (buttonEnableDarkMode.isSelected()){
-            FxManager.enableLightMode(stage);
-        }
-        else {
-            FxManager.enableDarkMode(stage);
-        }
+        buttonEnableDarkMode.setOnAction(event ->
+                mainMenuController.darkModeButtonOnPressed(stage, buttonEnableDarkMode));
     }
 
     public static void main(String[] args) {
