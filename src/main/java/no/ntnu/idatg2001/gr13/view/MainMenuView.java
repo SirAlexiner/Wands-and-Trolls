@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.gr13.view;
 
 import io.github.siralexiner.fxmanager.FxManager;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -28,6 +27,7 @@ import static atlantafx.base.theme.Styles.*;
 
 public class MainMenuView extends Application{
     private MainMenuController mainMenuController;
+    private SettingsView settingsView;
     private ResourceBundle bundle;
     private BorderPane root;
     private Stage stage;
@@ -43,8 +43,6 @@ public class MainMenuView extends Application{
         } catch (FileNotFoundException e) {
             // Handle the file not found exception
             e.printStackTrace();
-            // You may choose to show an error dialog or handle the exception in a different way
-
         }
     }
 
@@ -55,7 +53,9 @@ public class MainMenuView extends Application{
 
     public void setUp() throws FileNotFoundException {
         mainMenuController = new MainMenuController();
+        // Initializes the stage
         stage = new Stage();
+        // Sets the root as a borderpane
         root = new BorderPane();
         // Set up the stage
         stage.setScene(setUpScene());
@@ -69,27 +69,51 @@ public class MainMenuView extends Application{
         stage.show();
     }
 
+    /**
+     * A method for setting up a scene with a background.
+     * @return A scene correctly set up.
+     * @throws FileNotFoundException if it cant find the background.
+     */
     public Scene setUpScene() throws FileNotFoundException {
-        // Creates an image from the file
-        FileInputStream input = new FileInputStream(BACKGROUND_IMAGE);
-        Image image = new Image(input);
-
+        Image image = getBackgroundImage();
         // Create an ImageView and set its size to the screen size
         ImageView imageView = new ImageView(image);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         imageView.setFitWidth(screenBounds.getWidth());
         imageView.setFitHeight(screenBounds.getHeight());
+        root.setBackground(setUpBackground(image));
+        // Set the scene to fullscreen
+        return new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+    }
 
+    /**
+     * A method for setting up a background.
+     * @param image to be used as a background.
+     * @return the background.
+     */
+    public static Background setUpBackground(Image image)  {
         BackgroundImage backgroundImage =
                 new BackgroundImage(image, null,
                         null, null,
                         new BackgroundSize(1.0, 1.0, true,
                                 true, false, false));
-        root.setBackground(new Background(backgroundImage));
-        // Set the scene to fullscreen
-        return new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+        return new Background(backgroundImage);
     }
 
+    /**
+     * A method for getting the background image.
+     * @return The image object containing the background.
+     * @throws FileNotFoundException If it cannot find the image.
+     */
+    public Image getBackgroundImage() throws FileNotFoundException {
+        FileInputStream input = new FileInputStream(BACKGROUND_IMAGE);
+        return new Image(input);
+    }
+
+    /**
+     * A method for setting up the buttons in a vertical box grid.
+     * @return a vertical box containing all the buttons.
+     */
     public VBox setUpButtons() {
         // Create button
         Button settingsButton = buttonCreator(bundle.getString("settingsButton"), Feather.SETTINGS, ACCENT);
@@ -103,6 +127,14 @@ public class MainMenuView extends Application{
         return vbox;
     }
 
+    /**
+     * A method for initializing buttons and style them appropriately. The method uses AtlantaFx
+     * for styling, and it creates large, rounded, outlined buttons and buttons gets a state.
+     * @param nameOfButton The name of the button to be displayed.
+     * @param buttonIcon The icon of the button to be displayed.
+     * @param buttonState The state of the button to be displayed.
+     * @return A button object.
+     */
     public Button buttonCreator(String nameOfButton, Feather buttonIcon, String buttonState) {
         // Creates Buttons and styles them.
         Button button = new Button(nameOfButton, new FontIcon(buttonIcon));
@@ -127,10 +159,11 @@ public class MainMenuView extends Application{
     }
 
     public GridPane layoutButtons() {
-        setUpButtons();
+        // Vertical box containing three buttons
+        VBox vBox = setUpButtons();
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(70));
-        gridPane.getChildren().addAll(setUpButtons());
+        gridPane.getChildren().addAll(vBox);
         gridPane.setAlignment(Pos.BOTTOM_CENTER);
         gridPane.setGridLinesVisible(false);
         return gridPane;
