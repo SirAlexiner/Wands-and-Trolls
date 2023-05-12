@@ -65,7 +65,7 @@ public class MainMenuView extends Application{
         FxManager.setup(stage);
         // Add buttons to the center of the root pane
         root.setCenter(layoutButtons());
-        buttonDarkMode();
+        buttonDarkMode(root);
         stage.show();
     }
 
@@ -135,7 +135,7 @@ public class MainMenuView extends Application{
      * @param buttonState The state of the button to be displayed.
      * @return A button object.
      */
-    public Button buttonCreator(String nameOfButton, Feather buttonIcon, String buttonState) {
+    public static Button buttonCreator(String nameOfButton, Feather buttonIcon, String buttonState) {
         // Creates Buttons and styles them.
         Button button = new Button(nameOfButton, new FontIcon(buttonIcon));
         button.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, buttonState);
@@ -169,22 +169,9 @@ public class MainMenuView extends Application{
         return gridPane;
     }
 
-    private void buttonDarkMode() {
-        // dark mode / light mode / following OS-theme
-        ToggleButton buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
-        GridPane darkModeGrid = new GridPane();
-
-        // Setting buttonPlacement for darkMode
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(darkModeGrid);
-        darkModeGrid.setAlignment(Pos.TOP_RIGHT);
-        darkModeGrid.setVgap(10);
-        darkModeGrid.setHgap(10);
-        darkModeGrid.setPadding(new Insets(10));
-
-        darkModeGrid.getChildren().addAll(buttonEnableDarkMode);
-        root.setTop(darkModeGrid);
-
+    private void buttonDarkMode(BorderPane root) {
+        DarkModeButton.setLayoutForToggleButton(root);
+        ToggleButton buttonEnableDarkMode = DarkModeButton.getToggleButton();
         buttonEnableDarkMode.setOnAction(event ->
                 mainMenuController.darkModeButtonOnPressed(stage, buttonEnableDarkMode));
     }

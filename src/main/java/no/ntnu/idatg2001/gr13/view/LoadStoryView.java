@@ -46,7 +46,7 @@ public class LoadStoryView extends Application {
         stage.setScene(scene);
         stage.setTitle("WiNG");
         FxManager.setup(stage);
-        buttonDarkMode(stage);
+        buttonDarkMode(root);
 
         root.setLeft(layoutTableColumn());
 
@@ -79,6 +79,7 @@ public class LoadStoryView extends Application {
         listViewBox.getChildren().add(listView);
     }
 
+    /*
     private void buttonDarkMode(Stage primaryStage) {
         // dark mode / light mode / following OS-theme
        // FxManager.setup(primaryStage);
@@ -98,6 +99,9 @@ public class LoadStoryView extends Application {
 
         buttonEnableDarkMode.setOnAction(this::darkModeButtonOnPressed);
     }
+
+     */
+
 
     public void darkModeButtonOnPressed(ActionEvent event){
         FxManager.enableDarkMode(stage);

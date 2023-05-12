@@ -41,4 +41,8 @@ public class DarkModeButton {
 
         return darkModeGrid;
     }
+
+    public static void setLayoutForToggleButton(BorderPane root) {
+        root.setTop(DarkModeButton.getLayoutForToggleButton());
+    }
 }
