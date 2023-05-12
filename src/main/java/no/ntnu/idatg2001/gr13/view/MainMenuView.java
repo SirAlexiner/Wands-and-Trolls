@@ -19,20 +19,33 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import static atlantafx.base.theme.Styles.*;
 
 
-public class MainMenuView extends Application {
+public class MainMenuView extends Application{
+    private ResourceBundle bundle;
     private BorderPane root;
     private ToggleButton buttonEnableDarkMode;
     private Stage stage;
     private static final String BACKGROUND_IMAGE = "WnT.png";
+    private Locale locale;
 
 
     @Override
     public void start(Stage stage) throws Exception {
-        setUp();
+        try {
+            locale = new Locale("no", "NO");
+            bundle = ResourceBundle.getBundle("languages/buttons", locale);
+            setUp();
+        } catch (FileNotFoundException e) {
+            // Handle the file not found exception
+            e.printStackTrace();
+            // You may choose to show an error dialog or handle the exception in a different way
+
+        }
     }
 
     @Override
@@ -102,7 +115,7 @@ public class MainMenuView extends Application {
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        Button newGameButton = buttonCreator("New Game", Feather.PLAY, SUCCESS);
+        Button newGameButton = buttonCreator(bundle.getString("newGameButton"), Feather.PLAY, SUCCESS);
         Button loadGameButton = buttonCreator("Load Game", Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
@@ -151,4 +164,7 @@ public class MainMenuView extends Application {
         }
     }
 
+    public static void main(String[] args) {
+        launch();
+    }
 }
