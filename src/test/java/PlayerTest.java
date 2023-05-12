@@ -1,11 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import no.ntnu.idatg2001.gr13.Player;
+import no.ntnu.idatg2001.gr13.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 class PlayerTest {

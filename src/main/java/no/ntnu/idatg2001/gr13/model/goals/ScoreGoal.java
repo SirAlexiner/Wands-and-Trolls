@@ -1,6 +1,6 @@
-package no.ntnu.idatg2001.gr13.goals;
+package no.ntnu.idatg2001.gr13.model.goals;
 
-import no.ntnu.idatg2001.gr13.Player;
+import no.ntnu.idatg2001.gr13.model.Player;
 
 public class ScoreGoal implements Goal {
   private int minimumPoints;

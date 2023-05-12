@@ -1,13 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import no.ntnu.idatg2001.gr13.Link;
-import no.ntnu.idatg2001.gr13.Passage;
-import no.ntnu.idatg2001.gr13.Story;
+import no.ntnu.idatg2001.gr13.model.Link;
+import no.ntnu.idatg2001.gr13.model.Passage;
+import no.ntnu.idatg2001.gr13.model.Story;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 class HashCodeContractTest {
   @Test

@@ -1,8 +1,8 @@
-package no.ntnu.idatg2001.gr13.goals;
+package no.ntnu.idatg2001.gr13.model.goals;
 
 import java.util.HashSet;
 import java.util.List;
-import no.ntnu.idatg2001.gr13.Player;
+import no.ntnu.idatg2001.gr13.model.Player;
 
 public class InventoryGoal implements Goal {
   private final List<String> mandatoryItems;

@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import no.ntnu.idatg2001.gr13.Link;
-import no.ntnu.idatg2001.gr13.Passage;
+import no.ntnu.idatg2001.gr13.model.Link;
+import no.ntnu.idatg2001.gr13.model.Passage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

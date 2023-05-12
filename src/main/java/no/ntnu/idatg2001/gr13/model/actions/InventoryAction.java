@@ -1,7 +1,7 @@
-package no.ntnu.idatg2001.gr13.actions;
+package no.ntnu.idatg2001.gr13.model.actions;
 
 import java.util.List;
-import no.ntnu.idatg2001.gr13.Player;
+import no.ntnu.idatg2001.gr13.model.Player;
 
 public class InventoryAction implements Action {
 

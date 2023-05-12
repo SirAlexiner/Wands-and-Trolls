@@ -1,14 +1,8 @@
-package no.ntnu.idatg2001.gr13;
+package no.ntnu.idatg2001.gr13.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
-import no.ntnu.idatg2001.gr13.actions.InventoryAction;
-import no.ntnu.idatg2001.gr13.goals.Goal;
-import no.ntnu.idatg2001.gr13.goals.GoldGoals;
-import no.ntnu.idatg2001.gr13.goals.HealthGoal;
-import no.ntnu.idatg2001.gr13.goals.InventoryGoal;
-import no.ntnu.idatg2001.gr13.goals.ScoreGoal;
+import no.ntnu.idatg2001.gr13.model.goals.Goal;
 
 public record Game(@Getter Player player, @Getter Story story, @Getter List<Goal> goals) {
 

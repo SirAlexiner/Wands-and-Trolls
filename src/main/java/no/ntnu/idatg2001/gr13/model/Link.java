@@ -1,9 +1,9 @@
-package no.ntnu.idatg2001.gr13;
+package no.ntnu.idatg2001.gr13.model;
 
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
-import no.ntnu.idatg2001.gr13.actions.Action;
+import no.ntnu.idatg2001.gr13.model.actions.Action;
 
 /**
  * A class representing a Link, part of the WiNG application.

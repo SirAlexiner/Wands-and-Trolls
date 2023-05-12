@@ -5,10 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import no.ntnu.idatg2001.gr13.Player;
-import no.ntnu.idatg2001.gr13.goals.GoldGoals;
+import no.ntnu.idatg2001.gr13.model.Player;
+import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class GoldGoalsTest
 {

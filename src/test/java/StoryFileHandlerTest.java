@@ -3,11 +3,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import no.ntnu.idatg2001.gr13.Link;
-import no.ntnu.idatg2001.gr13.Passage;
-import no.ntnu.idatg2001.gr13.Story;
-import no.ntnu.idatg2001.gr13.StoryFileHandler;
-import no.ntnu.idatg2001.gr13.goals.GoldGoals;
+import no.ntnu.idatg2001.gr13.model.Link;
+import no.ntnu.idatg2001.gr13.model.Passage;
+import no.ntnu.idatg2001.gr13.model.Story;
+import no.ntnu.idatg2001.gr13.model.StoryFileHandler;
+import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

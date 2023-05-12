@@ -1,9 +1,9 @@
-package no.ntnu.idatg2001.gr13;
+package no.ntnu.idatg2001.gr13.model;
 
 import java.util.List;
 import java.util.Scanner;
-import no.ntnu.idatg2001.gr13.actions.Action;
-import no.ntnu.idatg2001.gr13.goals.Goal;
+import no.ntnu.idatg2001.gr13.model.actions.Action;
+import no.ntnu.idatg2001.gr13.model.goals.Goal;
 
 public class Main
 {

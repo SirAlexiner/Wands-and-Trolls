@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.gr13;
+package no.ntnu.idatg2001.gr13.model;
 
 import java.util.*;
 

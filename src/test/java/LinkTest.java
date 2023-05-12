@@ -3,10 +3,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatg2001.gr13.Link;
-import no.ntnu.idatg2001.gr13.actions.Action;
-import no.ntnu.idatg2001.gr13.actions.GoldAction;
-import no.ntnu.idatg2001.gr13.actions.InventoryAction;
+import no.ntnu.idatg2001.gr13.model.Link;
+import no.ntnu.idatg2001.gr13.model.actions.Action;
+import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
+import no.ntnu.idatg2001.gr13.model.actions.InventoryAction;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

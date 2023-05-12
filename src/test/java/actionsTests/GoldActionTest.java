@@ -2,8 +2,8 @@ package actionsTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import no.ntnu.idatg2001.gr13.Player;
-import no.ntnu.idatg2001.gr13.actions.GoldAction;
+import no.ntnu.idatg2001.gr13.model.Player;
+import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
