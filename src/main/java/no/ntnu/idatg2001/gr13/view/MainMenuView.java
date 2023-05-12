@@ -37,7 +37,7 @@ public class MainMenuView extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            locale = new Locale("no", "NO");
+            locale = new Locale.Builder().setLanguage("no").setRegion("NO").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
             setUp();
         } catch (FileNotFoundException e) {
@@ -91,7 +91,7 @@ public class MainMenuView extends Application{
 
     public VBox setUpButtons() {
         // Create button
-        Button settingsButton = buttonCreator("Settings", Feather.SETTINGS, ACCENT);
+        Button settingsButton = buttonCreator(bundle.getString("settingsButton"), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -116,7 +116,7 @@ public class MainMenuView extends Application{
      */
     public HBox topBoxButtons() {
         Button newGameButton = buttonCreator(bundle.getString("newGameButton"), Feather.PLAY, SUCCESS);
-        Button loadGameButton = buttonCreator("Load Game", Feather.FOLDER, SUCCESS);
+        Button loadGameButton = buttonCreator(bundle.getString("loadGameButton"), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
