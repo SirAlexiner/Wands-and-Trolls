@@ -16,6 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.gr13.controller.MainMenuController;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
+import no.ntnu.idatg2001.gr13.model.LanguageModel;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -35,10 +36,12 @@ public class MainMenuView extends Application{
     private Stage primaryStage;
     private Scene scene;
     private static final String BACKGROUND_IMAGE = "WnT.png";
+    private LanguageModel languageModel;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.languageModel = new LanguageModel();
         try {
             Locale locale = new Locale.Builder().setLanguage("no").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
@@ -47,6 +50,8 @@ public class MainMenuView extends Application{
             // Handle the file not found exception
             e.printStackTrace();
         }
+        
+        languageModel.addLanguageChangeListener(this::updateLocalizedStrings);
     }
 
     @Override
@@ -120,7 +125,7 @@ public class MainMenuView extends Application{
      */
     public VBox setUpButtons(Stage primaryStage) {
         // Create button
-        settingsButton = buttonCreator(bundle.getString("settingsButton"), Feather.SETTINGS, ACCENT);
+        settingsButton = buttonCreator(languageModel.getLocalizedString("settingsButton"), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -152,8 +157,8 @@ public class MainMenuView extends Application{
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        Button newGameButton = buttonCreator(bundle.getString("newGameButton"), Feather.PLAY, SUCCESS);
-        Button loadGameButton = buttonCreator(bundle.getString("loadGameButton"), Feather.FOLDER, SUCCESS);
+        Button newGameButton = buttonCreator(languageModel.getLocalizedString("newGameButton"), Feather.PLAY, SUCCESS);
+        Button loadGameButton = buttonCreator(languageModel.getLocalizedString("loadGameButton"), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
@@ -174,7 +179,7 @@ public class MainMenuView extends Application{
     private void settingsButtonHandler() {
         settingsButton.setOnAction(event -> {
             SettingsDialogController controller = new SettingsDialogController();
-            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, scene);
+            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageModel);
             settingsDialog.show();
         });
 

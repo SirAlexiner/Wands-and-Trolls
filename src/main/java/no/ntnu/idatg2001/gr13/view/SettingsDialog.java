@@ -16,9 +16,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
+import no.ntnu.idatg2001.gr13.model.LanguageModel;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+
+import java.io.FileNotFoundException;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import static atlantafx.base.theme.Styles.*;
 
@@ -30,10 +36,11 @@ public class SettingsDialog extends Dialog {
     private StackPane stackPane;
     private SettingsDialogController controller;
     private BorderPane root;
-
-    public SettingsDialog(SettingsDialogController controller, Stage primaryStage, BorderPane root, Scene scene) {
+    private LanguageModel languageModel;
+    public SettingsDialog(SettingsDialogController controller, Stage primaryStage, BorderPane root, LanguageModel languageModel) {
         this.root = root;
         this.controller = controller;
+        this.languageModel = languageModel;
 
         setBlur();
         initOwner(primaryStage); // Set the primary stage as the owner
@@ -56,7 +63,7 @@ public class SettingsDialog extends Dialog {
         stackPane = new StackPane();
         stackPane.getChildren().add(vbox);
         stackPane.setAlignment(Pos.CENTER);
-        stackPane.setPadding(new Insets(10,10,10,10));
+        stackPane.setPadding(new Insets(10, 10, 10, 10));
         getDialogPane().setContent(stackPane);
         getDialogPane().setMinHeight(120);
     }
@@ -69,7 +76,7 @@ public class SettingsDialog extends Dialog {
     }
 
 
-    private void createConfirmButton(){
+    private void createConfirmButton() {
         confirmButton = buttonCreator("Confirm", Feather.CHECK, SUCCESS);
         confirmButton.setOnAction(event -> {
             controller.onExitApplication(event);
@@ -103,7 +110,9 @@ public class SettingsDialog extends Dialog {
         languages.getItems().setAll(norwegian, english);
         languages.getSelectionModel().selectedIndexProperty().addListener((
                 (observableValue, oldValue, newValue) -> {
-
+                    int selectedIndex = newValue.intValue();
+                    String languageCode = (selectedIndex == 0) ? "no" : "en";
+                    languageModel.setLanguage(languageCode);
                 }));
 
         return languages;
