@@ -11,6 +11,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -69,7 +70,9 @@ public class SettingsDialog extends Dialog {
     }
 
     private void setBlur() {
-        BoxBlur blurEffect = new BoxBlur(20, 20, 3);
+        GaussianBlur blurEffect = new GaussianBlur();
+        double blurRadius = 15;
+        blurEffect.setRadius(blurRadius);
         root.setEffect(blurEffect);
     }
 

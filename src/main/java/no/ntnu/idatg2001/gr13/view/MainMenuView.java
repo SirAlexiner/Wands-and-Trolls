@@ -8,12 +8,14 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.gr13.controller.MainMenuController;
+import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -171,15 +173,9 @@ public class MainMenuView extends Application{
 
     private void settingsButtonHandler() {
         settingsButton.setOnAction(event -> {
-            // Create the new buttons
-            Button button3 = new Button("Button 3");
-            Button button4 = new Button("Button 4");
-
-            // Create a new container node and add the new buttons
-            VBox newRoot = new VBox(button3, button4);
-
-            // Replace the root node of the scene with the new container node
-            scene.setRoot(newRoot);
+            SettingsDialogController controller = new SettingsDialogController();
+            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, scene);
+            settingsDialog.show();
         });
 
         // Add the update button to the initial root node
