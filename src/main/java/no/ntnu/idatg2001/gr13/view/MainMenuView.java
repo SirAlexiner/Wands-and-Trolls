@@ -27,19 +27,20 @@ import static atlantafx.base.theme.Styles.*;
 
 public class MainMenuView extends Application{
     private MainMenuController mainMenuController;
-    private SettingsView settingsView;
+    private Button settingsButton;
     private ResourceBundle bundle;
     private BorderPane root;
-    private Stage stage;
+    private Stage primaryStage;
+    private Scene scene;
     private static final String BACKGROUND_IMAGE = "WnT.png";
 
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
         try {
             Locale locale = new Locale.Builder().setLanguage("no").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
-            setUp();
+            setUp(primaryStage);
         } catch (FileNotFoundException e) {
             // Handle the file not found exception
             e.printStackTrace();
@@ -51,22 +52,22 @@ public class MainMenuView extends Application{
         System.exit(0);
     }
 
-    public void setUp() throws FileNotFoundException {
+    public void setUp(Stage primaryStage) throws FileNotFoundException {
         mainMenuController = new MainMenuController();
         // Initializes the stage
-        stage = new Stage();
+        this.primaryStage = new Stage();
         // Sets the root as a borderpane
         root = new BorderPane();
         // Set up the stage
-        stage.setScene(setUpScene());
-        stage.setTitle("WiNG");
-        stage.setResizable(false);
-        stage.setFullScreen(true);
-        FxManager.setup(stage);
+        this.primaryStage.setScene(setUpScene());
+        this.primaryStage.setTitle("WiNG");
+        this.primaryStage.setResizable(false);
+        this.primaryStage.setFullScreen(true);
+        FxManager.setup(this.primaryStage);
         // Add buttons to the center of the root pane
-        root.setCenter(layoutButtons());
+        root.setCenter(layoutButtons(primaryStage));
         buttonDarkMode(root);
-        stage.show();
+        this.primaryStage.show();
     }
 
     /**
@@ -83,7 +84,8 @@ public class MainMenuView extends Application{
         imageView.setFitHeight(screenBounds.getHeight());
         root.setBackground(setUpBackground(image));
         // Set the scene to fullscreen
-        return new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+        scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
+        return scene;
     }
 
     /**
@@ -114,9 +116,9 @@ public class MainMenuView extends Application{
      * A method for setting up the buttons in a vertical box grid.
      * @return a vertical box containing all the buttons.
      */
-    public VBox setUpButtons() {
+    public VBox setUpButtons(Stage primaryStage) {
         // Create button
-        Button settingsButton = buttonCreator(bundle.getString("settingsButton"), Feather.SETTINGS, ACCENT);
+        settingsButton = buttonCreator(bundle.getString("settingsButton"), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -155,12 +157,38 @@ public class MainMenuView extends Application{
         topHBox.setSpacing(20);
         topHBox.setAlignment(Pos.CENTER);
 
+        /*
+        loadGameButton.setOnAction(event -> {
+            LoadStoryView loadStoryView = new LoadStoryView();
+            Scene settingsScene = new Scene(loadStoryView.getRoot(), 400, 300);
+            primaryStage.setScene(settingsScene);
+        });
+
+         */
+        settingsButtonHandler();
         return topHBox;
     }
 
-    public GridPane layoutButtons() {
+    private void settingsButtonHandler() {
+        settingsButton.setOnAction(event -> {
+            // Create the new buttons
+            Button button3 = new Button("Button 3");
+            Button button4 = new Button("Button 4");
+
+            // Create a new container node and add the new buttons
+            VBox newRoot = new VBox(button3, button4);
+
+            // Replace the root node of the scene with the new container node
+            scene.setRoot(newRoot);
+        });
+
+        // Add the update button to the initial root node
+        root.getChildren().add(settingsButton);
+    }
+
+    public GridPane layoutButtons(Stage primaryStage) {
         // Vertical box containing three buttons
-        VBox vBox = setUpButtons();
+        VBox vBox = setUpButtons(primaryStage);
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(70));
         gridPane.getChildren().addAll(vBox);
@@ -173,7 +201,7 @@ public class MainMenuView extends Application{
         DarkModeButton.setLayoutForToggleButton(root);
         ToggleButton buttonEnableDarkMode = DarkModeButton.getToggleButton();
         buttonEnableDarkMode.setOnAction(event ->
-                mainMenuController.darkModeButtonOnPressed(stage, buttonEnableDarkMode));
+                mainMenuController.darkModeButtonOnPressed(primaryStage, buttonEnableDarkMode));
     }
 
     public static void main(String[] args) {
