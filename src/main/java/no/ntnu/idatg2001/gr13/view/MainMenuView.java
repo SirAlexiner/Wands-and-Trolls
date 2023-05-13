@@ -37,7 +37,7 @@ public class MainMenuView extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         try {
-            Locale locale = new Locale.Builder().setLanguage("no").setRegion("NO").build();
+            Locale locale = new Locale.Builder().setLanguage("no").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
             setUp();
         } catch (FileNotFoundException e) {
