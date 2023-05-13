@@ -2,15 +2,11 @@ package no.ntnu.idatg2001.gr13.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -19,13 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import no.ntnu.idatg2001.gr13.Main;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import static atlantafx.base.theme.Styles.*;
 
@@ -37,12 +30,10 @@ public class SettingsDialog extends Dialog {
     private StackPane stackPane;
     private SettingsDialogController controller;
     private BorderPane root;
-    private Scene scene;
 
     public SettingsDialog(SettingsDialogController controller, Stage primaryStage, BorderPane root, Scene scene) {
         this.root = root;
         this.controller = controller;
-        this.scene = scene;
 
         setBlur();
         initOwner(primaryStage); // Set the primary stage as the owner
@@ -55,9 +46,10 @@ public class SettingsDialog extends Dialog {
 
     private void createLayout() {
         HBox buttonBox = new HBox(cancelButton, confirmButton);
+        ChoiceBox<String> languages = languagePicker();
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
         buttonBox.setSpacing(10);
-        VBox vbox = new VBox(buttonBox);
+        VBox vbox = new VBox(buttonBox, languages);
         vbox.setSpacing(10);
         vbox.setFillWidth(true);
 
@@ -100,6 +92,21 @@ public class SettingsDialog extends Dialog {
         button.getStyleClass().addAll(LARGE, ROUNDED, BUTTON_OUTLINED, buttonState);
 
         return button;
+    }
+
+    private ChoiceBox<String> languagePicker() {
+        String norwegian = "Norwegian";
+        String english = "English";
+        ChoiceBox<String> languages = new ChoiceBox<>();
+        languages.getItems().addAll(norwegian, english);
+
+        languages.getItems().setAll(norwegian, english);
+        languages.getSelectionModel().selectedIndexProperty().addListener((
+                (observableValue, oldValue, newValue) -> {
+
+                }));
+
+        return languages;
     }
 
 }
