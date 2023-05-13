@@ -46,8 +46,7 @@ public class LoadStoryView extends Application {
         stage.setScene(scene);
         stage.setTitle("WiNG");
         FxManager.setup(stage);
-        buttonDarkMode(root);
-
+        DarkModeButton.setLayoutForToggleButton(root);
         root.setLeft(layoutTableColumn());
 
         stage.show();
@@ -77,39 +76,5 @@ public class LoadStoryView extends Application {
         // Add the ListView to a parent node, such as a VBox
         listViewBox = new VBox();
         listViewBox.getChildren().add(listView);
-    }
-
-    /*
-    private void buttonDarkMode(Stage primaryStage) {
-        // dark mode / light mode / following OS-theme
-       // FxManager.setup(primaryStage);
-        buttonEnableDarkMode = new ToggleButton("", new FontIcon(Feather.SUN));
-        darkModeGrid = new GridPane();
-
-        // Setting buttonPlacement for darkMode
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(darkModeGrid);
-        darkModeGrid.setAlignment(Pos.TOP_RIGHT);
-        darkModeGrid.setVgap(10);
-        darkModeGrid.setHgap(10);
-        darkModeGrid.setPadding(new Insets(10));
-
-        darkModeGrid.getChildren().addAll(buttonEnableDarkMode);
-        root.setTop(darkModeGrid);
-
-        buttonEnableDarkMode.setOnAction(this::darkModeButtonOnPressed);
-    }
-
-     */
-
-
-    public void darkModeButtonOnPressed(ActionEvent event){
-        FxManager.enableDarkMode(stage);
-        if (buttonEnableDarkMode.isSelected()){
-            FxManager.enableLightMode(stage);
-        }
-        else {
-            FxManager.enableDarkMode(stage);
-        }
     }
 }

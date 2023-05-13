@@ -9,7 +9,7 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class DarkModeButton {
-    private static DarkModeButton instance = new DarkModeButton();
+    private static final DarkModeButton instance = new DarkModeButton();
     private static ToggleButton toggleButton;
 
     private DarkModeButton() {
