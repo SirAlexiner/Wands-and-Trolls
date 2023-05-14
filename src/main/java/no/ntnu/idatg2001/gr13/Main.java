@@ -4,6 +4,6 @@ import no.ntnu.idatg2001.gr13.view.*;
 
 public class Main {
     public static void main(String[] args) {
-        MainMenuView.main(args);
+        MainMenuView.startApplication(args);
     }
 }
