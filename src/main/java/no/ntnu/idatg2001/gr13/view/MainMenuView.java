@@ -8,7 +8,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,6 +15,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.gr13.controller.MainMenuController;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
+import no.ntnu.idatg2001.gr13.model.LanguageListener;
 import no.ntnu.idatg2001.gr13.model.LanguageModel;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 import static atlantafx.base.theme.Styles.*;
 
 
-public class MainMenuView extends Application{
+public class MainMenuView extends Application implements LanguageListener {
     private MainMenuController mainMenuController;
     private Button settingsButton;
     private ResourceBundle bundle;
@@ -37,21 +37,32 @@ public class MainMenuView extends Application{
     private Scene scene;
     private static final String BACKGROUND_IMAGE = "WnT.png";
     private LanguageModel languageModel;
+    Button newGameButton;
+    Button loadGameButton;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        newGameButton = new Button();
+        settingsButton= new Button();
+        loadGameButton= new Button();
+
         this.languageModel = new LanguageModel();
+        languageModel.setLanguage("no");
+        languageModel.addLanguageChangeListener(this);
+
         try {
             Locale locale = new Locale.Builder().setLanguage("no").build();
             bundle = ResourceBundle.getBundle("languages/buttons", locale);
+            languageModel.notifyLanguageChange();
             setUp(primaryStage);
         } catch (FileNotFoundException e) {
             // Handle the file not found exception
             e.printStackTrace();
         }
-        
-        languageModel.addLanguageChangeListener(this::updateLocalizedStrings);
+
+
+        updateLocalizedStrings();
     }
 
     @Override
@@ -79,6 +90,7 @@ public class MainMenuView extends Application{
 
     /**
      * A method for setting up a scene with a background.
+     *
      * @return A scene correctly set up.
      * @throws FileNotFoundException if it cant find the background.
      */
@@ -97,10 +109,11 @@ public class MainMenuView extends Application{
 
     /**
      * A method for setting up a background.
+     *
      * @param image to be used as a background.
      * @return the background.
      */
-    public static Background setUpBackground(Image image)  {
+    public static Background setUpBackground(Image image) {
         BackgroundImage backgroundImage =
                 new BackgroundImage(image, null,
                         null, null,
@@ -111,6 +124,7 @@ public class MainMenuView extends Application{
 
     /**
      * A method for getting the background image.
+     *
      * @return The image object containing the background.
      * @throws FileNotFoundException If it cannot find the image.
      */
@@ -121,6 +135,7 @@ public class MainMenuView extends Application{
 
     /**
      * A method for setting up the buttons in a vertical box grid.
+     *
      * @return a vertical box containing all the buttons.
      */
     public VBox setUpButtons(Stage primaryStage) {
@@ -139,9 +154,10 @@ public class MainMenuView extends Application{
     /**
      * A method for initializing buttons and style them appropriately. The method uses AtlantaFx
      * for styling, and it creates large, rounded, outlined buttons and buttons gets a state.
+     *
      * @param nameOfButton The name of the button to be displayed.
-     * @param buttonIcon The icon of the button to be displayed.
-     * @param buttonState The state of the button to be displayed.
+     * @param buttonIcon   The icon of the button to be displayed.
+     * @param buttonState  The state of the button to be displayed.
      * @return A button object.
      */
     public static Button buttonCreator(String nameOfButton, Feather buttonIcon, String buttonState) {
@@ -154,26 +170,29 @@ public class MainMenuView extends Application{
 
     /**
      * A method for creating a "horizontal box" that contains two buttons.
+     *
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        Button newGameButton = buttonCreator(languageModel.getLocalizedString("newGameButton"), Feather.PLAY, SUCCESS);
-        Button loadGameButton = buttonCreator(languageModel.getLocalizedString("loadGameButton"), Feather.FOLDER, SUCCESS);
+        newGameButton = buttonCreator(languageModel.getLocalizedString("newGameButton"), Feather.PLAY, SUCCESS);
+        loadGameButton = buttonCreator(languageModel.getLocalizedString("loadGameButton"), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
         topHBox.setAlignment(Pos.CENTER);
-
-        /*
-        loadGameButton.setOnAction(event -> {
-            LoadStoryView loadStoryView = new LoadStoryView();
-            Scene settingsScene = new Scene(loadStoryView.getRoot(), 400, 300);
-            primaryStage.setScene(settingsScene);
-        });
-
-         */
         settingsButtonHandler();
         return topHBox;
+    }
+
+    public void updateLocalizedStrings() {
+        String newGameButtonText = languageModel.getLocalizedString("newGameButton");
+        newGameButton.setText(newGameButtonText);
+
+        String loadGameButtonText = languageModel.getLocalizedString("loadGameButton");
+        loadGameButton.setText(loadGameButtonText);
+
+        String settingsButtonText = languageModel.getLocalizedString("settingsButton");
+        settingsButton.setText(settingsButtonText);
     }
 
     private void settingsButtonHandler() {
@@ -205,7 +224,12 @@ public class MainMenuView extends Application{
                 mainMenuController.darkModeButtonOnPressed(primaryStage, buttonEnableDarkMode));
     }
 
-    public static void main(String[] args) {
-        launch();
+    @Override
+    public void languageChange() {
+        updateLocalizedStrings();
+    }
+
+    public static void startApplication(String[] args) {
+        launch(args);
     }
 }
