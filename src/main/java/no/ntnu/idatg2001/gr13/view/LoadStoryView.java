@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -17,26 +18,14 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 
-public class LoadStoryView extends Application {
+public class LoadStoryView {
     private BorderPane root;
-    private ToggleButton buttonEnableDarkMode;
     private Scene scene;
     private Stage stage;
-    private GridPane darkModeGrid;
     private VBox listViewBox;
 
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        setUp();
-    }
-
-    @Override
-    public void stop() {
-        System.exit(0);
-    }
-
-    public void setUp() {
+    public LoadStoryView() {
         stage = new Stage();
         root = new BorderPane();
 
