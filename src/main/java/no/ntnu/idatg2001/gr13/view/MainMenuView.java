@@ -22,8 +22,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import static atlantafx.base.theme.Styles.*;
 
@@ -31,10 +29,8 @@ import static atlantafx.base.theme.Styles.*;
 public class MainMenuView extends Application implements LanguageListener {
     private MainMenuController mainMenuController;
     private Button settingsButton;
-    private ResourceBundle bundle;
     private BorderPane root;
     private Stage primaryStage;
-    private Scene scene;
     private static final String BACKGROUND_IMAGE = "WnT.png";
     private LanguageModel languageModel;
     Button newGameButton;
@@ -51,16 +47,8 @@ public class MainMenuView extends Application implements LanguageListener {
         languageModel.setLanguage("no");
         languageModel.addLanguageChangeListener(this);
 
-        try {
-            Locale locale = new Locale.Builder().setLanguage("no").build();
-            bundle = ResourceBundle.getBundle("languages/buttons", locale);
-            languageModel.notifyLanguageChange();
-            setUp(primaryStage);
-        } catch (FileNotFoundException e) {
-            // Handle the file not found exception
-            e.printStackTrace();
-        }
-
+        languageModel.notifyLanguageChange();
+        setUp();
 
         updateLocalizedStrings();
     }
@@ -70,7 +58,7 @@ public class MainMenuView extends Application implements LanguageListener {
         System.exit(0);
     }
 
-    public void setUp(Stage primaryStage) throws FileNotFoundException {
+    public void setUp() throws FileNotFoundException {
         mainMenuController = new MainMenuController();
         // Initializes the stage
         this.primaryStage = new Stage();
@@ -83,7 +71,7 @@ public class MainMenuView extends Application implements LanguageListener {
         this.primaryStage.setFullScreen(true);
         FxManager.setup(this.primaryStage);
         // Add buttons to the center of the root pane
-        root.setCenter(layoutButtons(primaryStage));
+        root.setCenter(layoutButtons());
         buttonDarkMode(root);
         this.primaryStage.show();
     }
@@ -103,8 +91,7 @@ public class MainMenuView extends Application implements LanguageListener {
         imageView.setFitHeight(screenBounds.getHeight());
         root.setBackground(setUpBackground(image));
         // Set the scene to fullscreen
-        scene = new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
-        return scene;
+        return new Scene(root, screenBounds.getWidth(), screenBounds.getHeight());
     }
 
     /**
@@ -138,7 +125,7 @@ public class MainMenuView extends Application implements LanguageListener {
      *
      * @return a vertical box containing all the buttons.
      */
-    public VBox setUpButtons(Stage primaryStage) {
+    public VBox setUpButtons() {
         // Create button
         settingsButton = buttonCreator(languageModel.getLocalizedString("settingsButton"), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
@@ -206,9 +193,9 @@ public class MainMenuView extends Application implements LanguageListener {
         root.getChildren().add(settingsButton);
     }
 
-    public GridPane layoutButtons(Stage primaryStage) {
+    public GridPane layoutButtons() {
         // Vertical box containing three buttons
-        VBox vBox = setUpButtons(primaryStage);
+        VBox vBox = setUpButtons();
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(70));
         gridPane.getChildren().addAll(vBox);
