@@ -15,8 +15,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.gr13.controller.MainMenuController;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
-import no.ntnu.idatg2001.gr13.model.LanguageListener;
-import no.ntnu.idatg2001.gr13.model.LanguageModel;
+import no.ntnu.idatg2001.gr13.controller.LanguageController;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -27,14 +26,17 @@ import static atlantafx.base.theme.Styles.*;
 
 
 public class MainMenuView extends Application implements LanguageListener {
-    private MainMenuController mainMenuController;
-    private Button settingsButton;
     private BorderPane root;
     private Stage primaryStage;
+    private Button newGameButton;
+    private Button loadGameButton;
+    private Button settingsButton;
+    private MainMenuController mainMenuController;
+    private LanguageController languageController;
     private static final String BACKGROUND_IMAGE = "WnT.png";
-    private LanguageModel languageModel;
-    Button newGameButton;
-    Button loadGameButton;
+    private static final String KEY_NEW_GAME_BUTTON = "newGameButton";
+    private static final String KEY_LOAD_GAME_BUTTON = "loadGameButton";
+    private static final String KEY_SETTINGS_BUTTON = "settingsButton";
 
 
     @Override
@@ -43,9 +45,9 @@ public class MainMenuView extends Application implements LanguageListener {
         settingsButton= new Button();
         loadGameButton= new Button();
 
-        this.languageModel = new LanguageModel(); // initializes with a list of listeners
-        languageModel.setLanguage("no"); // sets language to norwegian
-        languageModel.addLanguageChangeListener(this); // adds a language listener to this class
+        this.languageController = new LanguageController(); // initializes with a list of listeners
+        languageController.setLanguage("no"); // sets language to norwegian
+        languageController.addLanguageChangeListener(this); // adds a language listener to this class
         setUp();
     }
 
@@ -123,7 +125,7 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     public VBox setUpButtons() {
         // Create button
-        settingsButton = buttonCreator(languageModel.getLocalizedString("settingsButton"), Feather.SETTINGS, ACCENT);
+        settingsButton = buttonCreator(languageController.getLocalizedString(KEY_SETTINGS_BUTTON), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -157,8 +159,8 @@ public class MainMenuView extends Application implements LanguageListener {
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        newGameButton = buttonCreator(languageModel.getLocalizedString("newGameButton"), Feather.PLAY, SUCCESS);
-        loadGameButton = buttonCreator(languageModel.getLocalizedString("loadGameButton"), Feather.FOLDER, SUCCESS);
+        newGameButton = buttonCreator(languageController.getLocalizedString(KEY_NEW_GAME_BUTTON), Feather.PLAY, SUCCESS);
+        loadGameButton = buttonCreator(languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
@@ -172,13 +174,13 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     @Override
     public void updateLocalizedStrings() {
-        String newGameButtonText = languageModel.getLocalizedString("newGameButton");
+        String newGameButtonText = languageController.getLocalizedString(KEY_NEW_GAME_BUTTON);
         newGameButton.setText(newGameButtonText);
 
-        String loadGameButtonText = languageModel.getLocalizedString("loadGameButton");
+        String loadGameButtonText = languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON);
         loadGameButton.setText(loadGameButtonText);
 
-        String settingsButtonText = languageModel.getLocalizedString("settingsButton");
+        String settingsButtonText = languageController.getLocalizedString(KEY_SETTINGS_BUTTON);
         settingsButton.setText(settingsButtonText);
     }
 
@@ -188,7 +190,7 @@ public class MainMenuView extends Application implements LanguageListener {
     private void settingsButtonHandler() {
         settingsButton.setOnAction(event -> {
             SettingsDialogController controller = new SettingsDialogController();
-            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageModel);
+            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageController);
             settingsDialog.show();
         });
         // Add the update button to the initial root node

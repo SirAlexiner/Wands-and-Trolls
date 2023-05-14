@@ -14,8 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
-import no.ntnu.idatg2001.gr13.model.LanguageListener;
-import no.ntnu.idatg2001.gr13.model.LanguageModel;
+import no.ntnu.idatg2001.gr13.controller.LanguageController;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -23,19 +22,21 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import static atlantafx.base.theme.Styles.*;
 
 public class SettingsDialog extends Dialog<Void> implements LanguageListener {
+    private final BorderPane root;
     private Button cancelButton;
     private Button confirmButton;
     private final SettingsDialogController controller;
-    private final BorderPane root;
-    private final LanguageModel languageModel;
+    private final LanguageController languageController;
+    private static final String KEY_CANCEL_BUTTON = "cancelButton";
+    private static final String KEY_CONFIRM_BUTTON = "confirmButton";
     public SettingsDialog(SettingsDialogController controller, Stage primaryStage,
-                          BorderPane root, LanguageModel languageModel) {
+                          BorderPane root, LanguageController languageController) {
         confirmButton = new Button();
         cancelButton = new Button();
-        languageModel.addLanguageChangeListener(this);
+        languageController.addLanguageChangeListener(this);
         this.root = root;
         this.controller = controller;
-        this.languageModel = languageModel;
+        this.languageController = languageController;
 
         setBlur();
         initOwner(primaryStage); // Set the primary stage as the owner
@@ -72,19 +73,19 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
 
 
     private void createConfirmButton() {
-        confirmButton = buttonCreator(languageModel.getLocalizedString("confirmButton"), Feather.CHECK, SUCCESS);
+        confirmButton = buttonCreator(languageController.getLocalizedString(KEY_CONFIRM_BUTTON), Feather.CHECK, SUCCESS);
         confirmButton.setOnAction(event -> {
-            languageModel.notifyLanguageChange();
+            languageController.notifyLanguageChange();
             controller.onExitApplication(event);
             root.setEffect(null);
         });
     }
 
     private void createCancelButton() {
-        cancelButton = buttonCreator(languageModel.getLocalizedString("cancelButton"), Feather.X, DANGER);
+        cancelButton = buttonCreator(languageController.getLocalizedString(KEY_CANCEL_BUTTON), Feather.X, DANGER);
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
-            languageModel.notifyLanguageChange();
+            languageController.notifyLanguageChange();
             controller.onExitApplication(event);
             root.setEffect(null);
         });
@@ -109,17 +110,16 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
                 (observableValue, oldValue, newValue) -> {
                     int selectedIndex = newValue.intValue();
                     String languageCode = (selectedIndex == 0) ? "no" : "en";
-                    languageModel.setLanguage(languageCode);
+                    languageController.setLanguage(languageCode);
                 }));
-
         return languages;
     }
     @Override
     public void updateLocalizedStrings() {
-        String confirmButtonText = languageModel.getLocalizedString("confirmButton");
+        String confirmButtonText = languageController.getLocalizedString(KEY_CONFIRM_BUTTON);
         confirmButton.setText(confirmButtonText);
 
-        String cancelButtonText = languageModel.getLocalizedString("cancelButton");
+        String cancelButtonText = languageController.getLocalizedString(KEY_CANCEL_BUTTON);
         cancelButton.setText(cancelButtonText);
 
     }
