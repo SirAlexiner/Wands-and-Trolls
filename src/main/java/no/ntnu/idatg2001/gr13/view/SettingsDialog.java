@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -22,15 +21,12 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import static atlantafx.base.theme.Styles.*;
 
-public class SettingsDialog extends Dialog {
-    //TODO Settings dialog contains singletonbuttons, for an example darkmode
-    private Dialog<ToggleButton> dialog;
+public class SettingsDialog extends Dialog<Void> {
     private Button cancelButton;
     private Button confirmButton;
-    private StackPane stackPane;
-    private SettingsDialogController controller;
-    private BorderPane root;
-    private LanguageModel languageModel;
+    private final SettingsDialogController controller;
+    private final BorderPane root;
+    private final LanguageModel languageModel;
     public SettingsDialog(SettingsDialogController controller, Stage primaryStage,
                           BorderPane root, LanguageModel languageModel) {
         this.root = root;
@@ -55,7 +51,7 @@ public class SettingsDialog extends Dialog {
         vbox.setSpacing(10);
         vbox.setFillWidth(true);
 
-        stackPane = new StackPane();
+        StackPane stackPane = new StackPane();
         stackPane.getChildren().add(vbox);
         stackPane.setAlignment(Pos.CENTER);
         stackPane.setPadding(new Insets(10, 10, 10, 10));
