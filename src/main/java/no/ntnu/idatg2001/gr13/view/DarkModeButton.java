@@ -8,6 +8,9 @@ import javafx.scene.layout.GridPane;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+/**
+ * A singleton class contains a toggle button for dark mode and light mode.
+ */
 public class DarkModeButton {
     private static final DarkModeButton instance = new DarkModeButton();
     private static ToggleButton toggleButton;
@@ -28,7 +31,6 @@ public class DarkModeButton {
     public static GridPane getLayoutForToggleButton() {
         GridPane darkModeGrid = new GridPane();
         ToggleButton button = getToggleButton();
-
         // Setting buttonPlacement for darkMode
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(darkModeGrid);
