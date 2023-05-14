@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.gr13.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Dialog;
@@ -21,11 +20,6 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 
-import java.io.FileNotFoundException;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import static atlantafx.base.theme.Styles.*;
 
 public class SettingsDialog extends Dialog {
@@ -37,7 +31,8 @@ public class SettingsDialog extends Dialog {
     private SettingsDialogController controller;
     private BorderPane root;
     private LanguageModel languageModel;
-    public SettingsDialog(SettingsDialogController controller, Stage primaryStage, BorderPane root, LanguageModel languageModel) {
+    public SettingsDialog(SettingsDialogController controller, Stage primaryStage,
+                          BorderPane root, LanguageModel languageModel) {
         this.root = root;
         this.controller = controller;
         this.languageModel = languageModel;
