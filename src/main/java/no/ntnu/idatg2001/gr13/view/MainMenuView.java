@@ -43,14 +43,10 @@ public class MainMenuView extends Application implements LanguageListener {
         settingsButton= new Button();
         loadGameButton= new Button();
 
-        this.languageModel = new LanguageModel();
-        languageModel.setLanguage("no");
-        languageModel.addLanguageChangeListener(this);
-
-        languageModel.notifyLanguageChange();
+        this.languageModel = new LanguageModel(); // initializes with a list of listeners
+        languageModel.setLanguage("no"); // sets language to norwegian
+        languageModel.addLanguageChangeListener(this); // adds a language listener to this class
         setUp();
-
-        updateLocalizedStrings();
     }
 
     @Override
@@ -72,7 +68,7 @@ public class MainMenuView extends Application implements LanguageListener {
         FxManager.setup(this.primaryStage);
         // Add buttons to the center of the root pane
         root.setCenter(layoutButtons());
-        buttonDarkMode(root);
+        buttonDarkModeHandler(root);
         this.primaryStage.show();
     }
 
@@ -171,6 +167,9 @@ public class MainMenuView extends Application implements LanguageListener {
         return topHBox;
     }
 
+    /**
+     * A method for updating the strings in the application.
+     */
     public void updateLocalizedStrings() {
         String newGameButtonText = languageModel.getLocalizedString("newGameButton");
         newGameButton.setText(newGameButtonText);
@@ -182,17 +181,23 @@ public class MainMenuView extends Application implements LanguageListener {
         settingsButton.setText(settingsButtonText);
     }
 
+    /**
+     * A method for handling the settings button.
+     */
     private void settingsButtonHandler() {
         settingsButton.setOnAction(event -> {
             SettingsDialogController controller = new SettingsDialogController();
             SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageModel);
             settingsDialog.show();
         });
-
         // Add the update button to the initial root node
         root.getChildren().add(settingsButton);
     }
 
+    /**
+     * A method for setting the layout of the buttons. Contains a vertical box inside a grid box.
+     * @return the grid pane of buttons.
+     */
     public GridPane layoutButtons() {
         // Vertical box containing three buttons
         VBox vBox = setUpButtons();
@@ -204,7 +209,11 @@ public class MainMenuView extends Application implements LanguageListener {
         return gridPane;
     }
 
-    private void buttonDarkMode(BorderPane root) {
+    /**
+     * A method for handling the dark mode button.
+     * @param root the root of the scene where the button should be placed.
+     */
+    private void buttonDarkModeHandler(BorderPane root) {
         DarkModeButton.setLayoutForToggleButton(root);
         ToggleButton buttonEnableDarkMode = DarkModeButton.getToggleButton();
         buttonEnableDarkMode.setOnAction(event ->
