@@ -170,6 +170,7 @@ public class MainMenuView extends Application implements LanguageListener {
     /**
      * A method for updating the strings in the application.
      */
+    @Override
     public void updateLocalizedStrings() {
         String newGameButtonText = languageModel.getLocalizedString("newGameButton");
         newGameButton.setText(newGameButtonText);
