@@ -1,14 +1,13 @@
 package no.ntnu.idatg2001.gr13.controller;
 
 import no.ntnu.idatg2001.gr13.view.LanguageListener;
-import no.ntnu.idatg2001.gr13.model.ResourceBundles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static no.ntnu.idatg2001.gr13.model.ResourceBundles.BUTTONS;
+import static no.ntnu.idatg2001.gr13.controller.ResourceBundles.BUTTONS;
 
 public class LanguageController {
     private ResourceBundle bundle;

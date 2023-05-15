@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.gr13.model;
+package no.ntnu.idatg2001.gr13.controller;
 
 public enum ResourceBundles {
     BUTTONS("Buttons");
