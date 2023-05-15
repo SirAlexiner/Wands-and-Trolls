@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import static atlantafx.base.theme.Styles.*;
+import static no.ntnu.idatg2001.gr13.view.LanguageKeys.*;
 
 
 public class MainMenuView extends Application implements LanguageListener {
@@ -34,9 +35,6 @@ public class MainMenuView extends Application implements LanguageListener {
     private MainMenuController mainMenuController;
     private LanguageController languageController;
     private static final String BACKGROUND_IMAGE = "WnT.png";
-    private static final String KEY_NEW_GAME_BUTTON = "newGameButton";
-    private static final String KEY_LOAD_GAME_BUTTON = "loadGameButton";
-    private static final String KEY_SETTINGS_BUTTON = "settingsButton";
 
 
     @Override
@@ -125,7 +123,7 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     public VBox setUpButtons() {
         // Create button
-        settingsButton = buttonCreator(languageController.getLocalizedString(KEY_SETTINGS_BUTTON), Feather.SETTINGS, ACCENT);
+        settingsButton = buttonCreator(languageController.getLocalizedString(KEY_SETTINGS_BUTTON.getKeyName()), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -159,8 +157,8 @@ public class MainMenuView extends Application implements LanguageListener {
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        newGameButton = buttonCreator(languageController.getLocalizedString(KEY_NEW_GAME_BUTTON), Feather.PLAY, SUCCESS);
-        loadGameButton = buttonCreator(languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON), Feather.FOLDER, SUCCESS);
+        newGameButton = buttonCreator(languageController.getLocalizedString(KEY_NEW_GAME_BUTTON.getKeyName()), Feather.PLAY, SUCCESS);
+        loadGameButton = buttonCreator(languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON.getKeyName()), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
@@ -174,13 +172,13 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     @Override
     public void updateLocalizedStrings() {
-        String newGameButtonText = languageController.getLocalizedString(KEY_NEW_GAME_BUTTON);
+        String newGameButtonText = languageController.getLocalizedString(KEY_NEW_GAME_BUTTON.getKeyName());
         newGameButton.setText(newGameButtonText);
 
-        String loadGameButtonText = languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON);
+        String loadGameButtonText = languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON.getKeyName());
         loadGameButton.setText(loadGameButtonText);
 
-        String settingsButtonText = languageController.getLocalizedString(KEY_SETTINGS_BUTTON);
+        String settingsButtonText = languageController.getLocalizedString(KEY_SETTINGS_BUTTON.getKeyName());
         settingsButton.setText(settingsButtonText);
     }
 

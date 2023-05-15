@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static no.ntnu.idatg2001.gr13.controller.ResourceBundles.BUTTONS;
+import static no.ntnu.idatg2001.gr13.controller.ResourceBundles.*;
 
 public class LanguageController {
     private ResourceBundle bundle;
@@ -19,11 +19,13 @@ public class LanguageController {
     }
 
     public void setLanguage(String languageCode) {
-        setLanguageForObject(BUTTONS, new Locale.Builder().setLanguage(languageCode).build());
+        Locale locale = new Locale.Builder().setLanguage(languageCode).build();
+        setLanguageForObject(BUTTONS, locale);
     }
 
     public void setLanguageForObject(ResourceBundles resourceObject, Locale locale) {
         bundle = ResourceBundle.getBundle("languages/" + resourceObject.getBundleName(), locale);
+        System.out.println(bundle);
         notifyLanguageChange();
     }
 

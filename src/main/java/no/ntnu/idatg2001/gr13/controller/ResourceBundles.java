@@ -1,7 +1,8 @@
 package no.ntnu.idatg2001.gr13.controller;
 
 public enum ResourceBundles {
-    BUTTONS("Buttons");
+    BUTTONS("Buttons"),
+    TEXT("Text");
 
     private final String bundleName;
 

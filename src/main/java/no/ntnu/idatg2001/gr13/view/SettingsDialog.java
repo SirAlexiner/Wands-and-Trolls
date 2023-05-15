@@ -20,15 +20,16 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 
 import static atlantafx.base.theme.Styles.*;
+import static no.ntnu.idatg2001.gr13.view.LanguageKeys.*;
 
 public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     private final BorderPane root;
     private Button cancelButton;
     private Button confirmButton;
+    private String norwegianSelectorText;
+    private String englishSelectorText;
     private final SettingsDialogController controller;
     private final LanguageController languageController;
-    private static final String KEY_CANCEL_BUTTON = "cancelButton";
-    private static final String KEY_CONFIRM_BUTTON = "confirmButton";
     public SettingsDialog(SettingsDialogController controller, Stage primaryStage,
                           BorderPane root, LanguageController languageController) {
         confirmButton = new Button();
@@ -73,7 +74,7 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
 
 
     private void createConfirmButton() {
-        confirmButton = buttonCreator(languageController.getLocalizedString(KEY_CONFIRM_BUTTON), Feather.CHECK, SUCCESS);
+        confirmButton = buttonCreator(languageController.getLocalizedString(KEY_CONFIRM_BUTTON.getKeyName()), Feather.CHECK, SUCCESS);
         confirmButton.setOnAction(event -> {
             languageController.notifyLanguageChange();
             controller.onExitApplication(event);
@@ -82,7 +83,7 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
 
     private void createCancelButton() {
-        cancelButton = buttonCreator(languageController.getLocalizedString(KEY_CANCEL_BUTTON), Feather.X, DANGER);
+        cancelButton = buttonCreator(languageController.getLocalizedString(KEY_CANCEL_BUTTON.getKeyName()), Feather.X, DANGER);
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
             languageController.notifyLanguageChange();
@@ -100,12 +101,13 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
 
     private ChoiceBox<String> languagePicker() {
-        String norwegian = "Norwegian";
-        String english = "English";
-        ChoiceBox<String> languages = new ChoiceBox<>();
-        languages.getItems().addAll(norwegian, english);
+        norwegianSelectorText = languageController.getLocalizedString(KEY_NORWEGIAN_TEXT.getKeyName());
+        englishSelectorText = languageController.getLocalizedString(KEY_ENGLISH_TEXT.getKeyName());
 
-        languages.getItems().setAll(norwegian, english);
+        ChoiceBox<String> languages = new ChoiceBox<>();
+        languages.getItems().addAll(norwegianSelectorText, englishSelectorText);
+
+        languages.getItems().setAll(norwegianSelectorText, englishSelectorText);
         languages.getSelectionModel().selectedIndexProperty().addListener((
                 (observableValue, oldValue, newValue) -> {
                     int selectedIndex = newValue.intValue();
@@ -116,12 +118,14 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
     @Override
     public void updateLocalizedStrings() {
-        String confirmButtonText = languageController.getLocalizedString(KEY_CONFIRM_BUTTON);
+        String confirmButtonText = languageController.getLocalizedString(KEY_CONFIRM_BUTTON.getKeyName());
         confirmButton.setText(confirmButtonText);
 
-        String cancelButtonText = languageController.getLocalizedString(KEY_CANCEL_BUTTON);
+        String cancelButtonText = languageController.getLocalizedString(KEY_CANCEL_BUTTON.getKeyName());
         cancelButton.setText(cancelButtonText);
 
+        norwegianSelectorText = languageController.getLocalizedString(KEY_NORWEGIAN_TEXT.getKeyName());
+        englishSelectorText = languageController.getLocalizedString(KEY_ENGLISH_TEXT.getKeyName());
     }
     @Override
     public void languageChange() {
