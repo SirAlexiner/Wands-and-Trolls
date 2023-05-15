@@ -20,13 +20,16 @@ public class LanguageController {
 
     public void setLanguage(String languageCode) {
         Locale locale = new Locale.Builder().setLanguage(languageCode).build();
-        setLanguageForObject(BUTTONS, locale);
+      setLanguageForObject(BUTTONS, locale);
+//        ResourceBundle.getBundle("languages/" + BUTTONS.getBundleName(), locale);
+   //   setLanguageForObject(TEXT, locale);
+ //       System.out.println(ResourceBundle.getBundle("languages/text", locale));
+  //      notifyLanguageChange();
     }
 
     public void setLanguageForObject(ResourceBundles resourceObject, Locale locale) {
         bundle = ResourceBundle.getBundle("languages/" + resourceObject.getBundleName(), locale);
-        System.out.println(bundle);
-        notifyLanguageChange();
+        //notifyLanguageChange();
     }
 
     public String getLocalizedString(String key) {
