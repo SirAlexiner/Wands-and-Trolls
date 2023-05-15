@@ -13,8 +13,16 @@ public class LanguageController {
     private ResourceBundle buttonBundle;
     private ResourceBundle textBundle;
     private final List<LanguageListener> listeners;
-    public LanguageController() {
+    private static LanguageController instance = null;
+    private LanguageController() {
         listeners = new ArrayList<>();
+    }
+    public static LanguageController getInstance()
+    {
+        if (instance == null)
+            instance = new LanguageController();
+
+        return instance;
     }
 
     public void setLanguage(String languageCode) {

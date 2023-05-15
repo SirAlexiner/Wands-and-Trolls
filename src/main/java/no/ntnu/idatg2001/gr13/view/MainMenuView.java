@@ -43,7 +43,7 @@ public class MainMenuView extends Application implements LanguageListener {
         settingsButton= new Button();
         loadGameButton= new Button();
 
-        this.languageController = new LanguageController(); // initializes with a list of listeners
+        this.languageController = LanguageController.getInstance(); // initializes with a list of listeners
         languageController.setLanguage("no"); // sets language to norwegian
         languageController.addLanguageChangeListener(this); // adds a language listener to this class
         setUp();
