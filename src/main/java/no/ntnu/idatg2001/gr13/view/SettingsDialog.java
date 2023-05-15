@@ -26,10 +26,12 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     private final BorderPane root;
     private Button cancelButton;
     private Button confirmButton;
-    private String norwegianSelectorText;
-    private String englishSelectorText;
     private final SettingsDialogController controller;
-    private final LanguageController languageController;
+    private final LanguageController languageController = LanguageController.getInstance();
+    private String englishSelectorText = languageController.getTextBundleString(KEY_ENGLISH_TEXT.getKeyName());
+    private String norwegianSelectorText = languageController.getTextBundleString(KEY_NORWEGIAN_TEXT.getKeyName());
+    private final String germanSelectorText = languageController.getTextBundleString(KEY_GERMAN_TEXT.getKeyName());
+
     public SettingsDialog(SettingsDialogController controller, Stage primaryStage,
                           BorderPane root, LanguageController languageController) {
         confirmButton = new Button();
@@ -37,7 +39,6 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
         languageController.addLanguageChangeListener(this);
         this.root = root;
         this.controller = controller;
-        this.languageController = languageController;
 
         setBlur();
         initOwner(primaryStage); // Set the primary stage as the owner
@@ -101,17 +102,19 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
 
     private ChoiceBox<String> languagePicker() {
-        norwegianSelectorText = languageController.getTextBundleString(KEY_NORWEGIAN_TEXT.getKeyName());
-        englishSelectorText = languageController.getTextBundleString(KEY_ENGLISH_TEXT.getKeyName());
-
         ChoiceBox<String> languages = new ChoiceBox<>();
-        languages.getItems().addAll(norwegianSelectorText, englishSelectorText);
 
-        languages.getItems().setAll(norwegianSelectorText, englishSelectorText);
+        languages.getItems().addAll(norwegianSelectorText, englishSelectorText, germanSelectorText);
+        languages.getItems().setAll(norwegianSelectorText, englishSelectorText, germanSelectorText);
         languages.getSelectionModel().selectedIndexProperty().addListener((
                 (observableValue, oldValue, newValue) -> {
                     int selectedIndex = newValue.intValue();
-                    String languageCode = (selectedIndex == 0) ? "no" : "en";
+                    String languageCode = switch (selectedIndex) {
+                        case 0 -> "no";
+                        case 2 -> "de";
+                        default -> "en";
+                    };
+
                     languageController.setLanguage(languageCode);
                 }));
         return languages;
