@@ -7,7 +7,8 @@ public enum LanguageKeys {
     KEY_CANCEL_BUTTON("cancelButton"),
     KEY_CONFIRM_BUTTON("confirmButton"),
     KEY_NORWEGIAN_TEXT("norwegianText"),
-    KEY_ENGLISH_TEXT("englishText");
+    KEY_ENGLISH_TEXT("englishText"),
+    KEY_GERMAN_TEXT("germanText");
 
 
     private final String keyName;
