@@ -17,4 +17,5 @@ module PathsModule {
 
     exports no.ntnu.idatg2001.gr13.view;
     exports no.ntnu.idatg2001.gr13.model;
+    exports no.ntnu.idatg2001.gr13.controller;
 }
