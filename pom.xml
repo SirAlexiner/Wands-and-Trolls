@@ -14,6 +14,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
+
         <!-- Maven plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
@@ -32,6 +33,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+            <repository>
+                <id>projectlombok.org</id>
+                <url>https://projectlombok.org/edge-releases</url>
+            </repository>
     </repositories>
 
     <dependencies>
@@ -119,16 +124,40 @@
             <version>3.13.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <inherited>true</inherited>
+            <configuration>
+                <source>17</source>
+                <target>17</target>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.24</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>no.ntnu.idatg2001.gr13.Main</mainClass>
+                    <mainClass>PathsModule/no.ntnu.idatg2001.gr13.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -206,6 +235,8 @@
                     <nohelp>true</nohelp>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 </project>
