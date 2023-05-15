@@ -18,15 +18,15 @@ public class Game {
   private final List<Goal> goals;
 
   /**
-   * The Game's constructor. Throws an exception if the player, story or goals are empty.
+   * The Game's constructor.
    *
    * @param player The player object in the game.
    * @param story  The story to be played in the game.
    * @param goals  The list of goal objects.
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException Throws an exception if the player, story or goals are empty.
    */
   public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException {
-    if (player != null || story != null || !goals.isEmpty()) {
+    if (player != null && story != null && !goals.isEmpty()) {
       this.player = player;
       this.story = story;
       this.goals = goals;
