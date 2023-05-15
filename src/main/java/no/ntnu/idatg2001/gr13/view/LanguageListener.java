@@ -19,10 +19,10 @@ public interface LanguageListener {
     /**
      * This method is implemented for language change events.
      */
-    public void languageChange();
+    void languageChange();
 
     /**
      * This method is implemented for updating local strings.
      */
-    public void updateLocalizedStrings();
+    void updateLocalizedStrings();
 }
