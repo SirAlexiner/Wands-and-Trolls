@@ -12,9 +12,7 @@ import static no.ntnu.idatg2001.gr13.controller.ResourceBundles.*;
 public class LanguageController {
     private ResourceBundle buttonBundle;
     private ResourceBundle textBundle;
-    private List<LanguageListener> listeners;
-    // TODO singleton
-
+    private final List<LanguageListener> listeners;
     public LanguageController() {
         listeners = new ArrayList<>();
     }
@@ -39,9 +37,7 @@ public class LanguageController {
     }
 
     public void notifyLanguageChange() {
-        for (LanguageListener listener : listeners) {
-            listener.languageChange();
-        }
+        listeners.forEach(LanguageListener::languageChange);
     }
 }
 
