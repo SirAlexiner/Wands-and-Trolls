@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import no.ntnu.idatg2001.gr13.controller.LoadStoryController;
 import no.ntnu.idatg2001.gr13.controller.MainMenuController;
 import no.ntnu.idatg2001.gr13.controller.SettingsDialogController;
 import no.ntnu.idatg2001.gr13.controller.LanguageController;
@@ -117,24 +118,6 @@ public class MainMenuView extends Application implements LanguageListener {
     }
 
     /**
-     * A method for setting up the buttons in a vertical box grid.
-     *
-     * @return a vertical box containing all the buttons.
-     */
-    public VBox setUpButtons() {
-        // Create button
-        settingsButton = buttonCreator(languageController.getButtonBundleString(KEY_SETTINGS_BUTTON.getKeyName()), Feather.SETTINGS, ACCENT);
-        HBox topBox = topBoxButtons();
-        // Create a vertical box for the new game and load game buttons and the settings button
-        VBox vbox = new VBox(topBox, new Region(), settingsButton);
-        vbox.setSpacing(10);
-        vbox.setAlignment(Pos.CENTER);
-        // Set the vertical grow priority of the spacer region to ALWAYS
-        VBox.setVgrow(new Region(), Priority.ALWAYS);
-        return vbox;
-    }
-
-    /**
      * A method for initializing buttons and style them appropriately. The method uses AtlantaFx
      * for styling, and it creates large, rounded, outlined buttons and buttons gets a state.
      *
@@ -152,6 +135,24 @@ public class MainMenuView extends Application implements LanguageListener {
     }
 
     /**
+     * A method for setting up the buttons in a vertical box grid.
+     *
+     * @return a vertical box containing all the buttons.
+     */
+    public VBox buttonVerticalBox() {
+        // Create button
+        settingsButton = buttonCreator(languageController.getButtonBundleString(KEY_SETTINGS_BUTTON.getKeyName()), Feather.SETTINGS, ACCENT);
+        HBox topBox = topBoxButtons();
+        // Create a vertical box for the new game and load game buttons and the settings button
+        VBox vbox = new VBox(topBox, new Region(), settingsButton);
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.CENTER);
+        // Set the vertical grow priority of the spacer region to ALWAYS
+        VBox.setVgrow(new Region(), Priority.ALWAYS);
+        return vbox;
+    }
+
+    /**
      * A method for creating a "horizontal box" that contains two buttons.
      *
      * @return A HBox containing Buttons.
@@ -163,8 +164,53 @@ public class MainMenuView extends Application implements LanguageListener {
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
         topHBox.setAlignment(Pos.CENTER);
-        settingsButtonHandler();
+        buttonHandler();
         return topHBox;
+    }
+
+    /**
+     * A method for setting the layout of the buttons. Contains a vertical box inside a grid box.
+     * @return the grid pane of buttons.
+     */
+    public GridPane layoutButtons() {
+        // Vertical box containing three buttons
+        VBox vBox = buttonVerticalBox();
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(70));
+        gridPane.getChildren().addAll(vBox);
+        gridPane.setAlignment(Pos.BOTTOM_CENTER);
+        gridPane.setGridLinesVisible(false);
+
+        return gridPane;
+    }
+
+    /**
+     * A method for handling the settings button.
+     */
+    private void buttonHandler() {
+        settingsButton.setOnAction(event -> {
+            SettingsDialogController controller = new SettingsDialogController();
+            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageController);
+            settingsDialog.show();
+        });
+        loadGameButton.setOnAction(event -> {
+            //LoadStoryView loadStoryView = new LoadStoryView(primaryStage);
+            Stage loadStoryStage = new Stage();
+            loadStoryStage.setTitle("Load Story");
+            loadStoryStage.show();
+        });
+
+    }
+
+    /**
+     * A method for handling the dark mode button.
+     * @param root the root of the scene where the button should be placed.
+     */
+    private void buttonDarkModeHandler(BorderPane root) {
+        DarkModeButton.setLayoutForToggleButton(root);
+        ToggleButton buttonEnableDarkMode = DarkModeButton.getToggleButton();
+        buttonEnableDarkMode.setOnAction(event ->
+                mainMenuController.darkModeButtonOnPressed(primaryStage, buttonEnableDarkMode));
     }
 
     /**
@@ -181,46 +227,6 @@ public class MainMenuView extends Application implements LanguageListener {
         String settingsButtonText = languageController.getButtonBundleString(KEY_SETTINGS_BUTTON.getKeyName());
         settingsButton.setText(settingsButtonText);
     }
-
-    /**
-     * A method for handling the settings button.
-     */
-    private void settingsButtonHandler() {
-        settingsButton.setOnAction(event -> {
-            SettingsDialogController controller = new SettingsDialogController();
-            SettingsDialog settingsDialog = new SettingsDialog(controller, primaryStage, root, languageController);
-            settingsDialog.show();
-        });
-        // Add the update button to the initial root node
-        root.getChildren().add(settingsButton);
-    }
-
-    /**
-     * A method for setting the layout of the buttons. Contains a vertical box inside a grid box.
-     * @return the grid pane of buttons.
-     */
-    public GridPane layoutButtons() {
-        // Vertical box containing three buttons
-        VBox vBox = setUpButtons();
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(70));
-        gridPane.getChildren().addAll(vBox);
-        gridPane.setAlignment(Pos.BOTTOM_CENTER);
-        gridPane.setGridLinesVisible(false);
-        return gridPane;
-    }
-
-    /**
-     * A method for handling the dark mode button.
-     * @param root the root of the scene where the button should be placed.
-     */
-    private void buttonDarkModeHandler(BorderPane root) {
-        DarkModeButton.setLayoutForToggleButton(root);
-        ToggleButton buttonEnableDarkMode = DarkModeButton.getToggleButton();
-        buttonEnableDarkMode.setOnAction(event ->
-                mainMenuController.darkModeButtonOnPressed(primaryStage, buttonEnableDarkMode));
-    }
-
     @Override
     public void languageChange() {
         updateLocalizedStrings();

@@ -1,37 +1,31 @@
 package no.ntnu.idatg2001.gr13.view;
 
 import io.github.siralexiner.fxmanager.FxManager;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.kordamp.ikonli.feather.Feather;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 
 public class LoadStoryView {
-    private BorderPane root;
-    private Scene scene;
-    private Stage stage;
+    private final BorderPane root;
+    private final Stage stage;
     private VBox listViewBox;
 
 
-    public LoadStoryView() {
-        stage = new Stage();
+    public LoadStoryView(Stage stage) {
+        this.stage = stage;
         root = new BorderPane();
 
         layoutTableColumn();
 
-        scene = new Scene(root, 800, 400);
+        Scene scene = new Scene(root, 800, 400);
         stage.setScene(scene);
         stage.setTitle("WiNG");
         FxManager.setup(stage);
