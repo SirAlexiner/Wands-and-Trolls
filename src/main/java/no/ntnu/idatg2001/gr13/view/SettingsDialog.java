@@ -74,7 +74,7 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
 
 
     private void createConfirmButton() {
-        confirmButton = buttonCreator(languageController.getLocalizedString(KEY_CONFIRM_BUTTON.getKeyName()), Feather.CHECK, SUCCESS);
+        confirmButton = buttonCreator(languageController.getButtonBundleString(KEY_CONFIRM_BUTTON.getKeyName()), Feather.CHECK, SUCCESS);
         confirmButton.setOnAction(event -> {
             languageController.notifyLanguageChange();
             controller.onExitApplication(event);
@@ -83,7 +83,7 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
 
     private void createCancelButton() {
-        cancelButton = buttonCreator(languageController.getLocalizedString(KEY_CANCEL_BUTTON.getKeyName()), Feather.X, DANGER);
+        cancelButton = buttonCreator(languageController.getButtonBundleString(KEY_CANCEL_BUTTON.getKeyName()), Feather.X, DANGER);
         cancelButton.setCancelButton(true);
         cancelButton.setOnAction(event -> {
             languageController.notifyLanguageChange();
@@ -101,8 +101,8 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
 
     private ChoiceBox<String> languagePicker() {
-        norwegianSelectorText = languageController.getLocalizedString(KEY_NORWEGIAN_TEXT.getKeyName());
-        englishSelectorText = languageController.getLocalizedString(KEY_ENGLISH_TEXT.getKeyName());
+        norwegianSelectorText = languageController.getTextBundleString(KEY_NORWEGIAN_TEXT.getKeyName());
+        englishSelectorText = languageController.getTextBundleString(KEY_ENGLISH_TEXT.getKeyName());
 
         ChoiceBox<String> languages = new ChoiceBox<>();
         languages.getItems().addAll(norwegianSelectorText, englishSelectorText);
@@ -118,14 +118,14 @@ public class SettingsDialog extends Dialog<Void> implements LanguageListener {
     }
     @Override
     public void updateLocalizedStrings() {
-        String confirmButtonText = languageController.getLocalizedString(KEY_CONFIRM_BUTTON.getKeyName());
+        String confirmButtonText = languageController.getButtonBundleString(KEY_CONFIRM_BUTTON.getKeyName());
         confirmButton.setText(confirmButtonText);
 
-        String cancelButtonText = languageController.getLocalizedString(KEY_CANCEL_BUTTON.getKeyName());
+        String cancelButtonText = languageController.getButtonBundleString(KEY_CANCEL_BUTTON.getKeyName());
         cancelButton.setText(cancelButtonText);
 
-        norwegianSelectorText = languageController.getLocalizedString(KEY_NORWEGIAN_TEXT.getKeyName());
-        englishSelectorText = languageController.getLocalizedString(KEY_ENGLISH_TEXT.getKeyName());
+        norwegianSelectorText = languageController.getTextBundleString(KEY_NORWEGIAN_TEXT.getKeyName());
+        englishSelectorText = languageController.getTextBundleString(KEY_ENGLISH_TEXT.getKeyName());
     }
     @Override
     public void languageChange() {

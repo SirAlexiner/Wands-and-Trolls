@@ -123,7 +123,7 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     public VBox setUpButtons() {
         // Create button
-        settingsButton = buttonCreator(languageController.getLocalizedString(KEY_SETTINGS_BUTTON.getKeyName()), Feather.SETTINGS, ACCENT);
+        settingsButton = buttonCreator(languageController.getButtonBundleString(KEY_SETTINGS_BUTTON.getKeyName()), Feather.SETTINGS, ACCENT);
         HBox topBox = topBoxButtons();
         // Create a vertical box for the new game and load game buttons and the settings button
         VBox vbox = new VBox(topBox, new Region(), settingsButton);
@@ -157,8 +157,8 @@ public class MainMenuView extends Application implements LanguageListener {
      * @return A HBox containing Buttons.
      */
     public HBox topBoxButtons() {
-        newGameButton = buttonCreator(languageController.getLocalizedString(KEY_NEW_GAME_BUTTON.getKeyName()), Feather.PLAY, SUCCESS);
-        loadGameButton = buttonCreator(languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON.getKeyName()), Feather.FOLDER, SUCCESS);
+        newGameButton = buttonCreator(languageController.getButtonBundleString(KEY_NEW_GAME_BUTTON.getKeyName()), Feather.PLAY, SUCCESS);
+        loadGameButton = buttonCreator(languageController.getButtonBundleString(KEY_LOAD_GAME_BUTTON.getKeyName()), Feather.FOLDER, SUCCESS);
         // Create a horizontal box for the new game and load game buttons
         HBox topHBox = new HBox(newGameButton, loadGameButton);
         topHBox.setSpacing(20);
@@ -172,13 +172,13 @@ public class MainMenuView extends Application implements LanguageListener {
      */
     @Override
     public void updateLocalizedStrings() {
-        String newGameButtonText = languageController.getLocalizedString(KEY_NEW_GAME_BUTTON.getKeyName());
+        String newGameButtonText = languageController.getButtonBundleString(KEY_NEW_GAME_BUTTON.getKeyName());
         newGameButton.setText(newGameButtonText);
 
-        String loadGameButtonText = languageController.getLocalizedString(KEY_LOAD_GAME_BUTTON.getKeyName());
+        String loadGameButtonText = languageController.getButtonBundleString(KEY_LOAD_GAME_BUTTON.getKeyName());
         loadGameButton.setText(loadGameButtonText);
 
-        String settingsButtonText = languageController.getLocalizedString(KEY_SETTINGS_BUTTON.getKeyName());
+        String settingsButtonText = languageController.getButtonBundleString(KEY_SETTINGS_BUTTON.getKeyName());
         settingsButton.setText(settingsButtonText);
     }
 
