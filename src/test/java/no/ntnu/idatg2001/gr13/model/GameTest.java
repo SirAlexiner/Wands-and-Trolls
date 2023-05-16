@@ -18,11 +18,15 @@ class GameTest {
     Story story;
     Game game;
     Link link;
+    Link invalidLink;
     List<Goal> goals;
     String openingPassageTitle = "Opening passage title";
     String openingPassageContent = "Opening passage content";
-    String linkTitle = "Link title";
     String secondPassageTitle = "Second passage title";
+    String linkTitle = "Link title";
+    String invalidLinkTitle = "Invali link title";
+    String invalidLinkReference = "Not valid reference";
+
 
     @BeforeEach
     void setUp() {
@@ -33,6 +37,7 @@ class GameTest {
         openingPassage = new Passage(openingPassageTitle, openingPassageContent);
         story = new Story("Story title", openingPassage);
 
+        invalidLink = new Link(invalidLinkTitle, invalidLinkReference);
         link = new Link(linkTitle, secondPassageTitle);
         secondPassage.addLink(link);
         story.addPassage(secondPassage);
@@ -43,13 +48,20 @@ class GameTest {
     }
 
     @Test
-    void constructorTest() {
+    void posConstructorTest() {
+        assertEquals(player, game.getPlayer());
+        assertEquals(story, game.getStory());
+        assertEquals(goals, game.getGoals());
+    }
+
+    @Test
+    void negConstructorTest() {
         assertThrows(IllegalArgumentException.class, () ->
             new Game(emptyPlayer, story, goals));
     }
 
     @Test
-    void posBeginTest() {
+    void beginTest() {
         String actual = game.begin().getTitle();
         String expected = openingPassage.getTitle();
 
@@ -62,5 +74,11 @@ class GameTest {
         String expected = secondPassage.getTitle();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void negGoTest() {
+        assertThrowsExactly(IllegalArgumentException.class, () ->
+            game.go(invalidLink));
     }
 }
