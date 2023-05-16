@@ -49,8 +49,14 @@ public class Game {
    *
    * @param link The link that was clicked.
    * @return The passage value to the link key.
+   * @throws IllegalArgumentException if the link does not point towards any passage.
    */
-  public Passage go(Link link) {
-    return story.getPassage(link);
+  public Passage go(Link link) throws IllegalArgumentException {
+    if (story.getPassages().contains(story.getPassage(link))) {
+      return story.getPassage(link);
+    }
+    else {
+      throw new IllegalArgumentException("Link does not point towards and passage");
+    }
   }
 }
