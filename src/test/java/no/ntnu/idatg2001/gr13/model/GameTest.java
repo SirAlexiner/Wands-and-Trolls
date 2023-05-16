@@ -19,17 +19,21 @@ class GameTest {
     Game game;
     Link link;
     List<Goal> goals;
+    String openingPassageTitle = "Opening passage title";
+    String openingPassageContent = "Opening passage content";
+    String linkTitle = "Link title";
+    String secondPassageTitle = "Second passage title";
 
     @BeforeEach
     void setUp() {
         goals = new ArrayList<>();
         goals.add(new GoldGoals(10));
 
-        secondPassage = new Passage("Second passage title", "Second passage content");
-        openingPassage = new Passage("Opening passage title", "Opening passage content");
+        secondPassage = new Passage(secondPassageTitle, "Second passage content");
+        openingPassage = new Passage(openingPassageTitle, openingPassageContent);
         story = new Story("Story title", openingPassage);
 
-        link = new Link("Link test", "Second passage title");
+        link = new Link(linkTitle, secondPassageTitle);
         secondPassage.addLink(link);
         story.addPassage(secondPassage);
 
