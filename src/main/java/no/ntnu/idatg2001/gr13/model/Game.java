@@ -6,14 +6,24 @@ import lombok.Getter;
 import no.ntnu.idatg2001.gr13.model.goals.Goal;
 
 /**
- * A class representing a game, part of the WiNG application, package model.
+ * A class representing a game in the WiNG application
+ * Part of the package, model.
  */
 public class Game {
 
+  /**
+   * Accessor method for the player in the game.
+   */
   @Getter
   private final Player player;
+  /**
+   * Accessor method for the story in the game.
+   */
   @Getter
   private final Story story;
+  /**
+   * Accessor method for the goals in the game.
+   */
   @Getter
   private final List<Goal> goals;
 
