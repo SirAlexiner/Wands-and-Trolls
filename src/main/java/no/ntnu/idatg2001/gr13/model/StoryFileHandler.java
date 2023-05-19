@@ -56,10 +56,10 @@ public class StoryFileHandler
         try {
             story.getPassages().forEach(passage -> {
                 try {
-                    writePassages(passage, writer);
+                    writePassages(story, passage, writer);
                     passage.getLinks().forEach(link -> {
                         try {
-                            writeLinks(link, writer);
+                            writeLinks(story, link, writer);
                             link.getActions().forEach(action -> {
                                 try {
                                     writeActions(action, writer);
@@ -102,8 +102,11 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writePassages(Passage passage, BufferedWriter writer) throws IOException
+    public static void writePassages(Story story, Passage passage, BufferedWriter writer) throws IOException, IllegalArgumentException
     {
+        if (story == null || story.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Story must contain character and be initialized to write passages!");
+        }
         // Writes the title of the passage.
         writer.write("::" + passage.getTitle() + "\n");
         // Writes the content of the passage
@@ -117,8 +120,11 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writeLinks(Link link, BufferedWriter writer) throws IOException
+    public static void writeLinks(Story story, Link link, BufferedWriter writer) throws IOException
     {
+        if (story == null || story.getTitle().isBlank()) {
+            throw new IllegalArgumentException("Story must contain character and be initialized to write passages!");
+        }
         // Writes the text and reference of the link
         writer.write("[" + link.getText() + "]" + "("  + link.getReference() + ")\n");
     }
