@@ -26,11 +26,14 @@ class StoryFileHandlerTest {
     Story differentStory;
     Passage passageBeginnings;
     Passage passageAnotherRoom;
+    Passage passageWizardRoom;
     Link enterLink;
     Link exitLink;
     Link openBookLink;
     Link goBackLink;
     String storyHauntedHouseTitle = "Haunted House";
+    String passageWizardRoomTitle = "Wizard Room";
+    String passageWizardRoomContent = "A dimly lit room full of brooms";
     final String passageBeginningsTitle = "Beginnings";
     final String passageBeginningsContent = "You are in a small, dimly lit room. There is a door in front of you.";
     final String passageTitleAnotherRoom = "Another room";
@@ -57,6 +60,9 @@ class StoryFileHandlerTest {
                 new Passage(passageTitleAnotherRoom, passageContentAnotherRoom);
         passageAnotherRoom.addLink(openBookLink = new Link("Open the book", "The book of spells"));
         passageAnotherRoom.addLink(goBackLink = new Link("Go back", "The book of spells"));
+
+        // Create 3 passage
+        passageWizardRoom = new Passage(passageWizardRoomTitle, passageWizardRoomContent);
 
         // Goals
         GoldGoals gold = new GoldGoals(50);
@@ -104,14 +110,6 @@ class StoryFileHandlerTest {
 
      */
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "hauntedHouse.paths")
-    void checkCsvFileSource(
-            String input, String expected) {
-        String actualValue = input;
-        assertEquals(expected, actualValue);
-    }
-
     @Test
     void posReaderStoryName() {
         String actual = StoryFileHandler.readFromFile(hauntedHouseFileLocation).getTitle();
@@ -148,20 +146,59 @@ class StoryFileHandlerTest {
     @CsvFileSource(resources = "hauntedHouse.paths")
     void posTestWriteStoryTitle(String csvFile) {
         String expected = storyHauntedHouseTitle;
-        if (csvFile.contains(storyHauntedHouse.getTitle())){
+        if (csvFile.contains(expected)){
+            assertEquals(expected, csvFile);
+        }
+    }
+    @ParameterizedTest
+    @CsvFileSource(resources = "hauntedHouse.paths")
+    void posTestWritePassageTitle(String csvFile) {
+        String expected = "::" + passageAnotherRoom.getTitle();
+        if (csvFile.contains(expected)){
             assertEquals(expected, csvFile);
         }
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "hauntedHouse.paths")
+    void posTestWritePassageContent(String csvFile) {
+        String expected = passageAnotherRoom.getContent();
+        if (csvFile.contains(expected)){
+            assertEquals(expected, csvFile);
+        }
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "hauntedHouse.paths")
+    void posTestWriteLink(String csvFile) {
+        String expected = openBookLink.toString();
+        if (csvFile.contains(expected)){
+            assertEquals(expected, csvFile);
+        }
+    }
 
     @Test
-    void posTestWriteStory() {
+    void posTestWriteWithMultiplePassages() {
+        storyHauntedHouse.addPassage(passageBeginnings);
+        storyHauntedHouse.addPassage(passageAnotherRoom);
+        storyHauntedHouse.addPassage(passageWizardRoom);
+        StoryFileHandler.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
         String expected = """
                 Haunted House
-                
+                                
+                ::Wizard Room
+                A dimly lit room full of brooms
+                                
                 ::Another room
-                The door opens to another room. You see a desk with a large dusty book.
-                [Open the book](The book of spells)""";
+                The door opens to another room. You see a desk with a large, dusty book.
+                [Open the book](The book of spells)
+                                
+                ::Beginnings
+                You are in a small, dimly lit room. There is a door in front of you.
+                [Try to open the door](Another room)
+                [Exit the room](The book of spells)
+                                
+                """;
         Path filePath = Path.of(hauntedHouseFileLocation);
 
         try {
