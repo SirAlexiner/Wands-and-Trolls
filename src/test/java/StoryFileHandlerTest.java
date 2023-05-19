@@ -304,6 +304,34 @@ class StoryFileHandlerTest {
         String unexpected = new Link("", "").toString();
         assertNotEquals(unexpected, actual);
     }
+
+    void setupFor_posTestWriteWithMultipleAttributes() throws IOException{
+        passageAnotherRoom.addLink(exitLink);
+        passageAnotherRoom.addLink(openBookLink);
+
+        openBookLink.addAction(goldAction);
+        openBookLink.addAction(healthAction);
+        openBookLink.addAction(moreHealth);
+
+        storyHauntedHouse.addPassage(passageBeginnings);
+        storyHauntedHouse.addPassage(passageAnotherRoom);
+        storyHauntedHouse.addPassage(passageWizardRoom);
+
+        StoryFileHandler.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
+    }
+    @Test
+    void posTestWriteWithMultiplePassages() throws IOException {
+        // setup
+        setupFor_posTestWriteWithMultipleAttributes();
+
+        Path filePath = Path.of(hauntedHouseFileLocation);
+        try {
+            String actual = Files.readString(filePath);
+            assertEquals(getHauntedHouseContent(), actual);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 /*
     @Test
