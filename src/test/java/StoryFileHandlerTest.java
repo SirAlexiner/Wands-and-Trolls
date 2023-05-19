@@ -2,6 +2,9 @@ import no.ntnu.idatg2001.gr13.model.Link;
 import no.ntnu.idatg2001.gr13.model.Passage;
 import no.ntnu.idatg2001.gr13.model.Story;
 import no.ntnu.idatg2001.gr13.model.StoryFileHandler;
+import no.ntnu.idatg2001.gr13.model.actions.Action;
+import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
+import no.ntnu.idatg2001.gr13.model.actions.HealthAction;
 import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +29,9 @@ class StoryFileHandlerTest {
     Passage passageBeginnings;
     Passage passageAnotherRoom;
     Passage passageWizardRoom;
+    Action goldAction = new GoldAction(100);
+    Action healthAction = new HealthAction(50);
+    Action moreHealth = new HealthAction(100);
     Link enterLink;
     Link exitLink;
     Link openBookLink;
@@ -38,7 +44,6 @@ class StoryFileHandlerTest {
     final String passageBeginningsContent = "You are in a small, dimly lit room. There is a door in front of you.";
     final String passageTitleAnotherRoom = "Another room";
     final String passageContentAnotherRoom = "The door opens to another room. You see a desk with a large, dusty book.";
-
 
     @BeforeEach
     void setUp() {
@@ -54,7 +59,7 @@ class StoryFileHandlerTest {
         // Create 1 passage
         passageBeginnings = new Passage(passageBeginningsTitle, passageBeginningsContent);
         passageBeginnings.addLink(enterLink = new Link("Try to open the door", "Another room"));
-        passageBeginnings.addLink(exitLink = new Link("Exit the room", "The book of spells"));
+        passageBeginnings.addLink(exitLink = new Link("Exit the room", "The room of wizards"));
 
         // Create 2 passage
         passageAnotherRoom =
@@ -74,6 +79,29 @@ class StoryFileHandlerTest {
         storyHauntedHouse.addPassage(passageBeginnings);
         storyHauntedHouse.addPassage(passageAnotherRoom);
 
+    }
+
+    String getHauntedHouseContent(){
+        return  """
+                Haunted House
+                                
+                ::Wizard Room
+                A dimly lit room full of brooms
+                                
+                ::Another room
+                The door opens to another room. You see a desk with a large, dusty book.
+                [Open the book](The book of spells)
+                =Gold;100
+                =Health;50
+                =Health;100
+                [Exit the room](The room of wizards)
+                                         
+                ::Beginnings
+                You are in a small, dimly lit room. There is a door in front of you.
+                [Try to open the door](Another room)
+                [Exit the room](The room of wizards)
+                                                                                        
+                """;
     }
 
     /**
@@ -134,7 +162,7 @@ class StoryFileHandlerTest {
     }
 
     @Test
-    void negTestWriteStoryTitle() {
+    void negTestWriteStoryTitle() throws IOException {
         Story unexpected = new Story("", passageBeginnings);
         StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
 
@@ -221,46 +249,11 @@ class StoryFileHandlerTest {
             e.printStackTrace();
         }
     }
-
-
-    @Test
-    void posTestWriteWithMultiplePassages() {
-        storyHauntedHouse.addPassage(passageBeginnings);
-        storyHauntedHouse.addPassage(passageAnotherRoom);
-        storyHauntedHouse.addPassage(passageWizardRoom);
-        StoryFileHandler.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
-        String expected = """
-                Haunted House
-                                
-                ::Wizard Room
-                A dimly lit room full of brooms
-                                
-                ::Another room
-                The door opens to another room. You see a desk with a large, dusty book.
-                [Open the book](The book of spells)
-                                
-                ::Beginnings
-                You are in a small, dimly lit room. There is a door in front of you.
-                [Try to open the door](Another room)
-                [Exit the room](The book of spells)
-                                
-                """;
-        Path filePath = Path.of(hauntedHouseFileLocation);
-
-        try {
-            String actual = Files.readString(filePath);
-            assertEquals(expected, actual);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     /*
     Test reading an empty text file.
      */
     @Test
-    void negReadStoryTitle(){
+    void negReadStoryTitle() throws IOException {
         Story emptyStory = new Story("", new Passage("", ""));
         StoryFileHandler.writeToFile(emptyStory, "src/test/resources/emptyStory.paths");
         Story actual = StoryFileHandler.readFromFile("src/test/resources/emptyStory.paths");
