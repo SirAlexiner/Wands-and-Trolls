@@ -258,7 +258,7 @@ class StoryFileHandlerTest {
 
 
     /*
-    Test reading a empty text file.
+    Test reading an empty text file.
      */
     @Test
     void negReadFromFile(){
