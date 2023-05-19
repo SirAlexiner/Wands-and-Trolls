@@ -5,9 +5,8 @@ import no.ntnu.idatg2001.gr13.model.StoryFileHandler;
 import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -261,7 +260,7 @@ class StoryFileHandlerTest {
     Test reading an empty text file.
      */
     @Test
-    void negReadFromFile(){
+    void negReadStoryTitle(){
         Story emptyStory = new Story("", new Passage("", ""));
         StoryFileHandler.writeToFile(emptyStory, "src/test/resources/emptyStory.paths");
         Story actual = StoryFileHandler.readFromFile("src/test/resources/emptyStory.paths");
@@ -270,10 +269,19 @@ class StoryFileHandlerTest {
     }
 
     @Test
-    void posReadFromFile(){
+    void posReadStoryTitle(){
         Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
         String actual = actualStory.getTitle();
         String expected = storyHauntedHouseTitle;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void posReadPassageTitle() {
+        Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        String expected = passageTitleAnotherRoom;
+        String actual = actualStory.getPassage(enterLink).getTitle();
 
         assertEquals(expected, actual);
     }
