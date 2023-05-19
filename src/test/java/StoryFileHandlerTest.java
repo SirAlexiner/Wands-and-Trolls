@@ -144,7 +144,6 @@ class StoryFileHandlerTest {
         assertEquals("", unexpected.getTitle());
         try {
             String actual = Files.readString(filePath);
-            System.out.println(actual);
             // checks that file writer has not written anything
             assertTrue(actual.isBlank());
         } catch (IOException e) {
@@ -157,6 +156,27 @@ class StoryFileHandlerTest {
         String expected = "::" + passageAnotherRoom.getTitle();
         if (csvFile.contains(expected)){
             assertEquals(expected, csvFile);
+        }
+    }
+
+    @Test
+    void negTestWritePassage() {
+        Path filePath = Path.of(emptyStoryFileLocation);
+        Story unexpected = new Story("", passageBeginnings);
+        // adds a second passage to the story
+        unexpected.addPassage(passageWizardRoom);
+
+        // Writes the story to .path format
+        // Checks that it throws if there is an illegalArgumentException
+        assertThrows(IllegalArgumentException.class, () -> {
+            StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
+        });
+        try {
+            String actual = Files.readString(filePath);
+            // checks that file writer has not written anything
+            assertTrue(actual.isBlank());
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
         }
     }
 
