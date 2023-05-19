@@ -140,16 +140,16 @@ class StoryFileHandlerTest {
         StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
 
         Path filePath = Path.of(emptyStoryFileLocation);
-        String regexPatter = assertTrue(csvFile.matches(".*"));
 
-        assertEquals(unexpected.getTitle(), "");
+        assertEquals("", unexpected.getTitle());
         try {
             String actual = Files.readString(filePath);
-            assertEquals(actual);
+            System.out.println(actual);
+            // checks that file writer has not written anything
+            assertTrue(actual.isBlank());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
     @ParameterizedTest
     @CsvFileSource(resources = "hauntedHouse.paths")
