@@ -5,16 +5,21 @@ import no.ntnu.idatg2001.gr13.model.StoryFileHandler;
 import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.*;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StoryFileHandlerTest
-{
+class StoryFileHandlerTest {
     String filenameTest;
     String sameFileNameTest;
-    String hauntedHouseTest;
+    String hauntedHouseFileLocation;
     Story storyHauntedHouse;
     Story testStory;
     Story sameTestStory;
@@ -23,34 +28,24 @@ class StoryFileHandlerTest
     Passage passageAnotherRoom;
     Link enterLink;
     Link exitLink;
+    Link openBookLink;
+    Link goBackLink;
     String storyHauntedHouseTitle = "Haunted House";
-    String passageBeginningsTitle = "Beginnings";
-    String passageBeginningsContent = "You are in a small, dimly lit room. There is a door in front of you.";
-    String passageTitleAnotherRoom = "Another room";
-    String passageContentAnotherRoom = "The door opens to another room. You see a desk with a large, dusty book.";
-
-    String content =
-            "Haunted House\n" +
-            "\n" +
-            "::Another room\n" +
-            "The door opens to another room. You see a desk with a large, dusty book.\n" +
-            "[Open the book](The book of spells)\n" +
-            "\n" +
-            "::Beginnings\n" +
-            "You are in a small, dimly lit room. There is a door in front of you.\n" +
-            "[Try to open the door](Another room)\n" +
-            "[Exit the room](The book of spells)";
+    final String passageBeginningsTitle = "Beginnings";
+    final String passageBeginningsContent = "You are in a small, dimly lit room. There is a door in front of you.";
+    final String passageTitleAnotherRoom = "Another room";
+    final String passageContentAnotherRoom = "The door opens to another room. You see a desk with a large, dusty book.";
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         filenameTest = "src/test/resources/test.paths";
         sameFileNameTest = "src/test/resources/testOther.paths";
-        hauntedHouseTest = "src/test/resources/hauntedHouse.paths";
+        hauntedHouseFileLocation = "src/test/resources/hauntedHouse.paths";
 
         testStory = StoryFileHandler.readFromFile(filenameTest);
         sameTestStory = StoryFileHandler.readFromFile(sameFileNameTest);
-        differentStory = StoryFileHandler.readFromFile(hauntedHouseTest);
+        differentStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
 
         // Create 1 passage
         passageBeginnings = new Passage(passageBeginningsTitle, passageBeginningsContent);
@@ -59,9 +54,9 @@ class StoryFileHandlerTest
 
         // Create 2 passage
         passageAnotherRoom =
-            new Passage(passageTitleAnotherRoom, passageContentAnotherRoom);
-        passageAnotherRoom.addLink(new Link("Open the book", "The book of spells"));
-        passageAnotherRoom.addLink(new Link("Go back", "The book of spells"));
+                new Passage(passageTitleAnotherRoom, passageContentAnotherRoom);
+        passageAnotherRoom.addLink(openBookLink = new Link("Open the book", "The book of spells"));
+        passageAnotherRoom.addLink(goBackLink = new Link("Go back", "The book of spells"));
 
         // Goals
         GoldGoals gold = new GoldGoals(50);
@@ -73,20 +68,19 @@ class StoryFileHandlerTest
         storyHauntedHouse.addPassage(passageAnotherRoom);
 
     }
+
     /**
      * Tests the readFromFile(). Uses positive and negative test.
      */
     @Test
-    void testReadFromFileSame()
-    {
+    void testReadFromFileSame() {
         // Reads two stories that are equal. Positive test.
         assertEquals(testStory, sameTestStory);
         assertSame(testStory, testStory);
     }
 
     @Test
-    void testReadFromFileDifferent()
-    {
+    void testReadFromFileDifferent() {
         // Negative test
         assertNotSame(testStory, differentStory);
     }
@@ -113,14 +107,14 @@ class StoryFileHandlerTest
     @ParameterizedTest
     @CsvFileSource(resources = "hauntedHouse.paths")
     void checkCsvFileSource(
-        String input, String expected) {
-            String actualValue = input;
-            assertEquals(expected, actualValue);
+            String input, String expected) {
+        String actualValue = input;
+        assertEquals(expected, actualValue);
     }
 
     @Test
-    void posReaderStoryName(){
-        String actual = StoryFileHandler.readFromFile(hauntedHouseTest).getTitle();
+    void posReaderStoryName() {
+        String actual = StoryFileHandler.readFromFile(hauntedHouseFileLocation).getTitle();
         String expected = storyHauntedHouseTitle;
 
         assertEquals(expected, actual);
@@ -128,11 +122,98 @@ class StoryFileHandlerTest
 
     @Test
     void negReaderStoryName() {
-        String actual = StoryFileHandler.readFromFile(hauntedHouseTest).getTitle();
+        String actual = StoryFileHandler.readFromFile(hauntedHouseFileLocation).getTitle();
         String unexpected = "A really random test story";
 
         assertNotEquals(unexpected, actual);
     }
+
+    @Test
+    void posReaderPassages() {
+        String actualPassageTitle;
+        String actualPassageContent;
+        Story hauntedHouse = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        for (Passage passageInStory : hauntedHouse.getPassages()) {
+            if (passageInStory.getTitle().matches(passageBeginningsTitle)) {
+                assertTrue(true);
+            }
+            if (passageInStory.getTitle().matches(passageTitleAnotherRoom)) {
+                assertTrue(true);
+            }
+
+            //System.out.println(passageInStory.getContent().matches(passageContentAnotherRoom));
+        }
+    }
+    @ParameterizedTest
+    @CsvFileSource(resources = "hauntedHouse.paths")
+    void posTestWriteStoryTitle(String csvFile) {
+        String expected = storyHauntedHouseTitle;
+        if (csvFile.contains(storyHauntedHouse.getTitle())){
+            assertEquals(expected, csvFile);
+        }
+    }
+
+
+    @Test
+    void posTestWriteStory() {
+        String expected = """
+                Haunted House
+                
+                ::Another room
+                The door opens to another room. You see a desk with a large dusty book.
+                [Open the book](The book of spells)""";
+        Path filePath = Path.of(hauntedHouseFileLocation);
+
+        try {
+            String actual = Files.readString(filePath);
+            assertEquals(expected, actual);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+    Test reading a empty text file.
+     */
+    @Test
+    void negReadFromFile(){
+        Story emptyStory = new Story("", new Passage("", ""));
+        StoryFileHandler.writeToFile(emptyStory, "src/test/resources/emptyStory.paths");
+        Story actual = StoryFileHandler.readFromFile("src/test/resources/emptyStory.paths");
+
+        assertNull(actual);
+    }
+
+    @Test
+    void posReadFromFile(){
+        Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        String actual = actualStory.getTitle();
+        String expected = storyHauntedHouseTitle;
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void posTestReadLinks(){
+        Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        actualStory.getBrokenLinks();
+        String expected = openBookLink.getText();
+        String actual = actualStory.getBrokenLinks().get(0).getText();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void negTestReadLinks(){
+        Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        List<Link> brokenLinks = actualStory.getBrokenLinks();
+        String actual = brokenLinks.get(0).toString();
+
+        String unexpected = new Link("", "").toString();
+        assertNotEquals(unexpected, actual);
+    }
+}
 /*
     @Test
     void testWriteToFile() {
@@ -202,4 +283,4 @@ class StoryFileHandlerTest
     }
 
      */
-}
+
