@@ -34,14 +34,19 @@ public class StoryFileHandler
      * @param story The story object that you want to write to a file.
      * @param fileName The name of the file to write to.
      */
-    public static void writeToFile(Story story, String fileName){
+    public static void writeToFile(Story story, String fileName) throws IOException {
         // Try-with-resource-statement
         try(BufferedWriter writer = newBufferedWriter(Path.of(fileName))){
             writer.write(story.getTitle() + "\n\n");
             writeStory(story, writer);
         }
         catch (IOException e){
-            System.err.println("There was a problem writing to" + fileName);
+            // Logging the exception
+            // TODO add Logger Here
+            //Logger.getLogger(YourClassName.class.getName()).log(Level.SEVERE, "Error writing to file: " + fileName, e);
+
+            // Rethrowing the exception
+            throw new IOException("Error writing to file: " + fileName, e);
         }
     }
 
@@ -52,47 +57,18 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writeStory(Story story, BufferedWriter writer) {
-        try {
-            story.getPassages().forEach(passage -> {
-                try {
-                    writePassages(story, passage, writer);
-                    passage.getLinks().forEach(link -> {
-                        try {
-                            writeLinks(story, link, writer);
-                            link.getActions().forEach(action -> {
-                                try {
-                                    writeActions(action, writer);
-                                } catch (IOException e) {
-                                    throw new UncheckedIOException(e);
-                                }
-                            });
-                        } catch (IOException e) {
-                            throw new UncheckedIOException(e);
-                        }
-                    });
-                    writer.write("\n");
-                } catch (IOException e) {
-                    throw new UncheckedIOException(e);
-                }
-            });
-        } catch (UncheckedIOException e) {
-            System.out.println("Error in write story");
-        }
-        /*
+    private static void writeStory(Story story, BufferedWriter writer) throws IOException {
         for (Passage passage: story.getPassages())
         {
-            writePassages(passage, writer);
+            writePassages(story, passage, writer);
             for (Link link : passage.getLinks()) {
-                writeLinks(link, writer);
+                writeLinks(story, link, writer);
                 for (Action action : link.getActions()) {
                     writeActions(action, writer);
                 }
             }
             writer.write("\n");
         }
-
-         */
     }
 
     /**
@@ -102,7 +78,7 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writePassages(Story story, Passage passage, BufferedWriter writer) throws IOException, IllegalArgumentException
+    private static void writePassages(Story story, Passage passage, BufferedWriter writer) throws IOException, IllegalArgumentException
     {
         if (story == null || story.getTitle().isBlank()) {
             throw new IllegalArgumentException("Story must contain character and be initialized to write passages!");
@@ -120,7 +96,7 @@ public class StoryFileHandler
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writeLinks(Story story, Link link, BufferedWriter writer) throws IOException
+    private static void writeLinks(Story story, Link link, BufferedWriter writer) throws IOException
     {
         if (story == null || story.getTitle().isBlank()) {
             throw new IllegalArgumentException("Story must contain character and be initialized to write passages!");
@@ -130,13 +106,13 @@ public class StoryFileHandler
     }
 
     /**
-     * The method takes a Action object and writes is using the "writer".
+     * The method takes an Action object and writes is using the "writer".
      *
      * @param action the Action to be written
      * @param writer the writer to write
      * @throws IOException if an input/output occurs while writing to the file
      */
-    public static void writeActions(Action action, BufferedWriter writer)throws IOException{
+    private static void writeActions(Action action, BufferedWriter writer)throws IOException{
         // Writes the type and value of the action
         writer.write("=" + action.getActionType() + ";" + action.getActionValue() + "\n");
     }
@@ -164,7 +140,7 @@ public class StoryFileHandler
                     }
                     story.addPassage(passage);
                 }
-                if (lineOfText.startsWith("[") && passage != null){
+                if (lineOfText.startsWith("[") && (passage != null )){
                     String[] line = lineOfText.split("\\[");
                     String[] text = line[1].split("]");
 
@@ -190,7 +166,7 @@ public class StoryFileHandler
      * @param actionFromFile A string with the action to be read.
      * @return the Action.
      */
-    public static Action readActionFromFile(String actionFromFile){
+    private static Action readActionFromFile(String actionFromFile){
         String[] action = actionFromFile.split("=");
         action = action[1].split(";");
 
