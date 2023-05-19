@@ -280,12 +280,18 @@ class StoryFileHandlerTest {
     @Test
     void posReadPassageTitle() {
         Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
-        String expected = passageTitleAnotherRoom;
         String actual = actualStory.getPassage(enterLink).getTitle();
 
-        assertEquals(expected, actual);
+        assertEquals(passageTitleAnotherRoom, actual);
     }
 
+    @Test
+    void posReadPassageContent() {
+        Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
+        String actual = actualStory.getPassage(enterLink).getContent();
+
+        assertEquals(passageContentAnotherRoom, actual);
+    }
     @Test
     void posTestReadLinks(){
         Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
