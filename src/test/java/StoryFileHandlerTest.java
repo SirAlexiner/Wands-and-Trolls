@@ -34,6 +34,7 @@ class StoryFileHandlerTest {
     String storyHauntedHouseTitle = "Haunted House";
     String passageWizardRoomTitle = "Wizard Room";
     String passageWizardRoomContent = "A dimly lit room full of brooms";
+    String emptyStoryFileLocation;
     final String passageBeginningsTitle = "Beginnings";
     final String passageBeginningsContent = "You are in a small, dimly lit room. There is a door in front of you.";
     final String passageTitleAnotherRoom = "Another room";
@@ -42,6 +43,7 @@ class StoryFileHandlerTest {
 
     @BeforeEach
     void setUp() {
+        emptyStoryFileLocation = "src/test/resources/emptyStory.paths";
         filenameTest = "src/test/resources/test.paths";
         sameFileNameTest = "src/test/resources/testOther.paths";
         hauntedHouseFileLocation = "src/test/resources/hauntedHouse.paths";
@@ -91,25 +93,6 @@ class StoryFileHandlerTest {
         assertNotSame(testStory, differentStory);
     }
 
-    /*String setUpForCsvWriter(String stringToBeMatched) {
-
-        StoryFileHandler.writeToFile(story, differentFileNameTest);
-        Path path = Path.of(differentFileNameTest);
-
-        String actualStoryName = null;
-        try {
-            // Read the CSV file and convert its content into a stream of lines
-            Optional<String> storyName = Files.lines(path)
-                    .collect(l.get -> )
-            actualStoryName = storyName.orElse("does not appear");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return actualStoryName;
-    }
-
-     */
-
     @Test
     void posReaderStoryName() {
         String actual = StoryFileHandler.readFromFile(hauntedHouseFileLocation).getTitle();
@@ -149,6 +132,24 @@ class StoryFileHandlerTest {
         if (csvFile.contains(expected)){
             assertEquals(expected, csvFile);
         }
+    }
+
+    @Test
+    void negTestWriteStoryTitle() {
+        Story unexpected = new Story("", passageBeginnings);
+        StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
+
+        Path filePath = Path.of(emptyStoryFileLocation);
+        String regexPatter = assertTrue(csvFile.matches(".*"));
+
+        assertEquals(unexpected.getTitle(), "");
+        try {
+            String actual = Files.readString(filePath);
+            assertEquals(actual);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
     @ParameterizedTest
     @CsvFileSource(resources = "hauntedHouse.paths")

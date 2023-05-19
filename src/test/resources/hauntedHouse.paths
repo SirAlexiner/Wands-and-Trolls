@@ -1,5 +1,8 @@
 Haunted House
 
+::Wizard Room
+A dimly lit room full of brooms
+
 ::Another room
 The door opens to another room. You see a desk with a large, dusty book.
 [Open the book](The book of spells)
