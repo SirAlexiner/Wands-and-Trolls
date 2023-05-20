@@ -2,6 +2,8 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 
 import java.io.File;
 import java.util.Objects;
+
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.experimental.UtilityClass;
@@ -75,7 +78,24 @@ public class FilePicker {
     });
 
     root.setCenter(dropLabel);
+    root.setBottom(buildCancelButton());
 
     return new Scene(root);
+  }
+
+  /**
+   * A method for creating a cancelButton for the file picker view.
+   * The grid pane places the cancel button in the bottom left corner.
+   * @return a grid pane containing a button.
+   */
+  private GridPane buildCancelButton() {
+    GridPane gridPane = new GridPane();
+    Button cancelButton = new FantasyButton("Cancel");
+    gridPane.getChildren().add(cancelButton);
+
+    gridPane.setAlignment(Pos.BOTTOM_LEFT);
+    gridPane.setPadding(new Insets(5));
+
+    return gridPane;
   }
 }
