@@ -75,6 +75,10 @@ public class MainMenuScene {
     Button settingsButton = new FantasyButton("Settings");
     settingsButton.setPrefWidth(225);
     box.getChildren().add(settingsButton);
+    settingsButton.setOnMouseClicked(event -> {
+      Scene settingsScene = SettingsScene.getSettingScene(stage);
+      contentContainer.getChildren().add(settingsScene.getRoot());
+    });
 
     BorderPane bottomInformation = new BorderPane();
     bottomInformation.setPadding(new Insets(20));
