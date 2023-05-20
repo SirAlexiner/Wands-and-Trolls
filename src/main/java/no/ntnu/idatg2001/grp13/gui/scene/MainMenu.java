@@ -3,10 +3,11 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.logging.Level;
-import javafx.application.Application;
+
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,52 +18,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
-import no.ntnu.idatg2001.grp13.gui.elements.FantasyFooter;
-import no.ntnu.idatg2001.grp13.gui.elements.FantasyTopBar;
 import no.ntnu.idatg2001.grp13.gui.util.App;
 import no.ntnu.idatg2001.grp13.gui.util.OpenAiImage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
-public class MainMenu extends Application {
+public class MainMenu {
   private static final boolean USE_AI = false;
 
   /**
-   * <p>main.</p>
-   *
-   * @param args an array of {@link java.lang.String} objects
-   */
-  public static void startGame(String[] args) {
-    launch(args);
-  }
-
-  @Override
-  public void stop() {
-    System.exit(0);
-  }
-
-  /**
    * {@inheritDoc}
+   *
+   * @return
    */
-  @Override
-  public void start(Stage primaryStage) {
-
-
-    Image icon = new Image(
-        Objects.requireNonNull(MainMenu.class.getResourceAsStream(
-            "/Image/MainMenu/Logo_Icon.png")));
-
-    primaryStage.getIcons().add(icon);
-    primaryStage.initStyle(StageStyle.TRANSPARENT);
-    primaryStage.setFullScreen(false);
-    primaryStage.setTitle("Wands and Trolls");
-    primaryStage.setResizable(true);
+  public static BorderPane getMainMeuScene(Stage primaryStage) {
 
     Image logo =
         new Image(String.valueOf(MainMenu.class.getResource(
@@ -171,35 +143,12 @@ public class MainMenu extends Application {
     content.setCenter(box);
     content.setBottom(bottomInformation);
 
-    BorderPane root = new BorderPane();
-    root.setCenter(content);
-
-    FantasyTopBar topBar = new FantasyTopBar(primaryStage);
-    root.setTop(topBar);
-
-    FantasyFooter bottomBar = new FantasyFooter();
-    root.setBottom(bottomBar);
-
     // Create a rectangle with rounded top corners
     Rectangle clipRect = new Rectangle(1024, 660);
     clipRect.setArcWidth(30);
     clipRect.setArcHeight(30);
 
     content.setClip(clipRect);
-
-    Scene scene = new Scene(root, 1024, 768, Color.TRANSPARENT);
-    scene.getStylesheets()
-        .add(String.valueOf(MainMenu.class.getResource("/CSS/WindowUi/FantasyStyle.css")));
-
-    AudioClip startPlayer = new AudioClip(
-        Objects.requireNonNull(MainMenu.class.getResource("/Audio/ThroughFire.wav"))
-            .toString());
-    startPlayer.setCycleCount(AudioClip.INDEFINITE);
-    startPlayer.setVolume(0.25);
-    startPlayer.play();
-
-    primaryStage.setScene(scene);
-    primaryStage.show();
 
     Task<Image> loadImageTask = new Task<>() {
       @Override
@@ -240,5 +189,6 @@ public class MainMenu extends Application {
     Thread loadImageThread = new Thread(loadImageTask);
     loadImageThread.setDaemon(true);
     loadImageThread.start();
+    return content;
   }
 }
