@@ -78,8 +78,6 @@ class StoryWriterTest {
 
         try {
             String actual = Files.readString(filePath);
-            // checks that file writer has not written anything
-            System.out.println(actual);
             assertTrue(actual.contains(expected.toString()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -155,8 +153,6 @@ class StoryWriterTest {
 
         try {
             String actual = Files.readString(filePath);
-            // checks that file writer has not written anything
-            System.out.println(actual);
             assertTrue(actual.contains(expected.toString()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,14 +168,11 @@ class StoryWriterTest {
         String expectedValue = goldAction.getActionValue();
         String expectedValue_2 = healthAction.getActionValue();
 
-        System.out.println(goldAction.toString());
         StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
         Path filePath = Path.of(hauntedHouseFileLocation);
 
         try {
             String actual = Files.readString(filePath);
-            // checks that file writer has not written anything
-            System.out.println(actual);
             assertTrue(actual.contains(expected));
             assertTrue(actual.contains(expected_2));
             assertTrue(actual.contains(expectedValue));
