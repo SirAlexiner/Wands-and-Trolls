@@ -1,18 +1,14 @@
 Haunted House
 
+::Beginnings
+You are in a small, dimly lit room. There is a door in front of you.
+[Try to open the door](Another room)
+[Exit the room](The room of wizards)
+
 ::Wizard Room
 A dimly lit room full of brooms
 
 ::Another room
 The door opens to another room. You see a desk with a large, dusty book.
 [Open the book](The book of spells)
-=Gold;100
-=Health;50
-=Health;100
-[Exit the room](The room of wizards)
-
-::Beginnings
-You are in a small, dimly lit room. There is a door in front of you.
-[Try to open the door](Another room)
-[Exit the room](The room of wizards)
 

@@ -18,9 +18,9 @@ import no.ntnu.idatg2001.gr13.model.actions.Action;
  * @author Torgrim Thorsen
  * @version 02-04-2023
  */
-public class StoryFileHandler
+public class StoryWriter
 {
-    private StoryFileHandler(){
+    private StoryWriter(){
         // empty, private constructor
     }
     /**
@@ -115,6 +115,4 @@ public class StoryFileHandler
         // Writes the type and value of the action
         writer.write("=" + action.getActionType() + ";" + action.getActionValue() + "\n");
     }
-
-
 }
