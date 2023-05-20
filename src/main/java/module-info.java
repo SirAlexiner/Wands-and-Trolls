@@ -1,16 +1,23 @@
-module WandsAndTrolls {
-  requires lombok;
-  requires javafx.graphics;
-  requires javafx.media;
-  requires javafx.controls;
-  requires java.logging;
-  requires com.google.gson;
+/**
+ * This is the module info for the WiNG application.
+ *
+ * @author Arthur Borger Thorkildsen
+ * @since May 14. 2023
+ */
+module PathsModule {
+    requires com.sun.jna.platform;
+    requires javafx.graphics;
+    requires lombok;
+    requires com.sun.jna;
+    requires javafx.controls;
+    requires org.kordamp.ikonli.javafx;
+    requires atlantafx.base;
+    requires org.kordamp.ikonli.feather;
+    requires com.jthemedetector;
 
-  exports no.ntnu.idatg2001.grp13;
-  exports no.ntnu.idatg2001.grp13.gui.util;
-  exports no.ntnu.idatg2001.grp13.util;
-  exports no.ntnu.idatg2001.grp13.gui.elements;
-  exports no.ntnu.idatg2001.grp13.gui.scene;
-  exports no.ntnu.idatg2001.grp13.stage;
-  exports no.ntnu.idatg2001.grp13.gui.elements.util;
+    exports no.ntnu.idatg2001.gr13.view;
+    exports no.ntnu.idatg2001.gr13.model;
+    exports no.ntnu.idatg2001.gr13.model.actions;
+    exports no.ntnu.idatg2001.gr13.model.goals;
+    exports no.ntnu.idatg2001.gr13.controller;
 }
