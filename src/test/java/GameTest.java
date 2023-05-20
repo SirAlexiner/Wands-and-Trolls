@@ -1,5 +1,4 @@
-package no.ntnu.idatg2001.gr13.model;
-
+import no.ntnu.idatg2001.gr13.model.*;
 import no.ntnu.idatg2001.gr13.model.goals.Goal;
 import no.ntnu.idatg2001.gr13.model.goals.GoldGoals;
 import org.junit.jupiter.api.BeforeEach;

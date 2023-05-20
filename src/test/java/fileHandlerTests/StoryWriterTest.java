@@ -1,3 +1,5 @@
+package fileHandlerTests;
+
 import no.ntnu.idatg2001.gr13.model.*;
 import no.ntnu.idatg2001.gr13.model.actions.Action;
 import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
