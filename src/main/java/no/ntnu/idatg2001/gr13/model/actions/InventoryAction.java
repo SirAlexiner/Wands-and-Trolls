@@ -25,9 +25,4 @@ public class InventoryAction implements Action {
   public String getActionValue(){
     return this.item;
   }
-  @Override
-  public boolean isFulFilled(Player player){
-    List<String> inventory = player.getInventory();
-    return inventory.contains(item);
-  }
 }

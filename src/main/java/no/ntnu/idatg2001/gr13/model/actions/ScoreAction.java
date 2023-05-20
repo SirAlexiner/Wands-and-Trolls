@@ -23,8 +23,4 @@ public class ScoreAction implements Action{
   public String getActionValue(){
     return String.valueOf(this.points);
   }
-  @Override
-  public boolean isFulFilled(Player player){
-    return player.getScore() >= points;
-  }
 }

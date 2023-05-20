@@ -8,6 +8,4 @@ public interface Action {
   String getActionType();
 
   String getActionValue();
-
-  boolean isFulFilled(Player player);
 }

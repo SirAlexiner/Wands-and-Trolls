@@ -25,9 +25,4 @@ public class GoldAction implements Action{
   public String getActionValue(){
     return String.valueOf(this.gold);
   }
-
-  @Override
-  public boolean isFulFilled(Player player){
-    return player.getGold() >= gold;
-  }
 }
