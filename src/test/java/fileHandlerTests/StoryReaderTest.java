@@ -1,7 +1,7 @@
 package fileHandlerTests;
 
-import no.ntnu.idatg2001.gr13.model.Story;
-import no.ntnu.idatg2001.gr13.model.StoryReader;
+import no.ntnu.idatg2001.grp13.model.Story;
+import no.ntnu.idatg2001.grp13.model.StoryReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

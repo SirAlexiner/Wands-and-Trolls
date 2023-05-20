@@ -1,9 +1,9 @@
 package fileHandlerTests;
 
-import no.ntnu.idatg2001.gr13.model.*;
-import no.ntnu.idatg2001.gr13.model.actions.Action;
-import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
-import no.ntnu.idatg2001.gr13.model.actions.HealthAction;
+import no.ntnu.idatg2001.grp13.model.*;
+import no.ntnu.idatg2001.grp13.model.actions.Action;
+import no.ntnu.idatg2001.grp13.model.actions.GoldAction;
+import no.ntnu.idatg2001.grp13.model.actions.HealthAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

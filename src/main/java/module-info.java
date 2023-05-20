@@ -4,20 +4,18 @@
  * @author Arthur Borger Thorkildsen
  * @since May 14. 2023
  */
-module PathsModule {
-    requires com.sun.jna.platform;
+module WandsAndTrolls {
     requires javafx.graphics;
     requires lombok;
-    requires com.sun.jna;
     requires javafx.controls;
-    requires org.kordamp.ikonli.javafx;
-    requires atlantafx.base;
-    requires org.kordamp.ikonli.feather;
-    requires com.jthemedetector;
+    requires com.google.gson;
+    requires java.logging;
+    requires javafx.media;
 
-    exports no.ntnu.idatg2001.gr13.view;
-    exports no.ntnu.idatg2001.gr13.model;
-    exports no.ntnu.idatg2001.gr13.model.actions;
-    exports no.ntnu.idatg2001.gr13.model.goals;
-    exports no.ntnu.idatg2001.gr13.controller;
+    exports no.ntnu.idatg2001.grp13.view;
+    exports no.ntnu.idatg2001.grp13.model;
+    exports no.ntnu.idatg2001.grp13.model.actions;
+    exports no.ntnu.idatg2001.grp13.model.goals;
+    exports no.ntnu.idatg2001.grp13.controller;
+    exports no.ntnu.idatg2001.grp13.stage;
 }
