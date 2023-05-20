@@ -49,7 +49,7 @@ class GoalsTest
         conditionToBeChecked = healthGoal.isFulfilled(player);
         assertTrue(conditionToBeChecked);
 
-        player.addHealth(-1);
+        player.addHealth(10);
         conditionToBeChecked = healthGoal.isFulfilled(player);
         assertFalse(conditionToBeChecked);
     }
