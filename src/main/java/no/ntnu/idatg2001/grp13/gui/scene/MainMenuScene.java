@@ -42,7 +42,6 @@ public class MainMenuScene {
     HBox logoBox = new HBox();
     logoBox.setAlignment(Pos.CENTER_LEFT);
     logoBox.setPadding(new Insets(50, 20, 20, 20));
-
     logoBox.getChildren().add(logoView);
 
     VBox box = new VBox();
@@ -76,8 +75,8 @@ public class MainMenuScene {
     settingsButton.setPrefWidth(225);
     box.getChildren().add(settingsButton);
     settingsButton.setOnMouseClicked(event -> {
-      Scene settingsScene = SettingsScene.getSettingScene(stage);
-      contentContainer.getChildren().add(settingsScene.getRoot());
+      Scene settingScene = SettingsScene.getSettingScene(stage);
+      contentContainer.getChildren().add(settingScene.getRoot());
     });
 
     BorderPane bottomInformation = new BorderPane();
