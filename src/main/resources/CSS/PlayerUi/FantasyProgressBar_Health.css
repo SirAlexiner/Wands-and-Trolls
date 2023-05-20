@@ -1,0 +1,14 @@
+.progress-bar .track {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.progress-bar .bar {
+    -fx-background-image: url("../../Image/PlayerUi/Health_Bar_Fill.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: stretch;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}

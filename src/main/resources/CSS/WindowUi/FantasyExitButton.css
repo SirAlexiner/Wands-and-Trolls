@@ -1,0 +1,10 @@
+.button {
+    -fx-background-image: url('../../Image/FantasyExitButton/Window_Exit_Button_Background.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
