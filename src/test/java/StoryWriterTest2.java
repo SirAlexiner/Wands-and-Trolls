@@ -96,6 +96,26 @@ class StoryWriterTest2 {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void negTestWriteStoryTitle() throws IOException {
+        Story unexpected = new Story("", passageBeginnings);
+        Path filePath = Path.of(emptyStoryFileLocation);
+
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            StoryWriter.writeToFile(unexpected, emptyStoryFileLocation);
+        });
+
+        assertEquals("", unexpected.getTitle());
+        try {
+            String actual = Files.readString(filePath);
+            // checks that file writer has not written anything
+            assertTrue(actual.isBlank());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @Test
     void negTestWritePassage() {
         Path filePath = Path.of(emptyStoryFileLocation);
