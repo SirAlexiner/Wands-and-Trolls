@@ -72,6 +72,23 @@ class StoryWriterTest2 {
     }
 
     @Test
+    void posTestWriteLink() throws IOException {
+        Link expected = new Link("Random", "Random");
+        passageBeginnings.addLink(expected);
+        StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
+        Path filePath = Path.of(hauntedHouseFileLocation);
+
+        try {
+            String actual = Files.readString(filePath);
+            // checks that file writer has not written anything
+            System.out.println(actual);
+            assertTrue(actual.contains(expected.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @Test
     void negTestWriteLink() {
         Path filePath = Path.of(emptyStoryFileLocation);
         Story unexpected = new Story("", passageBeginnings);
@@ -81,7 +98,6 @@ class StoryWriterTest2 {
         passageWizardRoom.addLink(new Link("", ""));
         // adds a not empty link
         passageWizardRoom.addLink(new Link("Not an empty link", "Not an empty link"));
-
 
         // Writes the story to .path format
         assertThrows(IllegalArgumentException.class, () -> {
