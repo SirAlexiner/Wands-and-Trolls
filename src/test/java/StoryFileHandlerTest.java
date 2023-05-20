@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StoryFileHandlerTest {
     String filenameTest;
-    String sameFileNameTest;
+    String testOtherFileLocation;
     String hauntedHouseFileLocation;
     Story storyHauntedHouse;
     Story testStory;
@@ -49,11 +49,11 @@ class StoryFileHandlerTest {
     void setUp() {
         emptyStoryFileLocation = "src/test/resources/emptyStory.paths";
         filenameTest = "src/test/resources/test.paths";
-        sameFileNameTest = "src/test/resources/testOther.paths";
+        testOtherFileLocation = "src/test/resources/testOther.paths";
         hauntedHouseFileLocation = "src/test/resources/hauntedHouse.paths";
 
         testStory = StoryFileHandler.readFromFile(filenameTest);
-        sameTestStory = StoryFileHandler.readFromFile(sameFileNameTest);
+        sameTestStory = StoryFileHandler.readFromFile(testOtherFileLocation);
         differentStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
 
         // Create 1 passage
@@ -220,9 +220,7 @@ class StoryFileHandlerTest {
     @CsvFileSource(resources = "hauntedHouse.paths")
     void posTestWriteLink(String csvFile) {
         String expected = openBookLink.toString();
-        if (csvFile.contains(expected)){
-            assertEquals(expected, csvFile);
-        }
+        assertTrue(csvFile.contentEquals(expected));
     }
     @Test
     void negTestWriteLink() {
@@ -249,6 +247,14 @@ class StoryFileHandlerTest {
             e.printStackTrace();
         }
     }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "testOther.paths")
+    void posTestWriteTitle_Story(String csvFile) {
+        String expected = "Planet of the trolls";
+        assertTrue(csvFile.contentEquals(expected));
+    }
+
     /*
     Test reading an empty text file.
      */
