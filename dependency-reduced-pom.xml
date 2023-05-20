@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>no.ntnu.torgrilt</groupId>
-  <artifactId>DallEDemo</artifactId>
-  <name>DallEDemo</name>
+  <groupId>no.ntnu.idatg2001.grp13</groupId>
+  <artifactId>Paths</artifactId>
+  <name>Wands and Trolls</name>
   <version>1.0-SNAPSHOT</version>
   <build>
     <plugins>
@@ -30,7 +30,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>DalleDemo/no.ntnu.idatg2001.grp13.WandsAndTrolls</mainClass>
+              <mainClass>WandsAndTrolls/no.ntnu.idatg2001.grp13.WandsAndTrolls</mainClass>
             </configuration>
           </execution>
         </executions>
@@ -88,7 +88,7 @@
               <goal>copy-resources</goal>
             </goals>
             <configuration>
-              <outputDirectory>${project.build.outputDirectory}/properties</outputDirectory>
+              <outputDirectory>${project.build.outputDirectory}/Properties</outputDirectory>
               <resources>
                 <resource>
                   <directory>src/main/resources/properties</directory>
@@ -147,7 +147,8 @@
   </dependencies>
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
-    <project.version>${version}</project.version>
+    <project.version>${project.version}</project.version>
+    <api.key>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</api.key>
     <maven.compiler.target>17</maven.compiler.target>
     <maven.build.timestamp.format>HH.mm.dd.MM.yy</maven.build.timestamp.format>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

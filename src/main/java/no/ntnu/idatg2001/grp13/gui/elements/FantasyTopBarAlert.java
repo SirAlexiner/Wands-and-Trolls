@@ -21,7 +21,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.scene.MainMenu;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 
 public class FantasyTopBarAlert extends StackPane {
   private static final ImageView alertIconView = new ImageView();
@@ -92,7 +92,7 @@ public class FantasyTopBarAlert extends StackPane {
 
     exitIconView.setOnMouseClicked(event -> {
       AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainMenu.class.getResource("/Audio/mouseclick_softer.wav"))
+          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
               .toString());
       buttonClick.play();
       FantasyAlert.setResult(ButtonType.CANCEL);

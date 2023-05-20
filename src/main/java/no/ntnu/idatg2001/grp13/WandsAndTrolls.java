@@ -1,7 +1,6 @@
 package no.ntnu.idatg2001.grp13;
 
-import no.ntnu.idatg2001.grp13.gui.scene.MainMenu;
-import no.ntnu.idatg2001.grp13.gui.stage.MainMenuStage;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 public class WandsAndTrolls {
@@ -10,6 +9,6 @@ public class WandsAndTrolls {
     // and configures the logger to write to a file called ErrorLog.log.
     ErrorLogger errorLogger = new ErrorLogger();
     errorLogger.configureLogger("ErrorLog.log", "./cfg/logs");
-    MainMenuStage.startGame(args);
+    MainStage.startGame(args);
   }
 }

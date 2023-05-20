@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.scene.MainMenu;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 
 public class FantasyTopBar extends StackPane {
 
@@ -89,16 +89,16 @@ public class FantasyTopBar extends StackPane {
 
     exitIconView.setOnMouseClicked(event -> {
       AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainMenu.class.getResource("/Audio/mouseclick_softer.wav"))
+          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
               .toString());
       buttonClick.play();
       FantasyAlert quitAlert = new FantasyAlert(stage);
-      quitAlert.setAlertType(Alert.AlertType.WARNING);
+      quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
       quitAlert.setHeader("Are you certain you want to Exit?");
 
       quitAlert.showAndWait();
 
-      if (FantasyAlert.getResult().equals(ButtonType.YES)) {
+      if (FantasyAlert.getResult().equals(ButtonType.OK)) {
         System.exit(0);
       }
     });

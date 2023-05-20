@@ -1,0 +1,15 @@
+.label {
+    -fx-text-fill: #000000;
+}
+
+.button {
+    -fx-background-image: url('../../Image/FantasyButton/Fantasy_Button_Bone.png');
+}
+
+.button:hover {
+    -fx-background-image: url('../../Image/FantasyButton/Fantasy_Button_Bone_Hover.png');
+}
+
+.button:pressed {
+    -fx-background-image: url('../../Image/FantasyButton/Fantasy_Button_Bone_Pressed.png');
+}

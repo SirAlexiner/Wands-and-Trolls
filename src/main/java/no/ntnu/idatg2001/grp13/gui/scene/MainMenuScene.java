@@ -3,41 +3,37 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.logging.Level;
-
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
+import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.util.App;
 import no.ntnu.idatg2001.grp13.gui.util.OpenAiImage;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
-public class MainMenu {
+@UtilityClass
+public class MainMenuScene {
   private static final boolean USE_AI = false;
+  @Getter
+  private StackPane contentContainer;
 
-  /**
-   * {@inheritDoc}
-   *
-   * @return
-   */
-  public static BorderPane getMainMeuScene(Stage primaryStage) {
-
+  public static StackPane getScene(Stage stage) {
     Image logo =
-        new Image(String.valueOf(MainMenu.class.getResource(
+        new Image(String.valueOf(MainStage.class.getResource(
             "/Image/MainMenu/WnT_logo_caption.png")));
     ImageView logoView = new ImageView(logo);
     logoView.setFitWidth(225);
@@ -53,15 +49,21 @@ public class MainMenu {
     box.setSpacing(10);
     box.setAlignment(Pos.CENTER);
     Button newGameButton = new FantasyButton("New Game");
+    newGameButton.setOnMouseClicked(event -> {
+      Scene newGameScene = NewGame.getNewGameScene(stage);
+      contentContainer.getChildren().add(newGameScene.getRoot());
+    });
     newGameButton.setPrefWidth(225);
     box.getChildren().add(newGameButton);
 
     BorderPane content = new BorderPane();
+    contentContainer = new StackPane(content);
+    contentContainer.setPrefHeight(660);
+
     Button loadButton = new FantasyButton("Load Adventure");
     loadButton.setOnMouseClicked(event -> {
-      Scene loader = FilePicker.getFilePickerScene(primaryStage);
-      content.getChildren().clear();
-      content.setCenter(loader.getRoot());
+      Scene filePickerScene = FilePicker.getFilePickerScene(stage);
+      contentContainer.getChildren().add(filePickerScene.getRoot());
     });
     loadButton.setPrefWidth(225);
     box.getChildren().add(loadButton);
@@ -93,7 +95,7 @@ public class MainMenu {
 
     Image companyLogo =
         new Image(
-            String.valueOf(MainMenu.class.getResource(
+            String.valueOf(MainStage.class.getResource(
                 "/Image/MainMenu/company_logo.png")));
     ImageView companyLogoview = new ImageView(companyLogo);
     companyLogoview.setFitWidth(225);
@@ -105,33 +107,17 @@ public class MainMenu {
     companyLogoBox.getChildren().addAll(companyLogoview, copyright);
 
     copyrightInformation.getChildren().add(companyLogoBox);
-    HBox quit = new HBox();
-    quit.setAlignment(Pos.BOTTOM_RIGHT);
-    FantasyButton exitButton = new FantasyButton("Quit");
-    exitButton.setPrefWidth(150);
-    quit.getChildren().add(exitButton);
 
-    exitButton.setOnMouseClicked(event -> {
-      FantasyAlert quitAlert = new FantasyAlert(primaryStage);
-      quitAlert.setAlertType(Alert.AlertType.WARNING);
-      quitAlert.setHeader("Are you certain you want to Exit?");
 
-      // Show the alert and wait for user interaction
-      quitAlert.showAndWait();
-
-      // Handle the button click
-      if (FantasyAlert.getResult().equals(ButtonType.YES)) {
-        // User chose to quit, perform necessary actions
-        primaryStage.close();
-      }
-    });
+    HBox emptySpacer = new HBox();
+    emptySpacer.setPrefWidth(150);
 
     bottomInformation.setLeft(versionInformation);
     bottomInformation.setCenter(copyrightInformation);
-    bottomInformation.setRight(quit);
+    bottomInformation.setRight(emptySpacer);
 
     Image background = new Image(
-        Objects.requireNonNull(MainMenu.class.getResourceAsStream(
+        Objects.requireNonNull(MainStage.class.getResourceAsStream(
             "/Image/MainMenu/Main_Menu.gif")));
     ImageView backgroundView = new ImageView(background);
     backgroundView.setFitWidth(1024);
@@ -148,7 +134,8 @@ public class MainMenu {
     clipRect.setArcWidth(30);
     clipRect.setArcHeight(30);
 
-    content.setClip(clipRect);
+    contentContainer.setClip(clipRect);
+
 
     Task<Image> loadImageTask = new Task<>() {
       @Override
@@ -165,7 +152,7 @@ public class MainMenu {
             ErrorLogger.LOGGER.log(Level.SEVERE,
                 String.format("Failed to load AI Image: %s", e));
             return new Image(Objects.requireNonNull(
-                MainMenu.class.getResourceAsStream("/Image/Window/Background.png")));
+                MainStage.class.getResourceAsStream("/Image/Window/Background.png")));
           }
         } else {
           return null;
@@ -189,6 +176,7 @@ public class MainMenu {
     Thread loadImageThread = new Thread(loadImageTask);
     loadImageThread.setDaemon(true);
     loadImageThread.start();
-    return content;
+
+    return contentContainer;
   }
 }

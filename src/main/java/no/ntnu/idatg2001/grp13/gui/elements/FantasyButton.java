@@ -8,7 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.media.AudioClip;
 import lombok.Getter;
 import lombok.Setter;
-import no.ntnu.idatg2001.grp13.gui.scene.MainMenu;
+import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 
 public class FantasyButton extends Button {
   @Getter
@@ -27,9 +28,20 @@ public class FantasyButton extends Button {
     setOnMouseExited(event -> setCursor(Cursor.DEFAULT));
     setOnAction(event -> {
       AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainMenu.class.getResource("/Audio/mouseclick_softer.wav"))
+          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
               .toString());
       buttonClick.play();
     });
+  }
+
+  public void setFantasyButtonType(FantasyButtonType buttonType) {
+    switch (buttonType) {
+      case BLUE -> getStylesheets().add(String.valueOf(FantasyButton.class.getResource(
+          "/CSS/WindowUi/FantasyButton_Blue.css")));
+      case BONE -> getStylesheets().add(String.valueOf(FantasyButton.class.getResource(
+          "/CSS/WindowUi/FantasyButton_Bone.css")));
+      default -> getStylesheets().add(String.valueOf(FantasyButton.class.getResource(
+          "/CSS/WindowUi/FantasyButton.css")));
+    }
   }
 }
