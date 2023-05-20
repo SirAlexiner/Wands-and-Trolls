@@ -17,7 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import no.ntnu.idatg2001.grp13.gui.scene.MainMenu;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 
 public class FantasyPlayerUi extends StackPane {
   private int maxHealth;
@@ -41,7 +41,7 @@ public class FantasyPlayerUi extends StackPane {
     setScaleY(scale);
 
     getStylesheets()
-        .add(String.valueOf(MainMenu.class.getResource("/CSS/PlayerUi/FantasyPlayerUi.css")));
+        .add(String.valueOf(MainStage.class.getResource("/CSS/PlayerUi/FantasyPlayerUi.css")));
 
     Image playerUiImage = new Image(Objects.requireNonNull(
         FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/PlayerUi_Background.png")));
@@ -129,8 +129,8 @@ public class FantasyPlayerUi extends StackPane {
         FantasyPlayerUi.class.getResourceAsStream(
             "/Image/PlayerUi/Default_Avatar.png")));
     avatarImageView = new ImageView(avatarImage);
-    avatarImageView.setPreserveRatio(true);
     avatarImageView.setFitWidth(60);
+    avatarImageView.setFitHeight(60);
     avatarImageView.setTranslateX(-65);
 
     Rectangle avatarClip = new Rectangle(60, 60);
@@ -167,7 +167,9 @@ public class FantasyPlayerUi extends StackPane {
   }
 
   public void setPlayerAvatar(Image image) {
-    avatarImageView.setImage(image);
+    if (image != null) {
+      avatarImageView.setImage(image);
+    }
   }
 
   private void animateProgressBar(ProgressBar progressBar, double targetProgress) {
