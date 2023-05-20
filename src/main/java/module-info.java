@@ -11,4 +11,5 @@ module WandsAndTrolls {
   exports no.ntnu.idatg2001.grp13.util;
   exports no.ntnu.idatg2001.grp13.gui.elements;
   exports no.ntnu.idatg2001.grp13.gui.scene;
+  exports no.ntnu.idatg2001.grp13.gui.stage to javafx.graphics;
 }
