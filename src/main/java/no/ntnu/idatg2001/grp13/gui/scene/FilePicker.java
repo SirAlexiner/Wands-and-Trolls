@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
+import no.ntnu.idatg2001.grp13.gui.stage.MainMenuStage;
 
 @UtilityClass
 public class FilePicker {
@@ -78,7 +79,7 @@ public class FilePicker {
     });
 
     root.setCenter(dropLabel);
-    root.setBottom(buildCancelButton());
+    root.setBottom(buildCancelButton(stage));
 
     return new Scene(root);
   }
@@ -88,9 +89,11 @@ public class FilePicker {
    * The grid pane places the cancel button in the bottom left corner.
    * @return a grid pane containing a button.
    */
-  private GridPane buildCancelButton() {
+  private GridPane buildCancelButton(Stage stage) {
     GridPane gridPane = new GridPane();
     Button cancelButton = new FantasyButton("Cancel");
+    cancelButton.setOnMouseClicked(mouseEvent -> MainMenuStage.getRoot().setCenter(MainMenu.getMainMeuScene(stage)));
+
     gridPane.getChildren().add(cancelButton);
 
     gridPane.setAlignment(Pos.BOTTOM_LEFT);
