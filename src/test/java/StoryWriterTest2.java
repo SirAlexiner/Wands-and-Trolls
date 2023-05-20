@@ -86,7 +86,6 @@ class StoryWriterTest2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
     @Test
     void negTestWriteLink() {
@@ -149,6 +148,23 @@ class StoryWriterTest2 {
             // checks that file writer has not written anything
             assertTrue(actual.isBlank());
         } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void posTestWritePassage() throws IOException {
+        Passage expected = new Passage("Random", "Random");
+        storyHauntedHouse.addPassage(expected);
+        StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
+        Path filePath = Path.of(hauntedHouseFileLocation);
+
+        try {
+            String actual = Files.readString(filePath);
+            // checks that file writer has not written anything
+            System.out.println(actual);
+            assertTrue(actual.contains(expected.toString()));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
