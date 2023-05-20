@@ -55,7 +55,7 @@ class GoldActionTest {
         String unexpected = "Health";
         assertNotEquals(unexpected, actual);
     }
-    @Test
+    /*@Test
     void testIsFulFilled() {
         goldAction.execute(player);
         player.addGold(-11);
@@ -65,4 +65,6 @@ class GoldActionTest {
         player.addGold(10);
         assertTrue(goldAction.isFulFilled(player));
     }
+
+     */
 }

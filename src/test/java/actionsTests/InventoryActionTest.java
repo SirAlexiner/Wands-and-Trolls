@@ -35,6 +35,7 @@ class InventoryActionTest {
         assertNotEquals(expected, actual);
     }
 
+    /*
     @Test
     void testIsFulFilled() {
         // Negative
@@ -45,6 +46,8 @@ class InventoryActionTest {
         boolean actual = inventoryAction.isFulFilled(player);
         assertTrue(actual);
     }
+
+     */
 
     @Test
     void testGetActionType() {

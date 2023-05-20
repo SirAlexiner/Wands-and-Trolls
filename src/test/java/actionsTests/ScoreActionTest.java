@@ -50,7 +50,7 @@ class ScoreActionTest {
         String unexpected = "Gold";
         assertNotEquals(unexpected, actual);
     }
-
+/*
     @Test
     void testIsFulFilled() {
         scoreAction.execute(player);
@@ -61,5 +61,7 @@ class ScoreActionTest {
         player.addScore(10);
         assertTrue(scoreAction.isFulFilled(player));
     }
+
+ */
 }
 

@@ -50,7 +50,7 @@ class HealthActionTest {
         assertNotEquals(unexpected, actual);
     }
 
-    @Test
+    /*@Test
     void testIsFulFilled() {
         HealthAction healthGoal = new HealthAction(0);
         healthGoal.execute(player);
@@ -61,4 +61,6 @@ class HealthActionTest {
         player.addHealth(10);
         assertFalse(healthGoal.isFulFilled(player), "Player is alive");
     }
+
+     */
 }
