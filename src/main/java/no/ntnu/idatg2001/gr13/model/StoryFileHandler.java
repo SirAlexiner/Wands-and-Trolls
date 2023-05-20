@@ -46,7 +46,7 @@ public class StoryFileHandler
     }
 
     /**
-     * The method takes a Story object and writes it using the "writer".
+     * The method takes a Story object and writes it using the BufferedWriter.
      *
      * @param story the Story object to be written
      * @param writer the writer to write
