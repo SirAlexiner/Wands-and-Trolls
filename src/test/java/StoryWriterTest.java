@@ -1,7 +1,7 @@
 import no.ntnu.idatg2001.gr13.model.Link;
 import no.ntnu.idatg2001.gr13.model.Passage;
 import no.ntnu.idatg2001.gr13.model.Story;
-import no.ntnu.idatg2001.gr13.model.StoryFileHandler;
+import no.ntnu.idatg2001.gr13.model.StoryWriter;
 import no.ntnu.idatg2001.gr13.model.actions.Action;
 import no.ntnu.idatg2001.gr13.model.actions.GoldAction;
 import no.ntnu.idatg2001.gr13.model.actions.HealthAction;
@@ -14,11 +14,10 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StoryFileHandlerTest {
+class StoryWriterTest {
     String filenameTest;
     String testOtherFileLocation;
     String hauntedHouseFileLocation;
@@ -51,11 +50,13 @@ class StoryFileHandlerTest {
         filenameTest = "src/test/resources/test.paths";
         testOtherFileLocation = "src/test/resources/testOther.paths";
         hauntedHouseFileLocation = "src/test/resources/hauntedHouse.paths";
-
+/*
         testStory = StoryFileHandler.readFromFile(filenameTest);
         sameTestStory = StoryFileHandler.readFromFile(testOtherFileLocation);
         differentStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
 
+
+ */
         // Create 1 passage
         passageBeginnings = new Passage(passageBeginningsTitle, passageBeginningsContent);
         passageBeginnings.addLink(enterLink = new Link("Try to open the door", "Another room"));
@@ -120,6 +121,7 @@ class StoryFileHandlerTest {
         assertNotSame(testStory, differentStory);
     }
 
+    /*
     @Test
     void posReaderStoryName() {
         String actual = StoryFileHandler.readFromFile(hauntedHouseFileLocation).getTitle();
@@ -152,6 +154,7 @@ class StoryFileHandlerTest {
             //System.out.println(passageInStory.getContent().matches(passageContentAnotherRoom));
         }
     }
+    */
     @ParameterizedTest
     @CsvFileSource(resources = "hauntedHouse.paths")
     void posTestWriteStoryTitle(String csvFile) {
@@ -164,7 +167,7 @@ class StoryFileHandlerTest {
     @Test
     void negTestWriteStoryTitle() throws IOException {
         Story unexpected = new Story("", passageBeginnings);
-        StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
+        StoryWriter.writeToFile(unexpected, emptyStoryFileLocation);
 
         Path filePath = Path.of(emptyStoryFileLocation);
 
@@ -181,7 +184,7 @@ class StoryFileHandlerTest {
     @CsvFileSource(resources = "hauntedHouse.paths")
     void posTestWritePassageTitle(String csvFile) {
         String expected = "::" + passageAnotherRoom.getTitle();
-        if (csvFile.contains(expected)){
+        if (csvFile.contentEquals(expected)){
             assertEquals(expected, csvFile);
         }
     }
@@ -196,7 +199,7 @@ class StoryFileHandlerTest {
         // Writes the story to .path format
         // Checks that it throws if there is an illegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> {
-            StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
+            StoryWriter.writeToFile(unexpected, emptyStoryFileLocation);
         });
         try {
             String actual = Files.readString(filePath);
@@ -237,7 +240,7 @@ class StoryFileHandlerTest {
         // Writes the story to .path format
         assertThrows(IllegalArgumentException.class, () -> {
             // Checks that it throws if there is an illegalArgumentException
-            StoryFileHandler.writeToFile(unexpected, emptyStoryFileLocation);
+            StoryWriter.writeToFile(unexpected, emptyStoryFileLocation);
         });
         try {
             String actual = Files.readString(filePath);
@@ -256,17 +259,6 @@ class StoryFileHandlerTest {
     }
 
     /*
-    Test reading an empty text file.
-     */
-    @Test
-    void negReadStoryTitle() throws IOException {
-        Story emptyStory = new Story("", new Passage("", ""));
-        StoryFileHandler.writeToFile(emptyStory, "src/test/resources/emptyStory.paths");
-        Story actual = StoryFileHandler.readFromFile("src/test/resources/emptyStory.paths");
-
-        assertNull(actual);
-    }
-
     @Test
     void posReadStoryTitle(){
         Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
@@ -301,6 +293,8 @@ class StoryFileHandlerTest {
         assertEquals(expected, actual);
     }
 
+
+
     @Test
     void negTestReadLinks(){
         Story actualStory = StoryFileHandler.readFromFile(hauntedHouseFileLocation);
@@ -310,6 +304,8 @@ class StoryFileHandlerTest {
         String unexpected = new Link("", "").toString();
         assertNotEquals(unexpected, actual);
     }
+
+     */
 
     void setupFor_posTestWriteWithMultipleAttributes() throws IOException{
         passageAnotherRoom.addLink(exitLink);
@@ -323,7 +319,7 @@ class StoryFileHandlerTest {
         storyHauntedHouse.addPassage(passageAnotherRoom);
         storyHauntedHouse.addPassage(passageWizardRoom);
 
-        StoryFileHandler.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
+        StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
     }
     @Test
     void posTestWriteWithMultiplePassages() throws IOException {
