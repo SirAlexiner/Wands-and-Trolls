@@ -97,7 +97,7 @@ public class FantasyPlayerUi extends StackPane {
     healthLabel.setId("health");
     healthLabel.setTextAlignment(TextAlignment.CENTER);
     Image healthIconImage = new Image(Objects.requireNonNull(
-        FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/heart.png")));
+        FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/Health.png")));
     ImageView healthIconImageView = new ImageView(healthIconImage);
     healthIconImageView.setPreserveRatio(true);
     healthIconImageView.setFitWidth(13);
