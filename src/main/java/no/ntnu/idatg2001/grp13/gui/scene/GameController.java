@@ -41,4 +41,9 @@ public class GameController {
     }
     return story.getOpeningPassage().getContent();
   }
+
+  public static String getNextPassage() {
+    return game.go(story.getOpeningPassage().getLinks().get(0)).getTitle();
+  }
+
 }

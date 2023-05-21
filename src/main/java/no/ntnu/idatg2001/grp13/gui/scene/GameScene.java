@@ -21,6 +21,7 @@ import no.ntnu.idatg2001.grp13.model.Link;
  * experience.
  */
 public class GameScene {
+  private static TextArea passageContentText;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
     root.getStylesheets().add(
@@ -32,27 +33,34 @@ public class GameScene {
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);
 
-    // Initializes the text area, containing passage content
-    TextArea passageContent = new TextArea();
-    passageContent.setPrefSize(300, 100);
-    passageContent.setEditable(false);
 
     // Initializes a ListView containing link
     ListView<Link> linkView = new ListView<>();
     linkView.setPrefSize(100, 50);
 
+    // Initializes the text area, containing passage content
+    passageContentText = new TextArea(GameController.getPassageContent());
+    passageContentText.setPrefSize(300, 100);
+    passageContentText.setEditable(false);
+
+
     // Initializes a vertical box containing passage and link
     VBox containerPassageAndLink = new VBox();
     containerPassageAndLink.setAlignment(Pos.CENTER);
     containerPassageAndLink.setSpacing(10);
-    containerPassageAndLink.getChildren().addAll(passageContent, linkView);
+    containerPassageAndLink.getChildren().addAll(passageContentText, linkView);
 
-    FantasyButton button = new FantasyButton("Next!");
+    FantasyButton nextButton = new FantasyButton("Next!");
+    nextButton.setOnMouseClicked(event -> {
+      passageContentText.clear();
+      GameController.getNextPassage();
+
+    });
 
     // Initializes a container containing passages and button
     HBox containerAction = new HBox();
     containerAction.setSpacing(10);
-    containerAction.getChildren().addAll(containerPassageAndLink, button);
+    containerAction.getChildren().addAll(containerPassageAndLink, nextButton);
     containerAction.setAlignment(Pos.CENTER);
 
     // sets it to the bottom of the screen
@@ -64,4 +72,6 @@ public class GameScene {
 
     return new Scene(root);
   }
+
+
 }
