@@ -3,7 +3,6 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -27,84 +26,98 @@ public class GameScene {
   private static ListView<Link> linkView;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
-    root.getStylesheets().add(
-        String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
+    setupScene(root);
 
+    GameController.startGame();
+    linkView.setItems(GameController.getLinkForPassage());
+
+    setTextAreaContent();
+
+    VBox containerPassageAndLink = setupContainerForPassageAndLink();
+    FantasyButton nextButton = setupNextButton();
+
+    HBox containerAction = setupActionContainer(containerPassageAndLink, nextButton);
+
+    root.setBottom(containerAction);
+
+    return new Scene(root);
+  }
+
+  private static void setupScene(BorderPane root) {
+    root.getStylesheets().add(String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
+
+    ImageView backgroundView = setupBackgroundView();
+    root.getChildren().add(backgroundView);
+    backgroundView.toBack();
+
+    linkView = setupLinkView();
+    passageContentTextArea = setupPassageContentTextArea();
+  }
+
+  private static ImageView setupBackgroundView() {
     Image background = new Image(Objects.requireNonNull(
         SettingsScene.class.getResourceAsStream("/Image/Window/Background_Purple.png")));
     ImageView backgroundView = new ImageView(background);
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);
 
-    // Initializes a ListView containing link title
-    linkView = new ListView<>();
+    return backgroundView;
+  }
+
+  private static ListView<Link> setupLinkView() {
+    ListView<Link> linkView = new ListView<>();
     linkView.setPrefSize(100, 50);
 
+    return linkView;
+  }
 
-    GameController.startGame();
-    linkView.setItems(GameController.getLinkForPassage());
-
-    // Initializes the text area
-    passageContentTextArea = new TextArea();
+  private static TextArea setupPassageContentTextArea() {
+    TextArea passageContentTextArea = new TextArea();
     passageContentTextArea.setPrefSize(300, 100);
     passageContentTextArea.setEditable(false);
+
+    return passageContentTextArea;
+  }
+
+  private static void setTextAreaContent() {
     passageContentTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
         + GameController.getCurrentPassage().getContent());
+  }
 
-    // Initializes a vertical box containing passage and link
+  private static VBox setupContainerForPassageAndLink() {
     VBox containerPassageAndLink = new VBox();
     containerPassageAndLink.setAlignment(Pos.CENTER);
     containerPassageAndLink.setSpacing(10);
     containerPassageAndLink.getChildren().addAll(passageContentTextArea, linkView);
 
+    return containerPassageAndLink;
+  }
 
-    // Initializes a "next" button and adds a mouse click event
-    // to clear the text.
+  private static FantasyButton setupNextButton() {
     FantasyButton nextButton = new FantasyButton("Next!");
+
     nextButton.setOnMouseClicked(event -> {
       GameController.startGame();
-      // sends the selected link to the controller
+
       Link selectedLink = linkView.getSelectionModel().getSelectedItem();
       if (selectedLink != null) {
-        // clears the screen
         passageContentTextArea.clear();
         linkView.refresh();
-        //the passage object, sends the title and content to the controller
+
         Passage nextPassage = GameController.getNextPassage(selectedLink);
         passageContentTextArea.setText(nextPassage.getTitle() + "\n" + nextPassage.getContent());
-        //sets the links in the list view
         linkView.setItems(GameController.getLinkForPassage());
       }
     });
+    return nextButton;
+  }
 
-    linkView.setCellFactory(param -> new ListCell<>() {
-      @Override
-      protected void updateItem(Link item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-        } else {
-          setText(item.getText());
-        }
-      }
-    });
-
-    // Initializes a container containing passages and button
+  private static HBox setupActionContainer(VBox containerPassageAndLink, FantasyButton nextButton) {
     HBox containerAction = new HBox();
     containerAction.setSpacing(10);
     containerAction.getChildren().addAll(containerPassageAndLink, nextButton);
     containerAction.setAlignment(Pos.CENTER);
 
-    // sets it to the bottom of the screen
-    root.setBottom(containerAction);
-
-    // Sends the background the back
-    root.getChildren().add(backgroundView);
-    backgroundView.toBack();
-
-    return new Scene(root);
+    return containerAction;
   }
-
-
-
 }
