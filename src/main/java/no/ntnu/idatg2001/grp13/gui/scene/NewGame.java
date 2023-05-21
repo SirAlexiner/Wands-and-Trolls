@@ -103,11 +103,17 @@ public class NewGame {
       }
     });
 
-    FantasyButton saveButton = new FantasyButton("Start Adventure");
-    saveButton.setFantasyButtonType(FantasyButtonType.BONE);
-    saveButton.setPrefWidth(200);
+    FantasyButton startAdventure = new FantasyButton("Start Adventure");
+    startAdventure.setFantasyButtonType(FantasyButtonType.BONE);
+    startAdventure.setPrefWidth(200);
+    startAdventure.setOnMouseClicked(mouseEvent -> {
+      Scene gameScene = GameScene.getGameScene(stage);
+      MainMenuScene.getContentContainer().getChildren().clear();
+      MainMenuScene.getContentContainer().getChildren().add(gameScene.getRoot());
 
-    HBox bottomButtons = new HBox(saveButton, cancelButton);
+    });
+
+    HBox bottomButtons = new HBox(startAdventure, cancelButton);
     bottomButtons.setAlignment(Pos.CENTER);
     bottomButtons.setSpacing(15);
     bottomButtons.setTranslateX(40);
