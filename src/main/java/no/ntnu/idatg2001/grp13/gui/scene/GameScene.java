@@ -4,6 +4,7 @@ import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -12,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.model.Link;
@@ -74,6 +76,17 @@ public class GameScene {
   private static ListView<Link> setupLinkView() {
     ListView<Link> linkView = new ListView<>();
     linkView.setPrefSize(100, 50);
+    linkView.setCellFactory(param -> new ListCell<>() {
+      @Override
+      protected void updateItem(Link link, boolean empty) {
+        super.updateItem(link, empty);
+        if (empty || link == null) {
+          setText(null);
+        } else {
+          setText(link.getText());
+        }
+      }
+    });
 
     return linkView;
   }
