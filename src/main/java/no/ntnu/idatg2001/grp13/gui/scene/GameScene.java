@@ -22,6 +22,7 @@ import no.ntnu.idatg2001.grp13.model.Link;
  */
 public class GameScene {
   private static TextArea passageContentText;
+  private static ListView<String> linkView;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
     root.getStylesheets().add(
@@ -33,9 +34,8 @@ public class GameScene {
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);
 
-
-    // Initializes a ListView containing link
-    ListView<Link> linkView = new ListView<>();
+    // Initializes a ListView containing link title
+    linkView = new ListView<>();
     linkView.setPrefSize(100, 50);
 
     // Initializes the text area, containing passage content
@@ -50,11 +50,14 @@ public class GameScene {
     containerPassageAndLink.setSpacing(10);
     containerPassageAndLink.getChildren().addAll(passageContentText, linkView);
 
+    // Initializes a "next" button and adds a mouse click event
+    // to clear the text.
     FantasyButton nextButton = new FantasyButton("Next!");
     nextButton.setOnMouseClicked(event -> {
       passageContentText.clear();
       String nextPassageContent = GameController.getNextPassage();
       passageContentText.setText(nextPassageContent);
+      linkView.setItems(GameController.getLinkForPassage());
     });
 
     // Initializes a container containing passages and button
@@ -71,14 +74,6 @@ public class GameScene {
     backgroundView.toBack();
 
     return new Scene(root);
-  }
-
-  private static TextArea getPassageText(String passageContent) {
-    // Initializes the text area, containing passage content
-    passageContentText = new TextArea(passageContent);
-    passageContentText.setPrefSize(300, 100);
-    passageContentText.setEditable(false);
-    return passageContentText;
   }
 
 
