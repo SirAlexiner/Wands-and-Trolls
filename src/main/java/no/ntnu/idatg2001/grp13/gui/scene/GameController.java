@@ -36,20 +36,35 @@ public class GameController {
    * A method for starting the game. Sets the current passage.
    */
   public static void startGame(Stage stage) {
+    setupGoalsAndPlayer();
+    initializeStory(stage);
+    initializeGame();
+    currentPassage = game.begin();
+  }
+
+  private static void setupGoalsAndPlayer() {
     goals.add(new GoldGoals(10));
     player = new Player("Arthur", 10, 10, 10);
+  }
+
+  private static void initializeStory(Stage stage) {
     story = StoryReader.readFromFile("src/test/resources/hauntedHouse.paths");
-    if (!story.getBrokenLinks().isEmpty()) {
+    if (storyHasBrokenLinks()) {
       GameScene.storyContainingBrokenLinks(stage).showAndWait();
     }
+  }
+
+  private static boolean storyHasBrokenLinks() {
+    return !story.getBrokenLinks().isEmpty();
+  }
+
+  public static void initializeGame() {
     try {
       game = new Game(player, story, goals);
     } catch (Exception e) {
       ErrorLogger.LOGGER.log(Level.SEVERE,
           String.format("Error loading the game: %s", e));
     }
-    currentPassage = game.begin();
-
   }
 
   public static Passage getCurrentPassage() {
