@@ -3,8 +3,12 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TextArea;
 import no.ntnu.idatg2001.grp13.model.Game;
+import no.ntnu.idatg2001.grp13.model.Link;
+import no.ntnu.idatg2001.grp13.model.Passage;
 import no.ntnu.idatg2001.grp13.model.Player;
 import no.ntnu.idatg2001.grp13.model.Story;
 import no.ntnu.idatg2001.grp13.model.StoryReader;
@@ -19,15 +23,12 @@ import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 public class GameController {
 
 
-
   private static Game game;
   private static Story story;
   private static Player player;
-  static List<Goal> goals = new ArrayList<>();
+  private static Passage currentPassage;
+  private static List<Goal> goals = new ArrayList<>();
 
-  public void populateFields(TextArea passageContent) {
-    passageContent.setText(getPassageContent());
-  }
 
   public static String getPassageContent() {
     goals.add(new GoldGoals(10));
@@ -43,7 +44,15 @@ public class GameController {
   }
 
   public static String getNextPassage() {
-    return game.go(story.getOpeningPassage().getLinks().get(0)).getTitle();
+    return story.getPassages().toString();
+  }
+
+  public static ObservableList<String> getLinkForPassage() {
+    ObservableList<String> linkTitles = FXCollections.observableArrayList();
+    for (Link linkInPassage : story.getOpeningPassage().getLinks()) {
+      linkTitles.add(linkInPassage.getText());
+    }
+    return linkTitles;
   }
 
 }
