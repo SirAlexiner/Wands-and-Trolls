@@ -23,7 +23,7 @@ import no.ntnu.idatg2001.grp13.model.Passage;
  * experience.
  */
 public class GameScene {
-  private static TextArea passageContentText;
+  private static TextArea passageContentTextArea;
   private static ListView<Link> linkView;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
@@ -40,31 +40,41 @@ public class GameScene {
     linkView = new ListView<>();
     linkView.setPrefSize(100, 50);
 
-    // Initializes the text area, containing passage content
-    passageContentText = new TextArea(GameController.getPassageContent());
-    passageContentText.setPrefSize(300, 100);
-    passageContentText.setEditable(false);
 
+    GameController.startGame();
+    linkView.setItems(GameController.getLinkForPassage());
+
+    // Initializes the text area
+    passageContentTextArea = new TextArea();
+    passageContentTextArea.setPrefSize(300, 100);
+    passageContentTextArea.setEditable(false);
+    passageContentTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
+        + GameController.getCurrentPassage().getContent());
 
     // Initializes a vertical box containing passage and link
     VBox containerPassageAndLink = new VBox();
     containerPassageAndLink.setAlignment(Pos.CENTER);
     containerPassageAndLink.setSpacing(10);
-    containerPassageAndLink.getChildren().addAll(passageContentText, linkView);
+    containerPassageAndLink.getChildren().addAll(passageContentTextArea, linkView);
+
 
     // Initializes a "next" button and adds a mouse click event
     // to clear the text.
     FantasyButton nextButton = new FantasyButton("Next!");
     nextButton.setOnMouseClicked(event -> {
-      passageContentText.clear();
-      linkView.refresh();
+      GameController.startGame();
+      // sends the selected link to the controller
       Link selectedLink = linkView.getSelectionModel().getSelectedItem();
       if (selectedLink != null) {
+        // clears the screen
+        passageContentTextArea.clear();
+        linkView.refresh();
+        //the passage object, sends the title and content to the controller
         Passage nextPassage = GameController.getNextPassage(selectedLink);
-        passageContentText.setText(nextPassage.getTitle());
+        passageContentTextArea.setText(nextPassage.getTitle() + "\n" + nextPassage.getContent());
+        //sets the links in the list view
+        linkView.setItems(GameController.getLinkForPassage());
       }
-      //String nextPassageContent = GameController.getNextPassage();
-      linkView.setItems(GameController.getLinkForPassage());
     });
 
     linkView.setCellFactory(param -> new ListCell<>() {
