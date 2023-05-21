@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextArea;
 import no.ntnu.idatg2001.grp13.model.Game;
 import no.ntnu.idatg2001.grp13.model.Link;
 import no.ntnu.idatg2001.grp13.model.Passage;
@@ -30,7 +29,10 @@ public class GameController {
   private static List<Goal> goals = new ArrayList<>();
 
 
-  public static String getPassageContent() {
+  /**
+   * A method for starting the game. Sets the current passage.
+   */
+  public static void startGame() {
     goals.add(new GoldGoals(10));
     player = new Player("Arthur", 10, 10, 10);
     story = StoryReader.readFromFile("src/test/resources/hauntedHouse.paths");
@@ -40,17 +42,25 @@ public class GameController {
       ErrorLogger.LOGGER.log(Level.SEVERE,
           String.format("Error loading the game: %s", e));
     }
-    return story.getOpeningPassage().getContent();
+    currentPassage = game.begin();
+
+  }
+
+  public static Passage getCurrentPassage() {
+    return currentPassage;
   }
 
   public static Passage getNextPassage(Link link) {
-    return game.go(link);
+    currentPassage = game.go(link);
+    return currentPassage;
   }
 
   public static ObservableList<Link> getLinkForPassage() {
     ObservableList<Link> links = FXCollections.observableArrayList();
-    links.addAll(story.getOpeningPassage().getLinks());
+    List<Link> brokenLinks = story.getBrokenLinks();
+    currentPassage.getLinks().stream()
+        .filter(link -> !brokenLinks.contains(link))
+        .forEach(links::add);
     return links;
   }
-
 }
