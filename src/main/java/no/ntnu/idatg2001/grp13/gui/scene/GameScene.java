@@ -104,7 +104,6 @@ public class GameScene {
     FantasyButton nextButton = new FantasyButton("Next!");
 
     nextButton.setOnMouseClicked(event -> {
-      GameController.startGame(stage);
 
       Link selectedLink = linkView.getSelectionModel().getSelectedItem();
       if (selectedLink != null) {
@@ -121,7 +120,7 @@ public class GameScene {
 
   private static FantasyButton setupRestartButton(Stage stage) {
     FantasyButton nextButton = new FantasyButton("Restart!");
-
+    //TODO bug where brokenLinks appears
     nextButton.setOnMouseClicked(event -> {
       // Reset the game state
       GameController.startGame(stage);
