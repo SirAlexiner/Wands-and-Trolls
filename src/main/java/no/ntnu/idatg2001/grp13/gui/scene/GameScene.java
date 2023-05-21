@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.model.Link;
 import no.ntnu.idatg2001.grp13.model.Passage;
@@ -24,18 +26,21 @@ import no.ntnu.idatg2001.grp13.model.Passage;
 public class GameScene {
   private static TextArea passageTextArea;
   private static ListView<Link> linkView;
+  private static Stage stage;
+
   public static Scene getGameScene(Stage stage) {
+
     BorderPane root = new BorderPane();
     setupScene(root);
 
-    GameController.startGame();
+    GameController.startGame(stage);
     linkView.setItems(GameController.getLinkForPassage());
 
     setTextAreaContent();
 
     VBox containerPassageAndLink = setupContainerForPassageAndLink();
     FantasyButton nextButton = setupNextButton();
-    FantasyButton restartButton = setupRestartButton();
+    FantasyButton restartButton = setupRestartButton(stage);
 
     HBox containerAction = setupActionContainer(restartButton, containerPassageAndLink, nextButton);
 
@@ -45,7 +50,8 @@ public class GameScene {
   }
 
   private static void setupScene(BorderPane root) {
-    root.getStylesheets().add(String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
+    root.getStylesheets().add(
+        String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
 
     ImageView backgroundView = setupBackgroundView();
     root.getChildren().add(backgroundView);
@@ -98,7 +104,7 @@ public class GameScene {
     FantasyButton nextButton = new FantasyButton("Next!");
 
     nextButton.setOnMouseClicked(event -> {
-      GameController.startGame();
+      GameController.startGame(stage);
 
       Link selectedLink = linkView.getSelectionModel().getSelectedItem();
       if (selectedLink != null) {
@@ -113,12 +119,12 @@ public class GameScene {
     return nextButton;
   }
 
-  private static FantasyButton setupRestartButton() {
+  private static FantasyButton setupRestartButton(Stage stage) {
     FantasyButton nextButton = new FantasyButton("Restart!");
 
     nextButton.setOnMouseClicked(event -> {
       // Reset the game state
-      GameController.startGame();
+      GameController.startGame(stage);
 
       // Reset passage content text area and link view
       passageTextArea.clear();
@@ -131,12 +137,21 @@ public class GameScene {
     return nextButton;
   }
 
-  private static HBox setupActionContainer(FantasyButton restartButton, VBox containerPassageAndLink, FantasyButton nextButton) {
+  private static HBox setupActionContainer(FantasyButton restartButton,
+                                           VBox containerPassageAndLink, FantasyButton nextButton) {
     HBox containerAction = new HBox();
     containerAction.setSpacing(10);
     containerAction.getChildren().addAll(restartButton, containerPassageAndLink, nextButton);
     containerAction.setAlignment(Pos.CENTER);
 
     return containerAction;
+  }
+
+  public static FantasyAlert storyContainingBrokenLinks(Stage stage) {
+    FantasyAlert brokenLinksAlert = new FantasyAlert(stage);
+    brokenLinksAlert.setAlertType(Alert.AlertType.INFORMATION);
+    brokenLinksAlert.setHeader("Story contains broken links! "
+        + "\n" + "Playing the game will not include those links.");
+    return brokenLinksAlert;
   }
 }
