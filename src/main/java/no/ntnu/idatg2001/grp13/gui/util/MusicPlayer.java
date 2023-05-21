@@ -30,7 +30,7 @@ public class MusicPlayer {
     if (masterVolume.equals(0) || volume.equals(0)) {
       mainMenuMusicMute();
     } else {
-      mainMenuMusic.setVolume(masterVolume * volume / 2);
+      mainMenuMusic.setVolume(masterVolume.get() * volume.get() / 2);
     }
   }
 }
