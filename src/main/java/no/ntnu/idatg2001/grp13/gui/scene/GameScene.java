@@ -62,10 +62,21 @@ public class GameScene {
       if (selectedLink != null) {
         Passage nextPassage = GameController.getNextPassage(selectedLink);
         passageContentText.setText(nextPassage.getTitle());
-
       }
       //String nextPassageContent = GameController.getNextPassage();
       linkView.setItems(GameController.getLinkForPassage());
+    });
+
+    linkView.setCellFactory(param -> new ListCell<>() {
+      @Override
+      protected void updateItem(Link item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+        } else {
+          setText(item.getText());
+        }
+      }
     });
 
     // Initializes a container containing passages and button
@@ -83,6 +94,7 @@ public class GameScene {
 
     return new Scene(root);
   }
+
 
 
 }
