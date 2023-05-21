@@ -22,7 +22,7 @@ import no.ntnu.idatg2001.grp13.model.Passage;
  * experience.
  */
 public class GameScene {
-  private static TextArea passageContentTextArea;
+  private static TextArea passageTextArea;
   private static ListView<Link> linkView;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
@@ -35,8 +35,9 @@ public class GameScene {
 
     VBox containerPassageAndLink = setupContainerForPassageAndLink();
     FantasyButton nextButton = setupNextButton();
+    FantasyButton restartButton = setupRestartButton();
 
-    HBox containerAction = setupActionContainer(containerPassageAndLink, nextButton);
+    HBox containerAction = setupActionContainer(restartButton, containerPassageAndLink, nextButton);
 
     root.setBottom(containerAction);
 
@@ -51,7 +52,7 @@ public class GameScene {
     backgroundView.toBack();
 
     linkView = setupLinkView();
-    passageContentTextArea = setupPassageContentTextArea();
+    passageTextArea = setupPassageContentTextArea();
   }
 
   private static ImageView setupBackgroundView() {
@@ -80,7 +81,7 @@ public class GameScene {
   }
 
   private static void setTextAreaContent() {
-    passageContentTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
+    passageTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
         + GameController.getCurrentPassage().getContent());
   }
 
@@ -88,7 +89,7 @@ public class GameScene {
     VBox containerPassageAndLink = new VBox();
     containerPassageAndLink.setAlignment(Pos.CENTER);
     containerPassageAndLink.setSpacing(10);
-    containerPassageAndLink.getChildren().addAll(passageContentTextArea, linkView);
+    containerPassageAndLink.getChildren().addAll(passageTextArea, linkView);
 
     return containerPassageAndLink;
   }
@@ -101,21 +102,39 @@ public class GameScene {
 
       Link selectedLink = linkView.getSelectionModel().getSelectedItem();
       if (selectedLink != null) {
-        passageContentTextArea.clear();
+        passageTextArea.clear();
         linkView.refresh();
 
         Passage nextPassage = GameController.getNextPassage(selectedLink);
-        passageContentTextArea.setText(nextPassage.getTitle() + "\n" + nextPassage.getContent());
+        passageTextArea.setText(nextPassage.getTitle() + "\n" + nextPassage.getContent());
         linkView.setItems(GameController.getLinkForPassage());
       }
     });
     return nextButton;
   }
 
-  private static HBox setupActionContainer(VBox containerPassageAndLink, FantasyButton nextButton) {
+  private static FantasyButton setupRestartButton() {
+    FantasyButton nextButton = new FantasyButton("Restart!");
+
+    nextButton.setOnMouseClicked(event -> {
+      // Reset the game state
+      GameController.startGame();
+
+      // Reset passage content text area and link view
+      passageTextArea.clear();
+      // Sets the text
+      passageTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
+          + GameController.getCurrentPassage().getContent());
+
+      linkView.setItems(GameController.getLinkForPassage());
+    });
+    return nextButton;
+  }
+
+  private static HBox setupActionContainer(FantasyButton restartButton, VBox containerPassageAndLink, FantasyButton nextButton) {
     HBox containerAction = new HBox();
     containerAction.setSpacing(10);
-    containerAction.getChildren().addAll(containerPassageAndLink, nextButton);
+    containerAction.getChildren().addAll(restartButton, containerPassageAndLink, nextButton);
     containerAction.setAlignment(Pos.CENTER);
 
     return containerAction;
