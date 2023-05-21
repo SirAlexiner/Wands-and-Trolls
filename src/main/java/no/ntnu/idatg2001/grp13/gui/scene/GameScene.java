@@ -53,8 +53,8 @@ public class GameScene {
     FantasyButton nextButton = new FantasyButton("Next!");
     nextButton.setOnMouseClicked(event -> {
       passageContentText.clear();
-      GameController.getNextPassage();
-
+      String nextPassageContent = GameController.getNextPassage();
+      passageContentText.setText(nextPassageContent);
     });
 
     // Initializes a container containing passages and button
@@ -71,6 +71,14 @@ public class GameScene {
     backgroundView.toBack();
 
     return new Scene(root);
+  }
+
+  private static TextArea getPassageText(String passageContent) {
+    // Initializes the text area, containing passage content
+    passageContentText = new TextArea(passageContent);
+    passageContentText.setPrefSize(300, 100);
+    passageContentText.setEditable(false);
+    return passageContentText;
   }
 
 
