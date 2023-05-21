@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 import no.ntnu.idatg2001.grp13.model.Game;
 import no.ntnu.idatg2001.grp13.model.Link;
 import no.ntnu.idatg2001.grp13.model.Passage;
@@ -13,6 +14,7 @@ import no.ntnu.idatg2001.grp13.model.Story;
 import no.ntnu.idatg2001.grp13.model.StoryReader;
 import no.ntnu.idatg2001.grp13.model.goals.Goal;
 import no.ntnu.idatg2001.grp13.model.goals.GoldGoals;
+import no.ntnu.idatg2001.grp13.stage.MainStage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 /**
@@ -20,22 +22,26 @@ import no.ntnu.idatg2001.grp13.util.ErrorLogger;
  * It populates the text area and lists view in the game scene with relevant data.
  */
 public class GameController {
-
-
   private static Game game;
   private static Story story;
   private static Player player;
   private static Passage currentPassage;
   private static List<Goal> goals = new ArrayList<>();
 
+  private GameController() {
+  }
+
 
   /**
    * A method for starting the game. Sets the current passage.
    */
-  public static void startGame() {
+  public static void startGame(Stage stage) {
     goals.add(new GoldGoals(10));
     player = new Player("Arthur", 10, 10, 10);
     story = StoryReader.readFromFile("src/test/resources/hauntedHouse.paths");
+    if (!story.getBrokenLinks().isEmpty()) {
+      GameScene.storyContainingBrokenLinks(stage).showAndWait();
+    }
     try {
       game = new Game(player, story, goals);
     } catch (Exception e) {
