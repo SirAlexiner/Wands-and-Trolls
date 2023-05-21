@@ -12,6 +12,7 @@ import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyFooter;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyTopBar;
 import no.ntnu.idatg2001.grp13.gui.scene.MainMenuScene;
+import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
 
 public class MainStage extends Application {
 
@@ -57,12 +58,7 @@ public class MainStage extends Application {
     scene.getStylesheets()
         .add(String.valueOf(MainStage.class.getResource("/CSS/WindowUi/FantasyStyle.css")));
 
-    AudioClip startPlayer = new AudioClip(
-        Objects.requireNonNull(MainStage.class.getResource("/Audio/ThroughFire.wav"))
-            .toString());
-    startPlayer.setCycleCount(AudioClip.INDEFINITE);
-    startPlayer.setVolume(0.25);
-    startPlayer.play();
+    MusicPlayer.playMainMenuMusic();
 
     primaryStage.setScene(scene);
     primaryStage.show();

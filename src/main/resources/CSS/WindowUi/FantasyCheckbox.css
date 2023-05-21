@@ -1,0 +1,24 @@
+.check-box .box {
+    -fx-pref-height: 30px;
+    -fx-pref-width: 30px;
+    -fx-background-image: url('../../Image/FantasyCheckbox/Checkbox_Background.png');
+    -fx-border-insets: 3px;
+    -fx-background-insets: 3px;
+    -fx-background-repeat: stretch;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(95, 95, 95, 0.7), 5, 0.0, 0, 0)
+}
+
+.check-box:selected .box > .mark {
+    -fx-background-image: url('../../Image/FantasyCheckbox/Checkbox_Checkmark.png');
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-background-repeat: stretch;
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}

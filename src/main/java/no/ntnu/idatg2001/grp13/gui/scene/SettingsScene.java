@@ -1,40 +1,35 @@
 package no.ntnu.idatg2001.grp13.gui.scene;
 
-import static no.ntnu.idatg2001.grp13.view.LanguageKeys.KEY_ENGLISH_TEXT;
-import static no.ntnu.idatg2001.grp13.view.LanguageKeys.KEY_GERMAN_TEXT;
-import static no.ntnu.idatg2001.grp13.view.LanguageKeys.KEY_NORWEGIAN_TEXT;
-
+import java.util.Objects;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import lombok.experimental.UtilityClass;
-import no.ntnu.idatg2001.grp13.controller.LanguageController;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
+import no.ntnu.idatg2001.grp13.gui.elements.FantasyCheckbox;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
+import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
 import no.ntnu.idatg2001.grp13.stage.MainStage;
-
-import java.util.Objects;
 
 @UtilityClass
 public class SettingsScene {
-  private final LanguageController languageController = LanguageController.getInstance();
-  private final String englishSelectorText =
-      "languageController.getTextBundleString(KEY_ENGLISH_TEXT.getKeyName())";
-  private final String norwegianSelectorText =
-      "languageController.getTextBundleString(KEY_NORWEGIAN_TEXT.getKeyName())";
-  private final String germanSelectorText =
-      "languageController.getTextBundleString(KEY_GERMAN_TEXT.getKeyName())";
+
+  private Slider masterVolumeSlider;
+  private Slider musicVolumeSlider;
 
   public static Scene getSettingScene(Stage stage) {
     BorderPane root = new BorderPane();
@@ -48,31 +43,106 @@ public class SettingsScene {
     backgroundView.setFitHeight(768);
 
     root.getChildren().add(0, backgroundView);
-    root.setCenter(settingsActionContainer());
+
+    // sets label text for settings
     root.setBottom(setButtons(stage));
+
+    VBox settingsBox = new VBox(setTitleLabel("Settings:"));
+    settingsBox.setAlignment(Pos.CENTER);
+    settingsBox.setSpacing(10);
+
+    VBox vbox = new VBox();
+    vbox.setSpacing(10);
+
+    // Create master volume slider
+    Label masterVolumeLabel = new Label("Master Volume");
+    masterVolumeSlider = createSliderWithPercentageLabel();
+    vbox.getChildren().addAll(masterVolumeLabel, masterVolumeSlider);
+
+    // Create HBox for music volume and sound effect volume sliders
+    HBox hbox = new HBox();
+    hbox.setSpacing(10);
+
+    // Create music volume slider
+    Label musicVolumeLabel = new Label("Music Volume");
+    musicVolumeSlider = createSliderWithPercentageLabel();
+    hbox.getChildren().addAll(musicVolumeLabel, musicVolumeSlider);
+
+    // Create sound effect volume slider
+    Label soundEffectVolumeLabel = new Label("Sound Effect Volume");
+    Slider soundEffectVolumeSlider = createSliderWithPercentageLabel();
+    hbox.getChildren().addAll(soundEffectVolumeLabel, soundEffectVolumeSlider);
+
+    masterVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateVolume());
+
+    musicVolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateVolume());
+
+    // Add HBox to VBox
+    vbox.getChildren().add(hbox);
+
+    VBox mainMusicbox = new VBox();
+    mainMusicbox.setAlignment(Pos.CENTER);
+
+    CheckBox muteMusic = new FantasyCheckbox();
+    muteMusic.setOnMouseClicked(event -> {
+      if (muteMusic.isSelected()) {
+        MusicPlayer.mainMenuMusicMute();
+      } else {
+        updateVolume();
+      }
+    });
+    HBox muteMusicBox = new HBox(muteMusic);
+    muteMusicBox.setAlignment(Pos.CENTER);
+    muteMusicBox.setSpacing(5);
+    Label muteMusicLabel = new Label("Mute Game Music  ");
+    muteMusicBox.getChildren().add(muteMusicLabel);
+
+    FantasyCheckbox muteSfx = new FantasyCheckbox();
+    HBox muteSfxBox = new HBox(muteSfx);
+    muteSfxBox.setAlignment(Pos.CENTER);
+    muteSfxBox.setSpacing(5);
+    Label muteSfxLabel = new Label("Mute Sound Effects");
+    muteSfxBox.getChildren().add(muteSfxLabel);
+
+    mainMusicbox.getChildren().addAll(vbox, muteMusicBox, muteSfxBox);
+
+    settingsBox.getChildren().addAll(mainMusicbox);
+
+    root.setCenter(settingsBox);
+    //
+
     root.setPadding(new Insets(5));
 
     return new Scene(root);
   }
 
-  public VBox settingsActionContainer() {
-    VBox settingActionContainer = new VBox();
-    settingActionContainer.setPadding(new Insets(10));
-    settingActionContainer.setSpacing(10);
-    settingActionContainer.getChildren().add(setLabel("Settings:", Pos.CENTER));
-    settingActionContainer.getChildren().add(languagePicker());
-    settingActionContainer.setAlignment(Pos.CENTER);
-
-    settingActionContainer.getChildren().add(new CheckBox("AI"));
-    settingActionContainer.getChildren().add(new CheckBox("Music"));
-
-    return settingActionContainer;
+  private void updateVolume() {
+    DoubleProperty masterVolume = masterVolumeSlider.valueProperty();
+    DoubleProperty musicVolume = musicVolumeSlider.valueProperty();
+    MusicPlayer.mainMenuMusicSetVolume(masterVolume, musicVolume);
   }
 
-  public Label setLabel(String labelName, Pos position) {
+  private Slider createSliderWithPercentageLabel() {
+    Slider slider = new Slider(0, 1, 1);
+    slider.setBlockIncrement(0.01);
+    Label valueLabel = new Label();
+
+    // Bind the label's text property to the slider's value property, converting it to a percentage
+    valueLabel.textProperty().bind(slider.valueProperty().multiply(100).asString("%.0f%%"));
+
+    return slider;
+  }
+
+  public Label setTitleLabel(String labelName) {
     Label settingsLabel;
     settingsLabel = new Label(labelName.toUpperCase());
-    settingsLabel.setAlignment(position);
+    settingsLabel.setStyle("-fx-font-size: 20px;");
+    return settingsLabel;
+  }
+
+  public Label setLabel(String labelName) {
+    Label settingsLabel;
+    settingsLabel = new Label(labelName.toUpperCase());
     return settingsLabel;
   }
 
@@ -105,24 +175,4 @@ public class SettingsScene {
     bottomButtons.setPadding(new Insets(10));
     return bottomButtons;
   }
-
-  private ChoiceBox<String> languagePicker() {
-    ChoiceBox<String> languages = new ChoiceBox<>();
-
-    languages.getItems().addAll(norwegianSelectorText, englishSelectorText, germanSelectorText);
-    languages.getItems().setAll(norwegianSelectorText, englishSelectorText, germanSelectorText);
-    languages.getSelectionModel().selectedIndexProperty().addListener((
-        (observableValue, oldValue, newValue) -> {
-          int selectedIndex = newValue.intValue();
-          String languageCode = switch (selectedIndex) {
-            case 0 -> "no";
-            case 2 -> "de";
-            default -> "en";
-          };
-
-          languageController.setLanguage(languageCode);
-        }));
-    return languages;
-  }
-
 }
