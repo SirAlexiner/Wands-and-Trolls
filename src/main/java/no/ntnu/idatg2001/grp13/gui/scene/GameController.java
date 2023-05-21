@@ -43,16 +43,14 @@ public class GameController {
     return story.getOpeningPassage().getContent();
   }
 
-  public static String getNextPassage() {
-    return story.getPassages().toString();
+  public static Passage getNextPassage(Link link) {
+    return game.go(link);
   }
 
-  public static ObservableList<String> getLinkForPassage() {
-    ObservableList<String> linkTitles = FXCollections.observableArrayList();
-    for (Link linkInPassage : story.getOpeningPassage().getLinks()) {
-      linkTitles.add(linkInPassage.getText());
-    }
-    return linkTitles;
+  public static ObservableList<Link> getLinkForPassage() {
+    ObservableList<Link> links = FXCollections.observableArrayList();
+    links.addAll(story.getOpeningPassage().getLinks());
+    return links;
   }
 
 }

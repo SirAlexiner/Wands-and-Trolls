@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 import java.util.Objects;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.model.Link;
+import no.ntnu.idatg2001.grp13.model.Passage;
 
 /**
  * This class is part of the "WiNG" application and represents the game scene within the application.
@@ -22,7 +24,7 @@ import no.ntnu.idatg2001.grp13.model.Link;
  */
 public class GameScene {
   private static TextArea passageContentText;
-  private static ListView<String> linkView;
+  private static ListView<Link> linkView;
   public static Scene getGameScene(Stage stage) {
     BorderPane root = new BorderPane();
     root.getStylesheets().add(
@@ -55,8 +57,14 @@ public class GameScene {
     FantasyButton nextButton = new FantasyButton("Next!");
     nextButton.setOnMouseClicked(event -> {
       passageContentText.clear();
-      String nextPassageContent = GameController.getNextPassage();
-      passageContentText.setText(nextPassageContent);
+      linkView.refresh();
+      Link selectedLink = linkView.getSelectionModel().getSelectedItem();
+      if (selectedLink != null) {
+        Passage nextPassage = GameController.getNextPassage(selectedLink);
+        passageContentText.setText(nextPassage.getTitle());
+
+      }
+      //String nextPassageContent = GameController.getNextPassage();
       linkView.setItems(GameController.getLinkForPassage());
     });
 
