@@ -23,12 +23,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
 
 public class FantasyTopBar extends StackPane {
 
-  private double xoffset = 0;
-  private double yoffset = 0;
+  private double offsetX = 0;
+  private double offsetY = 0;
 
   public FantasyTopBar(Stage stage) {
     HBox topBar = new HBox();
@@ -88,13 +89,11 @@ public class FantasyTopBar extends StackPane {
     exitIconView.setOnMouseExited(event -> exitIconView.setEffect(null));
 
     exitIconView.setOnMouseClicked(event -> {
-      AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
-              .toString());
-      buttonClick.play();
+      SoundEffectPlayer.playMouseClickSoundEffect();
       FantasyAlert quitAlert = new FantasyAlert(stage);
+      quitAlert.setTitle("alert.exit");
       quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
-      quitAlert.setHeader("Are you certain you want to Exit?");
+      quitAlert.setHeader("alert.exitText");
 
       quitAlert.showAndWait();
 
@@ -137,7 +136,7 @@ public class FantasyTopBar extends StackPane {
 
     Image topDecorationImage = new Image(Objects.requireNonNull(
         FantasyTopBar.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
+            "/Image/FantasyBar/Fantasy_Bar_Decoration_Bottom.png")));
     topBarDecorationTop.setImage(topDecorationImage);
 
     ImageView topBarBorder2 = new ImageView();
@@ -173,7 +172,7 @@ public class FantasyTopBar extends StackPane {
 
     Image bottomDecorationImage = new Image(Objects.requireNonNull(
         FantasyTopBar.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Bottom.png")));
+            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
     topBarDecorationBottom.setImage(bottomDecorationImage);
 
     ImageView topBarBorder4 = new ImageView();
@@ -234,21 +233,21 @@ public class FantasyTopBar extends StackPane {
     // Event handler for mouse pressed event
     topBar.setOnMousePressed(event -> {
       // Store the initial mouse cursor position
-      xoffset = event.getScreenX();
-      yoffset = event.getScreenY();
+      offsetX = event.getScreenX();
+      offsetY = event.getScreenY();
     });
 
     // Event handler for mouse dragged event
     topBar.setOnMouseDragged(event -> {
       // Calculate the new position of the stage based on the mouse movement
-      double deltaX = event.getScreenX() - xoffset;
-      double deltaY = event.getScreenY() - yoffset;
+      double deltaX = event.getScreenX() - offsetX;
+      double deltaY = event.getScreenY() - offsetY;
       stage.setX(stage.getX() + deltaX);
       stage.setY(stage.getY() + deltaY);
 
       // Update the mouse cursor position
-      xoffset = event.getScreenX();
-      yoffset = event.getScreenY();
+      offsetX = event.getScreenX();
+      offsetY = event.getScreenY();
     });
   }
 }

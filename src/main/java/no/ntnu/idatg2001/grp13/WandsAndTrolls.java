@@ -1,6 +1,6 @@
 package no.ntnu.idatg2001.grp13;
 
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 public class WandsAndTrolls {

@@ -78,7 +78,7 @@ public class FantasyFooter extends StackPane {
 
     Image topDecorationImage = new Image(Objects.requireNonNull(
         FantasyFooter.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
+            "/Image/FantasyBar/Fantasy_Bar_Decoration_Bottom.png")));
     topBarDecorationTop.setImage(topDecorationImage);
 
     ImageView topBarBorder2 = new ImageView();
@@ -114,7 +114,7 @@ public class FantasyFooter extends StackPane {
 
     Image bottomDecorationImage = new Image(Objects.requireNonNull(
         FantasyFooter.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Bottom.png")));
+            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
     topBarDecorationBottom.setImage(bottomDecorationImage);
 
     ImageView topBarBorder4 = new ImageView();

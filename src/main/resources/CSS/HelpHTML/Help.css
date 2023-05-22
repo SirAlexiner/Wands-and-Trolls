@@ -1,0 +1,30 @@
+body {
+    background-image: url("../../Image/Window/Background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Constantia', serif;
+    color: #F1EDDF;
+    font-size: 14px;
+    margin: 50px;
+    padding: 0;
+    overflow: visible;
+}
+
+h1, h2 {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7), 0 0 5px rgba(255, 255, 255, 0.15), 0 0 5px rgb(0, 0, 0), 0 0 0.5em #F1EDDF;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li:before {
+    content: "\2022";
+    color: #F1EDDF;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+

@@ -7,8 +7,8 @@
     -fx-background-size: contain;
     -fx-background-position: center center;
     -fx-background-radius: 0;
-    -fx-border-insets: 10px;
-    -fx-background-insets: 10px;
+    -fx-border-insets:  10px, 20px, 10px, 20px;
+    -fx-background-insets: 10px, 20px, 10px, 20px;
     -fx-border-radius: 0;
     -fx-border-color: transparent;
     -fx-background-color: transparent;

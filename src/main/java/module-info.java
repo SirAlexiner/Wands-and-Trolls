@@ -5,17 +5,13 @@
  * @since May 14. 2023
  */
 module WandsAndTrolls {
-    requires javafx.graphics;
-    requires lombok;
-    requires javafx.controls;
     requires com.google.gson;
     requires java.logging;
+    requires lombok;
     requires javafx.media;
+    requires javafx.controls;
+  requires javafx.web;
 
-    exports no.ntnu.idatg2001.grp13.view;
-    exports no.ntnu.idatg2001.grp13.model;
-    exports no.ntnu.idatg2001.grp13.model.actions;
-    exports no.ntnu.idatg2001.grp13.model.goals;
-    exports no.ntnu.idatg2001.grp13.controller;
-    exports no.ntnu.idatg2001.grp13.stage;
+  exports no.ntnu.idatg2001.grp13.gui.stage to javafx.graphics;
+    exports no.ntnu.idatg2001.grp13.gui.util.settings to com.google.gson;
 }

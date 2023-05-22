@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.grp13.gui.elements;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -10,6 +11,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,25 +19,30 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 
 public class FantasyPlayerUi extends StackPane {
   private int maxHealth;
-  private int currentHealth;
+  private int health;
   private final Label healthLabel;
-  private int maxMana;
-  private int currentMana;
-  private final Label manaLabel;
+  private int gold;
+  private int score;
+  private final Label goldLabel;
+  private final Label scoreLabel;
   private final ImageView avatarImageView;
 
   private final ProgressBar healthBar = new ProgressBar();
-  private final ProgressBar manaBar = new ProgressBar();
 
-  public FantasyPlayerUi(int health, int mana, double scale) {
-    maxHealth = health;
-    currentHealth = health;
-    maxMana = mana;
-    currentMana = mana;
+  public FantasyPlayerUi(int health, int gold, double scale) {
+    if (health > 99999) {
+      maxHealth = 99999;
+      this.health = 99999;
+    } else {
+      maxHealth = health;
+      this.health = health;
+    }
+    this.gold = gold;
+    score = 0;
 
     setScaleX(scale);
     setScaleY(scale);
@@ -55,28 +62,14 @@ public class FantasyPlayerUi extends StackPane {
     healthBar.setPrefWidth(190);
     healthBar.setPrefHeight(18);
     healthBar.setTranslateX(-7);
-    healthBar.setTranslateY(-0.5);
+    healthBar.setTranslateY(-9);
 
     ColorAdjust healthColorAdjust = new ColorAdjust();
     healthColorAdjust.setHue(Color.RED.getHue());
     healthColorAdjust.setSaturation(Color.RED.getSaturation());
     healthBar.setEffect(healthColorAdjust);
 
-    manaBar.setProgress(mana);
-    manaBar.getStylesheets().add(String.valueOf(FantasyPlayerUi.class.getResource(
-        "/CSS/PlayerUi/FantasyProgressBar_Mana.css")));
-    manaBar.setPrefWidth(170);
-    manaBar.setPrefHeight(15);
-    manaBar.setTranslateX(-11);
-    manaBar.setTranslateY(1.5);
-
-    ColorAdjust manaColorAdjust = new ColorAdjust();
-    manaColorAdjust.setHue(Color.CYAN.getHue());
-    manaColorAdjust.setSaturation(Color.CYAN.getSaturation());
-
-    manaBar.setEffect(manaColorAdjust);
-
-    VBox bars = new VBox(healthBar, manaBar);
+    VBox bars = new VBox(healthBar);
     bars.setAlignment(Pos.CENTER);
     bars.setSpacing(1);
     bars.setTranslateY(-8);
@@ -93,9 +86,8 @@ public class FantasyPlayerUi extends StackPane {
     avatarRingView.setFitWidth(75);
     avatarRingView.setTranslateX(-65);
 
-    healthLabel = new Label(currentHealth + " / " + maxHealth);
+    healthLabel = new Label(this.health + " / " + maxHealth);
     healthLabel.setId("health");
-    healthLabel.setTextAlignment(TextAlignment.CENTER);
     Image healthIconImage = new Image(Objects.requireNonNull(
         FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/Health.png")));
     ImageView healthIconImageView = new ImageView(healthIconImage);
@@ -103,25 +95,42 @@ public class FantasyPlayerUi extends StackPane {
     healthIconImageView.setFitWidth(13);
     healthIconImageView.setTranslateY(1);
     healthLabel.setGraphic(healthIconImageView);
-    healthLabel.setAlignment(Pos.CENTER);
-    healthLabel.setTranslateX(8);
+    healthLabel.setAlignment(Pos.CENTER_LEFT);
+    healthLabel.setTranslateX(23);
     healthLabel.setTranslateY(-0.5);
 
-    manaLabel = new Label(currentMana + " / " + maxMana);
-    manaLabel.setId("mana");
-    manaLabel.setTextAlignment(TextAlignment.CENTER);
-    Image manaIconImage = new Image(Objects.requireNonNull(
-        FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/Mana.png")));
-    ImageView manaIconImageView = new ImageView(manaIconImage);
-    manaIconImageView.setPreserveRatio(true);
-    manaIconImageView.setFitWidth(8);
-    manaLabel.setGraphic(manaIconImageView);
-    manaLabel.setAlignment(Pos.CENTER);
-    manaLabel.setPrefHeight(18);
-    manaLabel.setTranslateX(8);
-    manaLabel.setTranslateY(1.5);
+    goldLabel = new Label(formatNumber(this.gold));
+    goldLabel.setId("gold");
+    Image goldIconImage = new Image(Objects.requireNonNull(
+        FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/Gold.png")));
+    ImageView goldIconImageView = new ImageView(goldIconImage);
+    goldIconImageView.setPreserveRatio(true);
+    goldIconImageView.setFitWidth(12);
+    goldLabel.setGraphic(goldIconImageView);
+    goldLabel.setAlignment(Pos.CENTER);
+    goldLabel.setPrefHeight(18);
+    goldIconImageView.setTranslateY(1);
 
-    VBox labels = new VBox(healthLabel, manaLabel);
+
+    scoreLabel = new Label(formatNumber(score));
+    scoreLabel.setId("score");
+    Image scoreIconImage = new Image(Objects.requireNonNull(
+        FantasyPlayerUi.class.getResourceAsStream("/Image/PlayerUi/Icons/Score.png")));
+    ImageView scoreIconImageView = new ImageView(scoreIconImage);
+    scoreIconImageView.setPreserveRatio(true);
+    scoreIconImageView.setFitWidth(12);
+    scoreLabel.setGraphic(scoreIconImageView);
+    scoreLabel.setAlignment(Pos.CENTER);
+    scoreLabel.setPrefHeight(18);
+    scoreIconImageView.setTranslateY(1);
+
+    HBox goldScoreBox = new HBox(goldLabel, scoreLabel);
+    goldScoreBox.setAlignment(Pos.CENTER_LEFT);
+    goldScoreBox.setSpacing(5);
+    goldScoreBox.setTranslateY(1.5);
+    goldScoreBox.setTranslateX(74);
+
+    VBox labels = new VBox(healthLabel, goldScoreBox);
     labels.setAlignment(Pos.CENTER);
     labels.setTranslateY(-8);
 
@@ -142,28 +151,56 @@ public class FantasyPlayerUi extends StackPane {
     getChildren().addAll(playerUiView, bars, labels, avatarRingView, avatarImageView);
   }
 
+  private static String formatNumber(int number) {
+    if (number > 1000000) {
+      int quotient = number / 1000000;
+
+      DecimalFormat decimalFormat = new DecimalFormat("#.#");
+      decimalFormat.setDecimalSeparatorAlwaysShown(false);
+
+      return decimalFormat.format(quotient) + "m";
+    } else if (number > 1000) {
+      int quotient = number / 1000;
+
+      DecimalFormat decimalFormat = new DecimalFormat("#.#");
+      decimalFormat.setDecimalSeparatorAlwaysShown(false);
+
+      return decimalFormat.format(quotient) + "k";
+    } else {
+      return String.valueOf(number);
+    }
+  }
+
   public void updateHealth(int health) {
-    maxHealth = health;
-    animateProgressBar(healthBar, ((currentHealth + (maxHealth * 0.20)) / maxHealth));
-    healthLabel.setText(currentHealth + " / " + maxHealth);
+    if (health > 99999) {
+      maxHealth = 99999;
+      this.health = 99999;
+    } else {
+      maxHealth = health;
+      this.health = health;
+    }
+    animateProgressBar(healthBar, ((this.health + (maxHealth * 0.20)) / maxHealth));
+    healthLabel.setText(this.health + " / " + maxHealth);
   }
 
   public void setHealth(int health) {
-    currentHealth = health;
-    animateProgressBar(healthBar, ((currentHealth + (maxHealth * 0.20)) / maxHealth));
-    healthLabel.setText(currentHealth + " / " + maxHealth);
+    if (health > 99999) {
+      this.health = 99999;
+    } else {
+      this.health = health;
+    }
+    animateProgressBar(healthBar, ((this.health + (maxHealth * 0.20)) / maxHealth));
+    healthLabel.setText(this.health + " / " + maxHealth);
   }
 
-  public void updateMana(int mana) {
-    maxMana = mana;
-    animateProgressBar(manaBar, ((currentMana + (maxMana * 0.20)) / maxMana));
-    manaLabel.setText(currentMana + " / " + maxMana);
+  public void setGold(int gold) {
+    this.gold = gold;
+    goldLabel.setText(String.valueOf(gold));
   }
 
-  public void setMana(int mana) {
-    currentMana = mana;
-    animateProgressBar(manaBar, ((currentMana + (maxMana * 0.20)) / maxMana));
-    manaLabel.setText(currentMana + " / " + maxMana);
+  public void setScore(int score) {
+    this.score = score;
+    scoreLabel.setText(String.valueOf(score));
   }
 
   public void setPlayerAvatar(Image image) {

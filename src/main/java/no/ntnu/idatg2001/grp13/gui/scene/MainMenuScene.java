@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.DepthTest;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,14 +21,15 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 import no.ntnu.idatg2001.grp13.gui.util.App;
 import no.ntnu.idatg2001.grp13.gui.util.OpenAiImage;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
+import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 @UtilityClass
 public class MainMenuScene {
-  private static final boolean USE_AI = false;
   @Getter
   private StackPane contentContainer;
 
@@ -52,9 +54,12 @@ public class MainMenuScene {
     Rectangle clipRect = createClipRect();
     contentContainer.setClip(clipRect);
 
-    if (USE_AI) {
+    Settings settings = SettingsDao.loadSettingsFromFile();
+    if (settings.isAiImagesEnabled()) {
       loadImage(content);
     }
+
+    contentContainer.setDepthTest(DepthTest.ENABLE);
 
     return contentContainer;
   }
@@ -82,7 +87,7 @@ public class MainMenuScene {
     box.getChildren().addAll(
         createNewGameButton(stage),
         createLoadButton(stage),
-        createCreateButton(),
+        createHelpButton(stage),
         createSettingsButton(stage)
     );
 
@@ -90,7 +95,7 @@ public class MainMenuScene {
   }
 
   private Button createNewGameButton(Stage stage) {
-    Button newGameButton = new FantasyButton("New Game");
+    Button newGameButton = new FantasyButton("button.newGame");
     newGameButton.setOnMouseClicked(event -> {
       Scene newGameScene = NewGame.getNewGameScene(stage);
       contentContainer.getChildren().add(newGameScene.getRoot());
@@ -100,23 +105,27 @@ public class MainMenuScene {
   }
 
   private Button createLoadButton(Stage stage) {
-    Button loadButton = new FantasyButton("Load Adventure");
+    Button loadButton = new FantasyButton("button.loadAdventure");
     loadButton.setOnMouseClicked(event -> {
-      Scene filePickerScene = FilePicker.getFilePickerScene(stage);
+      Scene filePickerScene = LoadAdventureScene.getScene(stage);
       contentContainer.getChildren().add(filePickerScene.getRoot());
     });
     loadButton.setPrefWidth(225);
     return loadButton;
   }
 
-  private Button createCreateButton() {
-    Button createButton = new FantasyButton("Create Adventure");
-    createButton.setPrefWidth(225);
-    return createButton;
+  private Button createHelpButton(Stage stage) {
+    Button settingsButton = new FantasyButton("button.help");
+    settingsButton.setPrefWidth(225);
+    settingsButton.setOnMouseClicked(event -> {
+      Scene helpScene = HelpScreen.getHelpScene(stage);
+      contentContainer.getChildren().add(helpScene.getRoot());
+    });
+    return settingsButton;
   }
 
   private Button createSettingsButton(Stage stage) {
-    Button settingsButton = new FantasyButton("Settings");
+    Button settingsButton = new FantasyButton("button.settings");
     settingsButton.setPrefWidth(225);
     settingsButton.setOnMouseClicked(event -> {
       Scene settingScene = SettingsScene.getSettingScene(stage);

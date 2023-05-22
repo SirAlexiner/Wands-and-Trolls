@@ -1,51 +1,53 @@
 .root {
     -fx-border-color: transparent;
     -fx-background-color: transparent;
-    -fx-effect: innershadow(three-pass-box, rgba(88,88,88,0.75), 100, -25.0, 0, 0);
-}
-
-.alert {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
-    -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
-    -fx-background-size: cover; /* Adjust the background image size to cover the alert */
-}
-
-.alert .header-panel {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
-    -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
-    -fx-background-size: cover; /* Adjust the background image size to cover the alert */
+    -fx-effect: innershadow(three-pass-box, rgba(88, 88, 88, 0.75), 100, -25.0, 0, 0);
 }
 
 .label {
-    -fx-font-family: 'Constantia';
-    -fx-text-fill: #F1EDDF;
     -fx-font-size: 16px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
-    innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
-    innershadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 3),
-    glow(0.5);
 }
 
-.button .label {
-    -fx-font-size: 14px;
+.slider .track {
+    -fx-pref-height: 20;
+    -fx-background-image: url("../../Image/Slider/Slider_Box.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-insets: 0;
+    -fx-background-insets: 0;
 }
 
-.check-box {
+.slider .thumb {
+    -fx-pref-height: 20;
+    -fx-background-image: url("../../Image/Slider/Slider_Handle.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+
+.choice-box, .context-menu {
     -fx-font-family: 'Constantia';
+    -fx-text-alignment: center, center;
     -fx-text-fill: #F1EDDF;
     -fx-font-size: 19px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
-    innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
-    innershadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 3),
-    glow(0.5);
-}
-
-.choice-box {
-    -fx-font-family: 'Constantia';
-    -fx-text-fill: #F1EDDF;
-    -fx-font-size: 19px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
-    innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
-    innershadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 3),
-    glow(0.5);
+    -fx-pref-width: 200;
+    -fx-effect: dropshadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 0);
+    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
+    -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
+    -fx-background-size: cover; /* Adjust the background image size to cover the alert */
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
 }

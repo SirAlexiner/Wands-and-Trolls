@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -25,8 +27,10 @@ import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyPlayerUi;
+import no.ntnu.idatg2001.grp13.gui.elements.LocalizedLabel;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
 
 @UtilityClass
 public class NewGame {
@@ -63,13 +67,13 @@ public class NewGame {
     storySelectBox.setTranslateX(5.5);
 
 
-    FantasyPlayerUi playerUi = new FantasyPlayerUi(0, 0, 1.25);
+    FantasyPlayerUi playerUi = new FantasyPlayerUi(100, 0, 1.25);
     HBox playerBox = new HBox(playerUi);
-    playerBox.setPadding(new Insets(40, 0, 0, 30));
+    playerBox.setPadding(new Insets(50, 0, 0, 100));
 
-    Button addAvatarButton = new FantasyButton("Add Avatar");
-    addAvatarButton.setTranslateX(75);
-    addAvatarButton.setTranslateY(-37.5);
+    Button addAvatarButton = new FantasyButton("button.selectAvatar");
+    addAvatarButton.setTranslateX(145);
+    addAvatarButton.setTranslateY(-25);
     addAvatarButton.setOnMouseClicked(event -> {
       FileChooser fileChooser = new FileChooser();
       fileChooser.setTitle("Choose File");
@@ -84,17 +88,14 @@ public class NewGame {
       }
     });
 
-    FantasyButton cancelButton = new FantasyButton("Go Back");
+    FantasyButton cancelButton = new FantasyButton("button.goBack");
     cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
     cancelButton.setPrefWidth(200);
     cancelButton.setOnMouseClicked(event -> {
-      AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
-              .toString());
-      buttonClick.play();
       FantasyAlert quitAlert = new FantasyAlert(stage);
+      quitAlert.setTitle("alert.goBack");
       quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
-      quitAlert.setHeader("Are you sure you want to go back?");
+      quitAlert.setHeader("alert.goBackText");
 
       quitAlert.showAndWait();
 
@@ -103,7 +104,7 @@ public class NewGame {
       }
     });
 
-    FantasyButton startAdventure = new FantasyButton("Start Adventure");
+    FantasyButton startAdventure = new FantasyButton("button.startAdventure");
     startAdventure.setFantasyButtonType(FantasyButtonType.BONE);
     startAdventure.setPrefWidth(200);
     startAdventure.setOnMouseClicked(mouseEvent -> {
@@ -117,8 +118,39 @@ public class NewGame {
     bottomButtons.setAlignment(Pos.CENTER);
     bottomButtons.setSpacing(15);
     bottomButtons.setTranslateX(40);
+    bottomButtons.setPadding(new Insets(30, 0, 0, 0));
 
-    VBox playerInformation = new VBox(playerBox, addAvatarButton, bottomButtons);
+
+    Label nameLabel = new LocalizedLabel("newGame.setName");
+    TextField adventurerName = new TextField();
+    adventurerName.setPromptText(LanguageManager.getStringProperty("newGame.adventurer").get());
+
+    TextField health = new TextField();
+    health.setPromptText(LanguageManager.getStringProperty("newGame.healthPrompt").get());
+
+    Label goalsLabel = new LocalizedLabel("newGame.setGoldGoal");
+
+    TextField goldGoals = new TextField();
+    goldGoals.setPromptText(LanguageManager.getStringProperty("newGame.goldPrompt").get());
+
+    TextField inventoryGoals = new TextField();
+    inventoryGoals.setPromptText(
+        LanguageManager.getStringProperty("newGame.inventoryPrompt").get());
+
+    TextField scoreGoal = new TextField();
+    scoreGoal.setPromptText(LanguageManager.getStringProperty("newGame.scorePrompt").get());
+
+
+    VBox nameBox = new VBox();
+    nameBox.setPadding(new Insets(0, 0, 0, 30));
+    nameBox.setSpacing(10);
+    nameBox.setAlignment(Pos.CENTER_LEFT);
+    nameBox.getChildren()
+        .addAll(nameLabel, adventurerName, health, goalsLabel, goldGoals, inventoryGoals,
+            scoreGoal);
+    nameBox.setTranslateX(30);
+
+    VBox playerInformation = new VBox(playerBox, addAvatarButton, nameBox, bottomButtons);
     playerInformation.setAlignment(Pos.TOP_LEFT);
     playerInformation.setPadding(new Insets(10));
     playerInformation.setSpacing(10);

@@ -10,7 +10,7 @@
     glow(0.5);
 }
 
-#mana {
+#gold, #score {
     -fx-font-family: 'LatoLatin';
     -fx-font-weight: bold;
     -fx-font-style: italic;

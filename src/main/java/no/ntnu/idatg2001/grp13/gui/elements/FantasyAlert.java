@@ -22,8 +22,9 @@ import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
+import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
 
-public class FantasyAlert extends Stage {
+public class FantasyAlert {
   @Getter
   @Setter
   private static ButtonType result;
@@ -31,17 +32,18 @@ public class FantasyAlert extends Stage {
   private final Label header;
 
   private final HBox buttons;
+  private Stage stage;
 
-  public FantasyAlert(Stage stage) {
-    initOwner(stage);
-    initStyle(StageStyle.TRANSPARENT);
-    initModality(Modality.WINDOW_MODAL);
+  public FantasyAlert(Stage stageOwner) {
+    stage = new Stage(StageStyle.TRANSPARENT);
+    stage.initOwner(stageOwner);
+    stage.initModality(Modality.WINDOW_MODAL);
 
     Image background = new Image(Objects.requireNonNull(
-        FantasyAlert.class.getResourceAsStream("/Image/Window/Alert/Alert_Frame.png")));
+        FantasyAlert.class.getResourceAsStream("/Image/FantasyAlert/Alert_Frame.png")));
     ImageView backgroundView = new ImageView(background);
 
-    Rectangle clip = new Rectangle(310, 25);
+    Rectangle clip = new Rectangle(310, 15);
     Rectangle alertShape = new Rectangle(310, 300);
 
     Shape invertedClip = Shape.subtract(alertShape, clip);
@@ -50,38 +52,40 @@ public class FantasyAlert extends Stage {
 
     backgroundView.setFitWidth(310);
     backgroundView.setTranslateX(-5);
-    backgroundView.setTranslateY(-15);
+    backgroundView.setTranslateY(30);
     backgroundView.setPreserveRatio(true);
 
     BorderPane root = new BorderPane();
     root.getChildren().add(0, backgroundView);
 
-    FantasyButton confirm = new FantasyButton("Yes");
+    FantasyButton confirm = new FantasyButton("button.yes");
     confirm.setFantasyButtonType(FantasyButtonType.BONE);
     confirm.setButtonType(ButtonType.OK);
     confirm.setPrefWidth(150);
     confirm.setOnMouseClicked(event -> {
       setResult(confirm.getButtonType());
-      close();
+      stage.close();
     });
 
-    FantasyButton cancel = new FantasyButton("no");
+    FantasyButton cancel = new FantasyButton("button.no");
     cancel.setFantasyButtonType(FantasyButtonType.BONE);
     cancel.setButtonType(ButtonType.CANCEL);
     cancel.setPrefWidth(150);
     cancel.setOnMouseClicked(event -> {
       setResult(cancel.getButtonType());
-      close();
+      stage.close();
     });
 
     buttons = new HBox(confirm, cancel);
     buttons.setAlignment(Pos.CENTER);
     buttons.setSpacing(10);
-    buttons.setTranslateY(-7.5);
+    buttons.setTranslateY(5);
 
     header = new Label();
     header.setTextAlignment(TextAlignment.CENTER);
-    header.setMinHeight(40);
+    header.setWrapText(true);
+    header.setTranslateY(13);
+    header.setMinHeight(85);
     header.setPadding(new Insets(0));
 
     VBox content = new VBox(header, buttons);
@@ -92,52 +96,59 @@ public class FantasyAlert extends Stage {
 
     content.setScaleY(0.75);
     content.setScaleX(0.75);
-    content.setTranslateY(-90);
+    content.setTranslateY(-75);
 
-    root.setTop(new FantasyTopBarAlert(this));
+    root.setTop(new FantasyTopBarAlert(stage));
     root.setCenter(content);
-    root.setTranslateY(10);
 
     Scene scene = new Scene(root, 300, 320, Color.TRANSPARENT);
     scene.getStylesheets().add(String.valueOf(FantasyButton.class.getResource(
         "/CSS/WindowUi/FantasyStyle_Alert.css")));
-    setScene(scene);
+    stage.setScene(scene);
   }
 
-  public void setHeader(String headerMessage) {
-    header.setText(headerMessage.toUpperCase());
+  public void setTitle(String resourceKey) {
+    FantasyTopBarAlert.updateTopBarTitle(resourceKey);
+  }
+
+  public void setHeader(String resourceKey) {
+    header.textProperty().bind(LanguageManager.getStringProperty(resourceKey));
   }
 
   public void setAlertType(Alert.AlertType alertType) {
     switch (alertType) {
       case CONFIRMATION -> FantasyTopBarAlert.setAlertIconView(new Image(Objects.requireNonNull(
           FantasyAlert.class.getResourceAsStream(
-              "/Image/Window/Alert/WarningBox_Icon_Question.png"))));
+              "/Image/FantasyAlert/WarningBox_Icon_Question.png"))));
       case WARNING, ERROR -> {
         addConfirmationButton();
 
         FantasyTopBarAlert.setAlertIconView(new Image(Objects.requireNonNull(
             FantasyAlert.class.getResourceAsStream(
-                "/Image/Window/Alert/WarningBox_Icon_Red.png"))));
+                "/Image/FantasyAlert/WarningBox_Icon_Red.png"))));
       }
       default -> {
         addConfirmationButton();
 
         FantasyTopBarAlert.setAlertIconView(new Image(Objects.requireNonNull(
             FantasyAlert.class.getResourceAsStream(
-                "/Image/Window/Alert/WarningBox_Icon_Gray.png"))));
+                "/Image/FantasyAlert/WarningBox_Icon_Gray.png"))));
       }
     }
   }
 
+  public void showAndWait() {
+    stage.showAndWait();
+  }
+
   private void addConfirmationButton() {
-    FantasyButton ok = new FantasyButton("Ok");
+    FantasyButton ok = new FantasyButton("button.confirm");
     ok.setFantasyButtonType(FantasyButtonType.BONE);
     ok.setButtonType(ButtonType.OK);
     ok.setPrefWidth(150);
     ok.setOnMouseClicked(event -> {
       setResult(ok.getButtonType());
-      close();
+      stage.close();
     });
 
     buttons.getChildren().clear();

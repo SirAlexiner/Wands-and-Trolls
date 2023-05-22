@@ -6,6 +6,7 @@ import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,17 +19,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
+import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
 
 public class FantasyTopBarAlert extends StackPane {
   private static final ImageView alertIconView = new ImageView();
   private double xoffset = 0;
   private double yoffset = 0;
 
+  private static final Label title = new Label();
+
   public FantasyTopBarAlert(Stage stage) {
+    this.setTranslateY(3);
     HBox topBar = new HBox();
     // Load and set the side gradients and middle gradients as the background
     Image backgroundImage = new Image(Objects.requireNonNull(
@@ -55,22 +59,19 @@ public class FantasyTopBarAlert extends StackPane {
             new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, true, false, true))
     ));
 
-    topBar.setMaxHeight(30);
-    topBar.setPadding(new Insets(5, 0, 5, 10));
-    topBar.setAlignment(Pos.CENTER_LEFT);
+    topBar.setMaxHeight(35);
+    topBar.setPadding(new Insets(5));
+    topBar.setAlignment(Pos.CENTER_RIGHT);
     topBar.setSpacing(2.5);
 
     alertIconView.setFitHeight(15);
     alertIconView.setPreserveRatio(true);
-    topBar.getChildren().add(alertIconView);
 
-    Image iconImage = new Image(Objects.requireNonNull(
-        FantasyTopBar.class.getResourceAsStream("/Image/Window/Alert/Alert.png")));
-    // Use the icon in the desired way
-    ImageView iconImageView = new ImageView(iconImage);
-    iconImageView.setFitHeight(15);
-    iconImageView.setPreserveRatio(true);
-    topBar.getChildren().add(iconImageView);
+    HBox leftAlignmentBox = new HBox(alertIconView, title);
+    leftAlignmentBox.setPrefWidth(300);
+    leftAlignmentBox.setSpacing(2.5);
+    leftAlignmentBox.setAlignment(Pos.CENTER_LEFT);
+    topBar.getChildren().add(leftAlignmentBox);
 
     Image exitIcon = new Image(Objects.requireNonNull(
             FantasyTopBarAlert.class.getResource(
@@ -91,16 +92,12 @@ public class FantasyTopBarAlert extends StackPane {
     exitIconView.setOnMouseExited(event -> exitIconView.setEffect(null));
 
     exitIconView.setOnMouseClicked(event -> {
-      AudioClip buttonClick = new AudioClip(
-          Objects.requireNonNull(MainStage.class.getResource("/Audio/mouseclick_softer.wav"))
-              .toString());
-      buttonClick.play();
+      SoundEffectPlayer.playMouseClickSoundEffect();
       FantasyAlert.setResult(ButtonType.CANCEL);
       stage.close();
     });
 
     HBox exit = new HBox();
-    exit.setPrefWidth(300);
     exit.setPadding(new Insets(0, 10, 0, 0));
     exit.setAlignment(Pos.CENTER_RIGHT);
 
@@ -110,9 +107,10 @@ public class FantasyTopBarAlert extends StackPane {
     BorderPane innerBorderPane = new BorderPane();
     innerBorderPane.setTranslateY(-2.0);
 
-    HBox topBox = new HBox();
-    topBox.setPrefSize(300, 10.0);
-    BorderPane.setAlignment(topBox, Pos.CENTER);
+    HBox bottomBox = new HBox();
+    bottomBox.setPrefSize(300, 10.0);
+    bottomBox.setTranslateY(-3.5);
+    BorderPane.setAlignment(bottomBox, Pos.CENTER);
 
     ImageView topBarBorder1 = new ImageView();
     topBarBorder1.setFitHeight(20.0);
@@ -126,14 +124,17 @@ public class FantasyTopBarAlert extends StackPane {
     ImageView topBarDecorationTop = new ImageView();
     topBarDecorationTop.setFitHeight(35.0);
     topBarDecorationTop.setFitWidth(100);
-    topBarDecorationTop.setTranslateY(1.0);
+    topBarDecorationTop.setTranslateY(8.0);
     topBarDecorationTop.setPickOnBounds(true);
     topBarDecorationTop.setPreserveRatio(true);
 
-    Image topDecorationImage = new Image(Objects.requireNonNull(
-        FantasyTopBarAlert.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
-    topBarDecorationTop.setImage(topDecorationImage);
+    ImageView bottomBarDecorationTop = new ImageView();
+    bottomBarDecorationTop.setFitHeight(35.0);
+    bottomBarDecorationTop.setFitWidth(100);
+    bottomBarDecorationTop.setRotate(180.0);
+    bottomBarDecorationTop.setTranslateY(-8.0);
+    bottomBarDecorationTop.setPickOnBounds(true);
+    bottomBarDecorationTop.setPreserveRatio(true);
 
     ImageView topBarBorder2 = new ImageView();
     topBarBorder2.setFitHeight(20.0);
@@ -143,11 +144,11 @@ public class FantasyTopBarAlert extends StackPane {
     topBarBorder2.setImage(borderDecorationImage);
     topBarBorder2.setRotationAxis(new Point3D(0, 1, 0));
 
-    topBox.getChildren().addAll(topBarBorder1, topBarDecorationTop, topBarBorder2);
+    bottomBox.getChildren().addAll(topBarBorder1, bottomBarDecorationTop, topBarBorder2);
 
-    HBox bottomBox = new HBox();
-    bottomBox.setPrefSize(300, 16.0);
-    BorderPane.setAlignment(bottomBox, Pos.CENTER);
+    HBox topBox = new HBox();
+    topBox.setPrefSize(300, 16.0);
+    BorderPane.setAlignment(topBox, Pos.CENTER);
 
     ImageView topBarBorder3 = new ImageView();
     topBarBorder3.setFitHeight(20.0);
@@ -158,17 +159,11 @@ public class FantasyTopBarAlert extends StackPane {
     topBarBorder3.setImage(borderDecorationImage);
     topBarBorder3.setRotationAxis(new Point3D(1, 0, 0));
 
-    ImageView topBarDecorationBottom = new ImageView();
-    topBarDecorationBottom.setFitHeight(35.0);
-    topBarDecorationBottom.setFitWidth(100);
-    topBarDecorationBottom.setTranslateY(6.0);
-    topBarDecorationBottom.setPickOnBounds(true);
-    topBarDecorationBottom.setPreserveRatio(true);
-
-    Image bottomDecorationImage = new Image(Objects.requireNonNull(
+    Image topDecorationImage = new Image(Objects.requireNonNull(
         FantasyTopBarAlert.class.getResourceAsStream(
-            "/Image/FantasyBar/Fantasy_Bar_Decoration_Bottom.png")));
-    topBarDecorationBottom.setImage(bottomDecorationImage);
+            "/Image/FantasyBar/Fantasy_Bar_Decoration_Top.png")));
+    topBarDecorationTop.setImage(topDecorationImage);
+    bottomBarDecorationTop.setImage(topDecorationImage);
 
     ImageView topBarBorder4 = new ImageView();
     topBarBorder4.setFitHeight(20.0);
@@ -178,27 +173,16 @@ public class FantasyTopBarAlert extends StackPane {
     topBarBorder4.setTranslateY(5.0);
     topBarBorder4.setImage(borderDecorationImage);
 
-    bottomBox.getChildren().addAll(topBarBorder3, topBarDecorationBottom, topBarBorder4);
+    topBox.getChildren().addAll(topBarBorder3, topBarDecorationTop, topBarBorder4);
 
-    innerBorderPane.setTop(topBox);
-    innerBorderPane.setBottom(bottomBox);
+    innerBorderPane.setTop(bottomBox);
+    innerBorderPane.setBottom(topBox);
     innerBorderPane.setMouseTransparent(true);
     innerBorderPane.setRotationAxis(new Point3D(1, 0, 0));
     innerBorderPane.setRotate(180);
 
     // Add topDecorationImageView and bottomDecorationImageView to the CustomTopBar
     getChildren().addAll(topBar, innerBorderPane);
-
-    Rectangle windowShape = new Rectangle(300, 300);
-
-    Rectangle barClip = new Rectangle(32, 32);
-    barClip.setX(134);
-    barClip.setY(18);
-    barClip.setRotate(45);
-    barClip.setArcWidth(10);
-    barClip.setArcHeight(10);
-    Shape invertedClip = Shape.subtract(windowShape, barClip);
-    topBar.setClip(invertedClip);
 
     topBar.setOnMouseEntered(event -> setCursor(Cursor.HAND));
 
@@ -221,6 +205,10 @@ public class FantasyTopBarAlert extends StackPane {
       xoffset = event.getScreenX();
       yoffset = event.getScreenY();
     });
+  }
+
+  protected static void updateTopBarTitle(String resourceKey) {
+    title.textProperty().bind(LanguageManager.getStringProperty(resourceKey));
   }
 
   public static void setAlertIconView(Image image) {
