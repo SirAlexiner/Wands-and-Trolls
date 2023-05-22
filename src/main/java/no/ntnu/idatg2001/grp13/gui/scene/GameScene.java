@@ -28,6 +28,7 @@ import no.ntnu.idatg2001.grp13.model.Passage;
 public class GameScene {
   private static TextArea passageTextArea;
   private static ListView<Link> linkView;
+  private static HBox linkButtonsContainer;
   private static Stage stage;
 
   public static Scene getGameScene(Stage stage) {
@@ -36,9 +37,13 @@ public class GameScene {
     setupScene(root);
 
     GameController.startGame(stage);
-    linkView.setItems(GameController.getLinkForPassage());
+    //linkView.setItems(GameController.getLinkForPassage());
 
     setTextAreaContent();
+
+    linkButtonsContainer = new HBox();
+    linkButtonsContainer.setSpacing(10);
+    setupLinkButtons();
 
     VBox containerPassageAndLink = setupContainerForPassageAndLink();
     FantasyButton nextButton = setupNextButton();
@@ -48,7 +53,41 @@ public class GameScene {
 
     root.setBottom(containerAction);
 
+
     return new Scene(root);
+  }
+
+  public static void setupLinkButtons() {
+    linkButtonsContainer = new HBox();
+    linkButtonsContainer.setSpacing(10); // Space between buttons
+
+    for (Link link : GameController.getLinksForCurrentPassage()) {
+      FantasyButton linkButton = new FantasyButton(link.getText());
+
+      linkButton.setOnAction(event -> {
+        // Clears the screen
+        passageTextArea.clear();
+
+        // Get the next passage text from the controller
+        Passage nextPassage = GameController.getNextPassage(link);
+        passageTextArea.setText(nextPassage.getTitle() + "\n" + nextPassage.getContent());
+
+        // Refresh the links
+        refreshLinkButtons();
+      });
+
+      linkButtonsContainer.getChildren().add(linkButton);
+    }
+  }
+  public static void refreshLinkButtons() {
+    // Clears the existing buttons
+    linkButtonsContainer.getChildren().clear();
+
+    // Adds new buttons based on the new links
+    setupLinkButtons();
+
+    // Force layout
+    linkButtonsContainer.layout();
   }
 
   private static void setupScene(BorderPane root) {
@@ -108,7 +147,7 @@ public class GameScene {
     VBox containerPassageAndLink = new VBox();
     containerPassageAndLink.setAlignment(Pos.CENTER);
     containerPassageAndLink.setSpacing(10);
-    containerPassageAndLink.getChildren().addAll(passageTextArea, linkView);
+    containerPassageAndLink.getChildren().addAll(passageTextArea, linkButtonsContainer);
 
     return containerPassageAndLink;
   }
@@ -132,21 +171,23 @@ public class GameScene {
   }
 
   private static FantasyButton setupRestartButton(Stage stage) {
-    FantasyButton nextButton = new FantasyButton("Restart!");
-    //TODO bug where brokenLinks appears
-    nextButton.setOnMouseClicked(event -> {
+    FantasyButton restartButton = new FantasyButton("Restart!");
+    restartButton.setOnMouseClicked(event -> {
+      // Clear the existing buttons
+      linkButtonsContainer.getChildren().clear();
       // Reset the game state
-      GameController.startGame(stage);
+      GameController.restartGame(stage);
 
-      // Reset passage content text area and link view
+      // Reset passage  text area and link view
       passageTextArea.clear();
       // Sets the text
       passageTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"
           + GameController.getCurrentPassage().getContent());
 
       linkView.setItems(GameController.getLinkForPassage());
+      refreshLinkButtons();
     });
-    return nextButton;
+    return restartButton;
   }
 
   private static HBox setupActionContainer(FantasyButton restartButton,

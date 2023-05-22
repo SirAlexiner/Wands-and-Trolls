@@ -41,6 +41,9 @@ public class GameController {
     initializeGame();
     currentPassage = game.begin();
   }
+  public static void restartGame(Stage stage) {
+    startGame(stage);
+  }
 
   private static void setupGoalsAndPlayer() {
     goals.add(new GoldGoals(10));
@@ -84,4 +87,16 @@ public class GameController {
         .forEach(links::add);
     return links;
   }
-}
+
+  public static List<String> getLinkTextsForCurrentPassage() {
+    List<String> linkTexts = new ArrayList<>();
+    for (Link link : getLinkForPassage()) {
+      linkTexts.add(link.getText());
+    }
+    return linkTexts;
+  }
+
+    public static List<Link> getLinksForCurrentPassage() {
+      return getLinkForPassage();
+    }
+  }
