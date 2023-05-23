@@ -2,8 +2,6 @@ package no.ntnu.idatg2001.grp13.gui.scene;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.logging.Level;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.DepthTest;
@@ -23,16 +21,24 @@ import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 import no.ntnu.idatg2001.grp13.gui.util.App;
-import no.ntnu.idatg2001.grp13.gui.util.OpenAiImage;
-import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
-import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
-import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
+/**
+ * <p>MainMenuScene class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 @UtilityClass
 public class MainMenuScene {
   @Getter
   private StackPane contentContainer;
 
+  /**
+   * <p>getScene.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   * @return a {@link javafx.scene.layout.StackPane} object
+   */
   public static StackPane getScene(Stage stage) {
     Image background = new Image(
         Objects.requireNonNull(MainStage.class.getResourceAsStream(
@@ -53,11 +59,6 @@ public class MainMenuScene {
     contentContainer.setPrefHeight(660);
     Rectangle clipRect = createClipRect();
     contentContainer.setClip(clipRect);
-
-    Settings settings = SettingsDao.loadSettingsFromFile();
-    if (settings.isAiImagesEnabled()) {
-      loadImage(content);
-    }
 
     contentContainer.setDepthTest(DepthTest.ENABLE);
 
@@ -95,28 +96,28 @@ public class MainMenuScene {
   }
 
   private Button createNewGameButton(Stage stage) {
-    Button newGameButton = new FantasyButton("button.newGame");
+    Button newGameButton = new FantasyButton("button.newGame", true);
     newGameButton.setOnMouseClicked(event -> {
       Scene newGameScene = NewGame.getNewGameScene(stage);
       contentContainer.getChildren().add(newGameScene.getRoot());
     });
-    newGameButton.setPrefWidth(225);
+    newGameButton.setPrefWidth(230);
     return newGameButton;
   }
 
   private Button createLoadButton(Stage stage) {
-    Button loadButton = new FantasyButton("button.loadAdventure");
+    Button loadButton = new FantasyButton("button.loadAdventure", true);
     loadButton.setOnMouseClicked(event -> {
       Scene filePickerScene = LoadAdventureScene.getScene(stage);
       contentContainer.getChildren().add(filePickerScene.getRoot());
     });
-    loadButton.setPrefWidth(225);
+    loadButton.setPrefWidth(230);
     return loadButton;
   }
 
   private Button createHelpButton(Stage stage) {
-    Button settingsButton = new FantasyButton("button.help");
-    settingsButton.setPrefWidth(225);
+    Button settingsButton = new FantasyButton("button.help", true);
+    settingsButton.setPrefWidth(230);
     settingsButton.setOnMouseClicked(event -> {
       Scene helpScene = HelpScreen.getHelpScene(stage);
       contentContainer.getChildren().add(helpScene.getRoot());
@@ -125,8 +126,8 @@ public class MainMenuScene {
   }
 
   private Button createSettingsButton(Stage stage) {
-    Button settingsButton = new FantasyButton("button.settings");
-    settingsButton.setPrefWidth(225);
+    Button settingsButton = new FantasyButton("button.settings", true);
+    settingsButton.setPrefWidth(230);
     settingsButton.setOnMouseClicked(event -> {
       Scene settingScene = SettingsScene.getSettingScene(stage);
       contentContainer.getChildren().add(settingScene.getRoot());
@@ -196,39 +197,5 @@ public class MainMenuScene {
     clipRect.setArcWidth(30);
     clipRect.setArcHeight(30);
     return clipRect;
-  }
-
-  private void loadImage(BorderPane content) {
-    Task<Image> loadImageTask = new Task<>() {
-      @Override
-      protected Image call() {
-        String description =
-            "Fantasy,"
-                + " Realistic Digital Art,"
-                + " You finally managed to climb the mountain,"
-                + " in the distance you see a cave opening with a troll guarding the entrance.";
-        try {
-          return OpenAiImage.generateImage(description);
-        } catch (Exception e) {
-          ErrorLogger.LOGGER.log(Level.SEVERE,
-              String.format("Failed to load AI Image: %s", e));
-          return new Image(Objects.requireNonNull(
-              MainStage.class.getResourceAsStream("/Image/Window/Background.png")));
-        }
-      }
-    };
-
-    loadImageTask.setOnSucceeded(event -> {
-      Image roomImage = loadImageTask.getValue();
-      ImageView roomImageView = new ImageView(roomImage);
-      roomImageView.setFitWidth(1024);
-      roomImageView.setFitHeight(768);
-      content.getChildren().remove(0);
-      content.getChildren().add(0, roomImageView);
-    });
-
-    Thread loadImageThread = new Thread(loadImageTask);
-    loadImageThread.setDaemon(true);
-    loadImageThread.start();
   }
 }

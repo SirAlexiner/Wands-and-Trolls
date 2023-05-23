@@ -2,7 +2,7 @@
     -fx-font-family: 'LatoLatin';
     -fx-font-weight: bold;
     -fx-font-style: italic;
-    -fx-text-fill: #F1EDDF;
+    -fx-text-fill: #CDB593;
     -fx-font-size: 12px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
     innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
@@ -14,7 +14,7 @@
     -fx-font-family: 'LatoLatin';
     -fx-font-weight: bold;
     -fx-font-style: italic;
-    -fx-text-fill: #F1EDDF;
+    -fx-text-fill: #CDB593;
     -fx-font-size: 11px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
     innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),

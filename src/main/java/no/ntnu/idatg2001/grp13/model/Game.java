@@ -7,6 +7,9 @@ import no.ntnu.idatg2001.grp13.model.goals.Goal;
 /**
  * A class representing a game in the WiNG application
  * Part of the package, model.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
 public class Game {
 
@@ -32,7 +35,7 @@ public class Game {
    * @param player The player object in the game.
    * @param story  The story to be played in the game.
    * @param goals  The list of goal objects.
-   * @throws IllegalArgumentException Throws an exception if the player, story or goals are empty.
+   * @throws java.lang.IllegalArgumentException Throws an exception if the player, story or goals are empty.
    */
   public Game(Player player, Story story, List<Goal> goals) throws IllegalArgumentException {
     if (player != null && story != null && !goals.isEmpty()) {
@@ -58,7 +61,7 @@ public class Game {
    *
    * @param link The link that was clicked.
    * @return The passage value to the link key.
-   * @throws IllegalArgumentException if the link does not point towards any passage.
+   * @throws java.lang.IllegalArgumentException if the link does not point towards any passage.
    */
   public Passage go(Link link) throws IllegalArgumentException {
     if (story.getPassages().contains(story.getPassage(link))) {

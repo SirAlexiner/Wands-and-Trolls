@@ -9,8 +9,12 @@ import java.util.logging.SimpleFormatter;
 
 /**
  * The configureLogger method is used to configure the logger for error logging.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
 public class ErrorLogger {
+  /** Constant <code>LOGGER</code> */
   public static final Logger LOGGER = Logger.getLogger("WnTLogger");
 
   /**

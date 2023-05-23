@@ -8,6 +8,12 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
+/**
+ * <p>App class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 @UtilityClass
 public class App {
   @Getter

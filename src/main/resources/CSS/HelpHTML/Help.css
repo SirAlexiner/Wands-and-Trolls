@@ -1,9 +1,9 @@
 body {
-    background-image: url("../../Image/Window/Background.png");
+    background-image: url("Background/Background.png");
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Constantia', serif;
-    color: #F1EDDF;
+    color: #CDB593;
     font-size: 14px;
     margin: 50px;
     padding: 0;

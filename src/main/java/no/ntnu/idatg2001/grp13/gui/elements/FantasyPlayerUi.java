@@ -20,6 +20,12 @@ import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 
+/**
+ * <p>FantasyPlayerUi class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class FantasyPlayerUi extends StackPane {
   private int maxHealth;
   private int health;
@@ -32,6 +38,13 @@ public class FantasyPlayerUi extends StackPane {
 
   private final ProgressBar healthBar = new ProgressBar();
 
+  /**
+   * <p>Constructor for FantasyPlayerUi.</p>
+   *
+   * @param health a int
+   * @param gold a int
+   * @param scale a double
+   */
   public FantasyPlayerUi(int health, int gold, double scale) {
     if (health > 99999) {
       maxHealth = 99999;
@@ -61,7 +74,7 @@ public class FantasyPlayerUi extends StackPane {
     healthBar.setPrefWidth(190);
     healthBar.setPrefHeight(18);
     healthBar.setTranslateX(-7);
-    healthBar.setTranslateY(-9);
+    healthBar.setTranslateY(-9.5);
 
     ColorAdjust healthColorAdjust = new ColorAdjust();
     healthColorAdjust.setHue(Color.RED.getHue());
@@ -170,6 +183,11 @@ public class FantasyPlayerUi extends StackPane {
     }
   }
 
+  /**
+   * <p>updateHealth.</p>
+   *
+   * @param health a int
+   */
   public void updateHealth(int health) {
     if (health > 99999) {
       maxHealth = 99999;
@@ -182,22 +200,42 @@ public class FantasyPlayerUi extends StackPane {
     healthLabel.setText(this.health + " / " + maxHealth);
   }
 
+  /**
+   * <p>Setter for the field <code>health</code>.</p>
+   *
+   * @param health a int
+   */
   public void setHealth(int health) {
     this.health = Math.min(health, 99999);
     animateProgressBar(healthBar, ((this.health + (maxHealth * 0.20)) / maxHealth));
     healthLabel.setText(this.health + " / " + maxHealth);
   }
 
+  /**
+   * <p>Setter for the field <code>gold</code>.</p>
+   *
+   * @param gold a int
+   */
   public void setGold(int gold) {
     this.gold = gold;
     goldLabel.setText(String.valueOf(gold));
   }
 
+  /**
+   * <p>Setter for the field <code>score</code>.</p>
+   *
+   * @param score a int
+   */
   public void setScore(int score) {
     this.score = score;
     scoreLabel.setText(String.valueOf(score));
   }
 
+  /**
+   * <p>setPlayerAvatar.</p>
+   *
+   * @param image a {@link javafx.scene.image.Image} object
+   */
   public void setPlayerAvatar(Image image) {
     if (image != null) {
       avatarImageView.setImage(image);

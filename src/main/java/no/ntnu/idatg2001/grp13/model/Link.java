@@ -7,6 +7,9 @@ import no.ntnu.idatg2001.grp13.model.actions.Action;
 
 /**
  * A class representing a Link, part of the WiNG application.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
 public class Link {
   @Getter
@@ -17,6 +20,12 @@ public class Link {
   private final List<Action> actions;
 
   // To be noted is that reference is the reference to the "passage object".
+  /**
+   * <p>Constructor for Link.</p>
+   *
+   * @param text a {@link java.lang.String} object
+   * @param reference a {@link java.lang.String} object
+   */
   public Link(String text, String reference) {
     this.text = text;
     this.reference = reference;
@@ -32,6 +41,11 @@ public class Link {
     actions.add(action);
   }
 
+  /**
+   * <p>Getter for the field <code>actions</code>.</p>
+   *
+   * @return a {@link java.util.List} object
+   */
   public List<Action> getActions() {
     return this.actions;
   }
@@ -46,9 +60,9 @@ public class Link {
   }
 
   /**
-   * A method for overriding the toString() method.
+   * {@inheritDoc}
    *
-   * @return The reference as a String.
+   * A method for overriding the toString() method.
    */
   @Override
   public String toString() {
@@ -56,11 +70,10 @@ public class Link {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * If the references are both null, or if the references are both not null and equal, then the
    * objects are equal.
-   *
-   * @param o The object to compare to.
-   * @return The hashCode of the reference.
    */
   @Override
   public final boolean equals(Object o) {
@@ -75,10 +88,10 @@ public class Link {
   }
 
   /**
+   * {@inheritDoc}
+   *
    * If the reference is null, return 17. Otherwise, return 31 times 17 plus the hash code of the
    * reference.
-   *
-   * @return The hash code of the object.
    */
   @Override
   public final int hashCode() {

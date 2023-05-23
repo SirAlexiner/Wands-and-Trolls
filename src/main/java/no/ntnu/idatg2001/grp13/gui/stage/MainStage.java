@@ -11,11 +11,17 @@ import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyFooter;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyTopBar;
 import no.ntnu.idatg2001.grp13.gui.scene.MainMenuScene;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.sound.MusicPlayer;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
 import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 
+/**
+ * <p>MainStage class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class MainStage extends Application {
 
   /**
@@ -27,14 +33,13 @@ public class MainStage extends Application {
     launch(args);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void stop() {
     System.exit(0);
   }
 
-  /**
-   * {@inheritDoc}
-   */
+  /** {@inheritDoc} */
   @Override
   public void start(Stage primaryStage) {
     Settings savedSettings = SettingsDao.loadSettingsFromFile();
@@ -59,6 +64,7 @@ public class MainStage extends Application {
     root.setBottom(bottomBar);
 
     Scene scene = new Scene(root, 1024, 768, Color.TRANSPARENT);
+    scene.setOnMouseClicked(event -> root.requestFocus());
     scene.getStylesheets()
         .add(String.valueOf(MainStage.class.getResource("/CSS/WindowUi/FantasyStyle.css")));
 

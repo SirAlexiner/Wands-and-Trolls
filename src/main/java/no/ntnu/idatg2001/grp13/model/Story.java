@@ -12,6 +12,9 @@ import lombok.Getter;
 
 /**
  * A class representing a story, part of the WiNG application.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
 public class Story {
 
@@ -22,6 +25,12 @@ public class Story {
   private final Passage openingPassage;
 
   // Constructor
+  /**
+   * <p>Constructor for Story.</p>
+   *
+   * @param title a {@link java.lang.String} object
+   * @param openingPassage a {@link no.ntnu.idatg2001.grp13.model.Passage} object
+   */
   public Story(String title, Passage openingPassage) {
     this.title = title;
     this.openingPassage = openingPassage;
@@ -33,6 +42,7 @@ public class Story {
    * passages are linked to the passage.
    *
    * @param link The Link key to the Passage object to be removed.
+   * @throws java.lang.IllegalStateException if any.
    */
   public void removePassage(Link link) throws IllegalStateException {
     if (passages.containsKey(link)) {
@@ -76,6 +86,7 @@ public class Story {
     passages.put(new Link(passage.getTitle(), passage.getTitle()), passage);
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -102,6 +113,7 @@ public class Story {
     return Objects.equals(openingPassage, story.openingPassage);
   }
 
+  /** {@inheritDoc} */
   @Override
   public int hashCode() {
     return Objects.hash(title, passages, openingPassage);
@@ -117,6 +129,11 @@ public class Story {
     return passages.get(link);
   }
 
+  /**
+   * <p>Getter for the field <code>passages</code>.</p>
+   *
+   * @return a {@link java.util.Collection} object
+   */
   public Collection<Passage> getPassages() {
     return passages.values();
   }

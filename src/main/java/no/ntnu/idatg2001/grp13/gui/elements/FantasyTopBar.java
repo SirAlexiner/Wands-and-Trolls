@@ -22,13 +22,24 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.sound.SoundEffectPlayer;
 
+/**
+ * <p>FantasyTopBar class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class FantasyTopBar extends StackPane {
 
   private double offsetX = 0;
   private double offsetY = 0;
 
+  /**
+   * <p>Constructor for FantasyTopBar.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   */
   public FantasyTopBar(Stage stage) {
     HBox topBar = new HBox();
     // Load and set the side gradients and middle gradients as the background

@@ -9,10 +9,22 @@ import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
 import no.ntnu.idatg2001.grp13.gui.scene.MainMenuScene;
 
+/**
+ * <p>QuickButtons class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 @UtilityClass
 public class QuickButtons {
+  /**
+   * <p>getGoBackButton.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   * @return a {@link no.ntnu.idatg2001.grp13.gui.elements.FantasyButton} object
+   */
   public static FantasyButton getGoBackButton(Stage stage) {
-    FantasyButton cancelButton = new FantasyButton("button.goBack");
+    FantasyButton cancelButton = new FantasyButton("button.goBack", true);
     cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
     cancelButton.setPrefWidth(200);
     cancelButton.setOnMouseClicked(event -> {

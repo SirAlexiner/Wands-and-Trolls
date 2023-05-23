@@ -6,7 +6,10 @@ import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.model.Game;
+import no.ntnu.idatg2001.grp13.model.GameHandler;
 import no.ntnu.idatg2001.grp13.model.Link;
 import no.ntnu.idatg2001.grp13.model.Passage;
 import no.ntnu.idatg2001.grp13.model.Player;
@@ -19,28 +22,37 @@ import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 /**
  * This class is part of the "WiNG" application and represents the controller for the game scene.
  * It populates the text area and lists view in the game scene with relevant data.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
+@UtilityClass
 public class GameController {
+  private static final GameHandler gameHandler = GameHandler.getGameHandler();
   private static Game game;
   private static Story story;
   private static Player player;
+  @Getter
   private static Passage currentPassage;
   private static final List<Goal> goals = new ArrayList<>();
 
-  private GameController() {
-  }
-
-
   /**
    * A method for starting the game. Sets the current passage.
+   *
+   * @param stage a {@link javafx.stage.Stage} object
    */
   public static void startGame(Stage stage) {
     setupGoalsAndPlayer();
-    initializeStory(stage);
+    initializeStory(stage, gameHandler.getStoryPath());
     initializeGame();
     currentPassage = game.begin();
   }
 
+  /**
+   * <p>restartGame.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   */
   public static void restartGame(Stage stage) {
     startGame(stage);
   }
@@ -50,8 +62,8 @@ public class GameController {
     player = new Player("Arthur", 10, 10, 10);
   }
 
-  private static void initializeStory(Stage stage) {
-    story = StoryReader.readFromFile("src/test/resources/hauntedHouse.paths");
+  private static void initializeStory(Stage stage, String file) {
+    story = StoryReader.readFromFile(file);
     if (storyHasBrokenLinks()) {
       GameScene.storyContainingBrokenLinks(stage).showAndWait();
     }
@@ -61,6 +73,9 @@ public class GameController {
     return !story.getBrokenLinks().isEmpty();
   }
 
+  /**
+   * <p>initializeGame.</p>
+   */
   public static void initializeGame() {
     try {
       game = new Game(player, story, goals);
@@ -70,15 +85,22 @@ public class GameController {
     }
   }
 
-  public static Passage getCurrentPassage() {
-    return currentPassage;
-  }
-
+  /**
+   * <p>getNextPassage.</p>
+   *
+   * @param link a {@link no.ntnu.idatg2001.grp13.model.Link} object
+   * @return a {@link no.ntnu.idatg2001.grp13.model.Passage} object
+   */
   public static Passage getNextPassage(Link link) {
     currentPassage = game.go(link);
     return currentPassage;
   }
 
+  /**
+   * <p>getLinkForPassage.</p>
+   *
+   * @return a {@link javafx.collections.ObservableList} object
+   */
   public static ObservableList<Link> getLinkForPassage() {
     ObservableList<Link> links = FXCollections.observableArrayList();
     List<Link> brokenLinks = story.getBrokenLinks();
@@ -88,14 +110,11 @@ public class GameController {
     return links;
   }
 
-  public static List<String> getLinkTextsForCurrentPassage() {
-    List<String> linkTexts = new ArrayList<>();
-    for (Link link : getLinkForPassage()) {
-      linkTexts.add(link.getText());
-    }
-    return linkTexts;
-  }
-
+  /**
+   * <p>getLinksForCurrentPassage.</p>
+   *
+   * @return a {@link java.util.List} object
+   */
   public static List<Link> getLinksForCurrentPassage() {
     return getLinkForPassage();
   }

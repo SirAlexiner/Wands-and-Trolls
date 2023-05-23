@@ -22,8 +22,15 @@ import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
 
+/**
+ * The FantasyAlert class is a custom Java alert dialog that allows for customization of the alert
+ * type, header, and buttons.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class FantasyAlert {
   @Getter
   @Setter
@@ -34,6 +41,11 @@ public class FantasyAlert {
   private final HBox buttons;
   private final Stage stage;
 
+  /**
+   * <p>Constructor for FantasyAlert.</p>
+   *
+   * @param stageOwner a {@link javafx.stage.Stage} object
+   */
   public FantasyAlert(Stage stageOwner) {
     stage = new Stage(StageStyle.TRANSPARENT);
     stage.initOwner(stageOwner);
@@ -58,7 +70,7 @@ public class FantasyAlert {
     BorderPane root = new BorderPane();
     root.getChildren().add(0, backgroundView);
 
-    FantasyButton confirm = new FantasyButton("button.yes");
+    FantasyButton confirm = new FantasyButton("button.yes", true);
     confirm.setFantasyButtonType(FantasyButtonType.BONE);
     confirm.setButtonType(ButtonType.OK);
     confirm.setPrefWidth(150);
@@ -67,7 +79,7 @@ public class FantasyAlert {
       stage.close();
     });
 
-    FantasyButton cancel = new FantasyButton("button.no");
+    FantasyButton cancel = new FantasyButton("button.no", true);
     cancel.setFantasyButtonType(FantasyButtonType.BONE);
     cancel.setButtonType(ButtonType.CANCEL);
     cancel.setPrefWidth(150);
@@ -107,14 +119,29 @@ public class FantasyAlert {
     stage.setScene(scene);
   }
 
+  /**
+   * <p>setTitle.</p>
+   *
+   * @param resourceKey a {@link java.lang.String} object
+   */
   public void setTitle(String resourceKey) {
     FantasyTopBarAlert.updateTopBarTitle(resourceKey);
   }
 
+  /**
+   * <p>Setter for the field <code>header</code>.</p>
+   *
+   * @param resourceKey a {@link java.lang.String} object
+   */
   public void setHeader(String resourceKey) {
     header.textProperty().bind(LanguageManager.getStringProperty(resourceKey));
   }
 
+  /**
+   * <p>setAlertType.</p>
+   *
+   * @param alertType a {@link javafx.scene.control.Alert.AlertType} object
+   */
   public void setAlertType(Alert.AlertType alertType) {
     switch (alertType) {
       case CONFIRMATION -> FantasyTopBarAlert.setAlertIconView(new Image(Objects.requireNonNull(
@@ -137,12 +164,15 @@ public class FantasyAlert {
     }
   }
 
+  /**
+   * <p>showAndWait.</p>
+   */
   public void showAndWait() {
     stage.showAndWait();
   }
 
   private void addConfirmationButton() {
-    FantasyButton ok = new FantasyButton("button.confirm");
+    FantasyButton ok = new FantasyButton("button.confirm", true);
     ok.setFantasyButtonType(FantasyButtonType.BONE);
     ok.setButtonType(ButtonType.OK);
     ok.setPrefWidth(150);

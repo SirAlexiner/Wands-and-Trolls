@@ -4,20 +4,20 @@
 }
 
 .alert {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
+    -fx-background-image: url("Background/Background.png"); /* Set the background image */
     -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
     -fx-background-size: cover; /* Adjust the background image size to cover the alert */
 }
 
 .alert .header-panel {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
+    -fx-background-image: url("Background/Background.png"); /* Set the background image */
     -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
     -fx-background-size: cover; /* Adjust the background image size to cover the alert */
 }
 
 .label {
     -fx-font-family: 'Constantia';
-    -fx-text-fill: #F1EDDF;
+    -fx-text-fill: #CDB593;
     -fx-font-size: 14px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
     innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
@@ -27,7 +27,7 @@
 
 .text-field {
     -fx-font-family: 'Constantia';
-    -fx-text-fill: #F1EDDF;
+    -fx-text-fill: #CDB593;
     -fx-font-size: 16px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
     innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
@@ -44,4 +44,64 @@
     -fx-padding: 0;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
+}
+
+.text-area {
+    -fx-font-family: 'Constantia';
+    -fx-text-fill: #000000;
+    -fx-font-size: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
+    innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),
+    innershadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 3),
+    glow(0.5);
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-padding: 10;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-opacity: 1;
+}
+
+.text-area .content{
+    -fx-background-color: #CDB593;
+    -fx-opacity: 0.75;
+}
+
+.list-view {
+    -fx-font-family: 'Constantia';
+    -fx-text-alignment: center, center;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 0);
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+
+.list-view .cell {
+    -fx-text-fill: #CDB593;
+    -fx-background-color: transparent;
+}
+
+.list-view .cell:selected {
+    -fx-background-color: linear-gradient(to right, #70534d, rgba(255, 255, 255, 0));;
+}
+
+.context-menu {
+    -fx-font-family: 'Constantia';
+    -fx-text-alignment: center, center;
+    -fx-text-fill: #F1EDDF;
+    -fx-font-size: 19px;
+    -fx-pref-width: 200px;
+    -fx-effect: dropshadow(three-pass-box, rgb(0, 0, 0), 5, 0.0, 0, 0);
+    -fx-background-image: url("Background/Background.png"); /* Set the background image */
+    -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
+    -fx-background-size: cover; /* Adjust the background image size to cover the alert */
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
 }

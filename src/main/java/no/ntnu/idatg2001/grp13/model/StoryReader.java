@@ -20,7 +20,6 @@ import no.ntnu.idatg2001.grp13.util.ErrorLogger;
  * @author Torgrim Thorsen
  * @version 02-04-2023
  */
-
 public class StoryReader {
 
   private StoryReader() {

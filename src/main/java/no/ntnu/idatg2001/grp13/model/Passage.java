@@ -7,6 +7,9 @@ import lombok.Getter;
 
 /**
  * A class representing a passage, part of the WiNG application.
+ *
+ * @author Sir_A
+ * @version $Id: $Id
  */
 public class Passage {
   @Getter
@@ -16,6 +19,12 @@ public class Passage {
   @Getter
   private final List<Link> links = new ArrayList<>();
 
+  /**
+   * <p>Constructor for Passage.</p>
+   *
+   * @param title a {@link java.lang.String} object
+   * @param content a {@link java.lang.String} object
+   */
   public Passage(String title, String content) {
     this.title = title;
     this.content = content;
@@ -67,9 +76,9 @@ public class Passage {
   }
 
   /**
-   * A method for returning the Link object to a string.
+   * {@inheritDoc}
    *
-   * @return A String of the Link object.
+   * A method for returning the Link object to a string.
    */
   @Override
   public String toString() {
@@ -77,6 +86,7 @@ public class Passage {
     return (("::") + this.title + ("\n") + this.content);
   }
 
+  /** {@inheritDoc} */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -89,6 +99,7 @@ public class Passage {
     return Objects.equals(title, passage.title);
   }
 
+  /** {@inheritDoc} */
   @Override
   public int hashCode() {
     return Objects.hash(title);

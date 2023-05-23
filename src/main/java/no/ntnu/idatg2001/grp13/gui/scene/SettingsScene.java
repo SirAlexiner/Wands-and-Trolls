@@ -21,14 +21,20 @@ import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyCheckbox;
 import no.ntnu.idatg2001.grp13.gui.elements.LocalizedLabel;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.sound.MusicPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.sound.SoundEffectPlayer;
 import no.ntnu.idatg2001.grp13.gui.util.StylizedBorderPane;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
 import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
+/**
+ * <p>SettingsScene class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 @UtilityClass
 public class SettingsScene {
   private boolean settingsSaved = false;
@@ -46,6 +52,12 @@ public class SettingsScene {
   private boolean musicMuted;
   private boolean soundEffectMuted;
 
+  /**
+   * <p>getSettingScene.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   * @return a {@link javafx.scene.Scene} object
+   */
   public static Scene getSettingScene(Stage stage) {
     VBox volumeSliderBox = new VBox();
     volumeSliderBox.setSpacing(20);
@@ -242,6 +254,12 @@ public class SettingsScene {
     return slider;
   }
 
+  /**
+   * <p>setTitleLabel.</p>
+   *
+   * @param resourceKey a {@link java.lang.String} object
+   * @return a {@link javafx.scene.control.Label} object
+   */
   public Label setTitleLabel(String resourceKey) {
     LocalizedLabel settingsLabel;
     settingsLabel = new LocalizedLabel(resourceKey);
@@ -249,6 +267,12 @@ public class SettingsScene {
     return settingsLabel;
   }
 
+  /**
+   * <p>setButtons.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   * @return a {@link javafx.scene.layout.HBox} object
+   */
   public HBox setButtons(Stage stage) {
     FantasyButton saveButton = getSaveButton(stage);
 
@@ -261,7 +285,7 @@ public class SettingsScene {
   }
 
   private static FantasyButton getCancelButton(Stage stage) {
-    FantasyButton cancelButton = new FantasyButton("alert.goBack");
+    FantasyButton cancelButton = new FantasyButton("alert.goBack", true);
     cancelButton.setPrefWidth(200);
     cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
     cancelButton.setOnMouseClicked(event -> {
@@ -300,7 +324,7 @@ public class SettingsScene {
   }
 
   private static FantasyButton getSaveButton(Stage stage) {
-    FantasyButton saveButton = new FantasyButton("button.save");
+    FantasyButton saveButton = new FantasyButton("button.save", true);
     saveButton.setPrefWidth(200);
     saveButton.setFantasyButtonType(FantasyButtonType.BONE);
     saveButton.setOnMouseClicked(event -> {

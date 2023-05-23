@@ -3,6 +3,12 @@ package no.ntnu.idatg2001.grp13.gui.util.settings;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <p>Settings class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class Settings {
   @Getter
   @Setter

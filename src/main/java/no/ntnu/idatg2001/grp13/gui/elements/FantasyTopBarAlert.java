@@ -19,9 +19,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.sound.SoundEffectPlayer;
 
+/**
+ * <p>FantasyTopBarAlert class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 public class FantasyTopBarAlert extends StackPane {
   private static final ImageView alertIconView = new ImageView();
   private double xoffset = 0;
@@ -29,6 +35,11 @@ public class FantasyTopBarAlert extends StackPane {
 
   private static final Label title = new Label();
 
+  /**
+   * <p>Constructor for FantasyTopBarAlert.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   */
   public FantasyTopBarAlert(Stage stage) {
     this.setTranslateY(3);
     HBox topBar = new HBox();
@@ -205,10 +216,20 @@ public class FantasyTopBarAlert extends StackPane {
     });
   }
 
+  /**
+   * <p>updateTopBarTitle.</p>
+   *
+   * @param resourceKey a {@link java.lang.String} object
+   */
   protected static void updateTopBarTitle(String resourceKey) {
     title.textProperty().bind(LanguageManager.getStringProperty(resourceKey));
   }
 
+  /**
+   * <p>Setter for the field <code>alertIconView</code>.</p>
+   *
+   * @param image a {@link javafx.scene.image.Image} object
+   */
   public static void setAlertIconView(Image image) {
     alertIconView.setImage(image);
   }

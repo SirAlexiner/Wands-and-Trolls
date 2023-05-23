@@ -15,9 +15,21 @@ import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.util.QuickButtons;
 
+/**
+ * <p>HelpScreen class.</p>
+ *
+ * @author Sir_A
+ * @version $Id: $Id
+ */
 @UtilityClass
 public class HelpScreen {
 
+  /**
+   * <p>getHelpScene.</p>
+   *
+   * @param stage a {@link javafx.stage.Stage} object
+   * @return a {@link javafx.scene.Scene} object
+   */
   public static Scene getHelpScene(Stage stage) {
     // Create a WebView component
     WebView webView = new WebView();
@@ -32,7 +44,7 @@ public class HelpScreen {
     // Create a layout container
     BorderPane root = new BorderPane();
     Image background = new Image(Objects.requireNonNull(
-        LoadAdventureScene.class.getResourceAsStream("/Image/Window/Background.png")));
+        LoadAdventureScene.class.getResourceAsStream("/Image/Background/Background.png")));
     ImageView backgroundView = new ImageView(background);
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);
