@@ -2,7 +2,7 @@ package no.ntnu.idatg2001.grp13.model.actions;
 
 import no.ntnu.idatg2001.grp13.model.Player;
 
-public class GoldAction implements Action{
+public class GoldAction implements Action {
 
   private final int gold;
 
@@ -17,12 +17,12 @@ public class GoldAction implements Action{
 
 
   @Override
-  public String getActionType(){
+  public String getActionType() {
     return "Gold";
   }
 
   @Override
-  public String getActionValue(){
+  public String getActionValue() {
     return String.valueOf(this.gold);
   }
 }

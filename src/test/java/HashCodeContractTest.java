@@ -23,7 +23,7 @@ class HashCodeContractTest {
   }
 
   @Test
-  public void testEqualsForStoryObject() {
+  void testEqualsForStoryObject() {
     Passage passage1 = new Passage("This is passage 1.", "content of passage 1");
     Passage passage2 = new Passage("This is passage 2.", "content of passage 2");
     Passage passage3 = new Passage("This is passage 3.", "content of passage 3");

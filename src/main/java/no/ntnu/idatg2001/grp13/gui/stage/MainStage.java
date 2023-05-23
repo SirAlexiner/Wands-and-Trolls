@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.grp13.gui.stage;
 
 import java.util.Objects;
 import javafx.application.Application;
-import javafx.scene.AmbientLight;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;

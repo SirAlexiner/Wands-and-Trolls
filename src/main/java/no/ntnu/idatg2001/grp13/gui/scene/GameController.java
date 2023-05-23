@@ -14,7 +14,6 @@ import no.ntnu.idatg2001.grp13.model.Story;
 import no.ntnu.idatg2001.grp13.model.StoryReader;
 import no.ntnu.idatg2001.grp13.model.goals.Goal;
 import no.ntnu.idatg2001.grp13.model.goals.GoldGoals;
-import no.ntnu.idatg2001.grp13.stage.MainStage;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 /**
@@ -26,7 +25,7 @@ public class GameController {
   private static Story story;
   private static Player player;
   private static Passage currentPassage;
-  private static List<Goal> goals = new ArrayList<>();
+  private static final List<Goal> goals = new ArrayList<>();
 
   private GameController() {
   }
@@ -41,6 +40,7 @@ public class GameController {
     initializeGame();
     currentPassage = game.begin();
   }
+
   public static void restartGame(Stage stage) {
     startGame(stage);
   }
@@ -96,7 +96,7 @@ public class GameController {
     return linkTexts;
   }
 
-    public static List<Link> getLinksForCurrentPassage() {
-      return getLinkForPassage();
-    }
+  public static List<Link> getLinksForCurrentPassage() {
+    return getLinkForPassage();
   }
+}

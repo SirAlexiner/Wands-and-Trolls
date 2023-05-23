@@ -34,9 +34,6 @@ public class MainMenuScene {
   private StackPane contentContainer;
 
   public static StackPane getScene(Stage stage) {
-    HBox logoBox = createLogoBox();
-    VBox mainButtonBox = createMainButtonBox(stage);
-    BorderPane bottomInformation = createBottomInformation();
     Image background = new Image(
         Objects.requireNonNull(MainStage.class.getResourceAsStream(
             "/Image/MainMenu/Main_Menu.gif")));
@@ -46,8 +43,11 @@ public class MainMenuScene {
 
     BorderPane content = new BorderPane();
     content.getChildren().add(backgroundView);
+    HBox logoBox = createLogoBox();
     content.setTop(logoBox);
+    VBox mainButtonBox = createMainButtonBox(stage);
     content.setCenter(mainButtonBox);
+    BorderPane bottomInformation = createBottomInformation();
     content.setBottom(bottomInformation);
     contentContainer = new StackPane(content);
     contentContainer.setPrefHeight(660);

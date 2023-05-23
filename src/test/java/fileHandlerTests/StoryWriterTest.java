@@ -72,7 +72,7 @@ class StoryWriterTest {
     }
 
     @Test
-    void posTestWriteLink() throws IOException {
+    void posTestWriteLink() {
         Link expected = new Link("Random", "Random");
         passageBeginnings.addLink(expected);
         StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
@@ -147,7 +147,7 @@ class StoryWriterTest {
     }
 
     @Test
-    void posTestWritePassage() throws IOException {
+    void posTestWritePassage() {
         Passage expected = new Passage("Random", "Random");
         storyHauntedHouse.addPassage(expected);
         StoryWriter.writeToFile(storyHauntedHouse, hauntedHouseFileLocation);
@@ -162,7 +162,7 @@ class StoryWriterTest {
     }
 
     @Test
-    void posTestWriteAction() throws IOException {
+    void posTestWriteAction() {
         enterLink.addAction(goldAction);
         enterLink.addAction(healthAction);
         String expected = goldAction.getActionType();

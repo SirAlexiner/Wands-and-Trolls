@@ -32,7 +32,7 @@ public class FantasyAlert {
   private final Label header;
 
   private final HBox buttons;
-  private Stage stage;
+  private final Stage stage;
 
   public FantasyAlert(Stage stageOwner) {
     stage = new Stage(StageStyle.TRANSPARENT);

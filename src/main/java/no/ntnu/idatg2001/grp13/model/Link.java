@@ -15,6 +15,7 @@ public class Link {
   private final String reference;
 
   private final List<Action> actions;
+
   // To be noted is that reference is the reference to the "passage object".
   public Link(String text, String reference) {
     this.text = text;
@@ -24,6 +25,7 @@ public class Link {
 
   /**
    * A method for adding the action.
+   *
    * @param action The action to be performed.
    */
   public void addAction(Action action) {
@@ -50,22 +52,24 @@ public class Link {
    */
   @Override
   public String toString() {
-    return ( ("[") + this.text + ("](") +  this.reference + (")") );
+    return (("[") + this.text + ("](") + this.reference + (")"));
   }
 
   /**
    * If the references are both null, or if the references are both not null and equal, then the
-   * objects are equal
+   * objects are equal.
    *
    * @param o The object to compare to.
    * @return The hashCode of the reference.
    */
   @Override
   public final boolean equals(Object o) {
-    if (o == this)
+    if (o == this) {
       return true;
-    if (!(o instanceof Link other))
+    }
+    if (!(o instanceof Link other)) {
       return false;
+    }
     return (this.reference == null && other.reference == null)
         || (this.reference != null && this.reference.equals(other.reference));
   }

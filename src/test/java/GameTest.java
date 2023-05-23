@@ -23,7 +23,7 @@ class GameTest {
     String openingPassageContent = "Opening passage content";
     String secondPassageTitle = "Second passage title";
     String linkTitle = "Link title";
-    String invalidLinkTitle = "Invali link title";
+    String invalidLinkTitle = "Invalid link title";
     String invalidLinkReference = "Not valid reference";
 
 

@@ -2,7 +2,7 @@ package no.ntnu.idatg2001.grp13.model.actions;
 
 import no.ntnu.idatg2001.grp13.model.Player;
 
-public class ScoreAction implements Action{
+public class ScoreAction implements Action {
 
   private final int points;
 
@@ -14,13 +14,14 @@ public class ScoreAction implements Action{
   public void execute(Player player) {
     player.addScore(points);
   }
+
   @Override
-  public String getActionType(){
+  public String getActionType() {
     return "Score";
   }
 
   @Override
-  public String getActionValue(){
+  public String getActionValue() {
     return String.valueOf(this.points);
   }
 }

@@ -1,13 +1,13 @@
 package fileHandlerTests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Objects;
 import no.ntnu.idatg2001.grp13.model.Story;
 import no.ntnu.idatg2001.grp13.model.StoryReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StoryReaderTest {
     String emptyStoryFileLocation;
@@ -22,15 +22,15 @@ class StoryReaderTest {
     @Test
     void posTestReadStoryTitle() {
         String expected = "Haunted House";
-        String actual = StoryReader.readFromFile(hauntedHouseFileLocation).getTitle();
+        String actual = Objects.requireNonNull(StoryReader.readFromFile(hauntedHouseFileLocation)).getTitle();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void posTestReader_ReaderBegPassage() throws IOException {
+    void posTestReader_ReaderBegPassage() {
         Story story = StoryReader.readFromFile(hauntedHouseFileLocation);
-        String actual = story.getOpeningPassage().getTitle();
+        String actual = Objects.requireNonNull(story).getOpeningPassage().getTitle();
         String expected = "Beginnings";
 
         assertEquals(expected, actual);
@@ -43,16 +43,12 @@ class StoryReaderTest {
     @Test
     void negTestReader_ReaderEmptyFile() {
         // Checks that it throws if there is an illegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> {
-            StoryReader.readFromFile(emptyStoryFileLocation);
-        });
+        assertThrows(IllegalArgumentException.class, () -> StoryReader.readFromFile(emptyStoryFileLocation));
     }
 
     @Test
     void negTestReader_ReaderNotExistingFile() {
         // Checks that it throws if there is an illegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> {
-            StoryReader.readFromFile("wrong");
-        });
+        assertThrows(IllegalArgumentException.class, () -> StoryReader.readFromFile("wrong"));
     }
 }

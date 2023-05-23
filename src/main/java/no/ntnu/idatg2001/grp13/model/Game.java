@@ -1,7 +1,6 @@
 package no.ntnu.idatg2001.grp13.model;
 
 import java.util.List;
-
 import lombok.Getter;
 import no.ntnu.idatg2001.grp13.model.goals.Goal;
 
@@ -64,8 +63,7 @@ public class Game {
   public Passage go(Link link) throws IllegalArgumentException {
     if (story.getPassages().contains(story.getPassage(link))) {
       return story.getPassage(link);
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Link does not point towards and passage");
     }
   }

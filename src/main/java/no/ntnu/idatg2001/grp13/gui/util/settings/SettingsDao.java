@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.logging.Level;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.scene.SettingsScene;

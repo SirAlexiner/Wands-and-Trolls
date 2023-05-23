@@ -2,7 +2,6 @@ package no.ntnu.idatg2001.grp13.gui.elements;
 
 import javafx.scene.Cursor;
 import javafx.scene.control.CheckBox;
-import javafx.scene.text.TextAlignment;
 import no.ntnu.idatg2001.grp13.gui.scene.SettingsScene;
 import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
 

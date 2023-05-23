@@ -1,6 +1,5 @@
 package no.ntnu.idatg2001.grp13.gui.scene;
 
-import java.util.Objects;
 import java.util.logging.Level;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,8 +10,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -27,6 +24,7 @@ import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
 import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
 import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
 import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.StylizedBorderPane;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
 import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
@@ -49,18 +47,6 @@ public class SettingsScene {
   private boolean soundEffectMuted;
 
   public static Scene getSettingScene(Stage stage) {
-    BorderPane root = new BorderPane();
-    root.getStylesheets().add(
-        String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
-
-    Image background = new Image(Objects.requireNonNull(
-        SettingsScene.class.getResourceAsStream("/Image/Window/Background_Purple.png")));
-    ImageView backgroundView = new ImageView(background);
-    backgroundView.setFitWidth(1024);
-    backgroundView.setFitHeight(768);
-
-    root.getChildren().add(0, backgroundView);
-
     VBox volumeSliderBox = new VBox();
     volumeSliderBox.setSpacing(20);
 
@@ -172,6 +158,7 @@ public class SettingsScene {
     leftRightSettingsBox.setPadding(new Insets(0, 0, 20, 0));
     settingsBox.getChildren().add(leftRightSettingsBox);
 
+    BorderPane root = StylizedBorderPane.getBorderPane();
     root.setCenter(settingsBox);
 
     ChoiceBox<String> languageSelectionChoiceBox = LanguageManager.getLanguageSelectionBox();
@@ -263,17 +250,62 @@ public class SettingsScene {
   }
 
   public HBox setButtons(Stage stage) {
+    FantasyButton saveButton = getSaveButton(stage);
+
+    FantasyButton cancelButton = getCancelButton(stage);
+    HBox bottomButtons = new HBox(saveButton, cancelButton);
+    bottomButtons.setAlignment(Pos.CENTER);
+    bottomButtons.setSpacing(20);
+    bottomButtons.setPadding(new Insets(10));
+    return bottomButtons;
+  }
+
+  private static FantasyButton getCancelButton(Stage stage) {
+    FantasyButton cancelButton = new FantasyButton("alert.goBack");
+    cancelButton.setPrefWidth(200);
+    cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
+    cancelButton.setOnMouseClicked(event -> {
+      if (!settingsSaved) {
+        FantasyAlert quitAlert = new FantasyAlert(stage);
+        quitAlert.setTitle("alert.goBack");
+        quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
+        quitAlert.setHeader("alert.goBackText");
+
+        quitAlert.showAndWait();
+
+        revertSettings();
+      } else {
+        MainMenuScene.getContentContainer().getChildren().remove(1);
+      }
+    });
+    return cancelButton;
+  }
+
+  private static void revertSettings() {
+    if (FantasyAlert.getResult().equals(ButtonType.OK)) {
+      MusicPlayer.setMusicVolume(masterVolume, musicVolume);
+      SoundEffectPlayer.setSoundEffectVolume(masterVolume, soundEffectVolume);
+      if (musicMuted) {
+        MusicPlayer.muteMusic();
+      } else {
+        MusicPlayer.unmuteMusic();
+      }
+      if (soundEffectMuted) {
+        SoundEffectPlayer.muteSoundEffects();
+      } else {
+        SoundEffectPlayer.unmuteSoundEffects();
+      }
+      MainMenuScene.getContentContainer().getChildren().remove(1);
+    }
+  }
+
+  private static FantasyButton getSaveButton(Stage stage) {
     FantasyButton saveButton = new FantasyButton("button.save");
     saveButton.setPrefWidth(200);
     saveButton.setFantasyButtonType(FantasyButtonType.BONE);
     saveButton.setOnMouseClicked(event -> {
       try {
-        settings.setMasterVolume(masterVolumeSlider.getValue());
-        settings.setMusicVolume(musicVolumeSlider.getValue());
-        settings.setSoundEffectVolume(soundEffectVolumeSlider.getValue());
-        settings.setGameMusicMuted(muteMusic.isSelected());
-        settings.setSoundEffectMuted(muteSoundEffect.isSelected());
-        SettingsDao.saveSettings();
+        getSettingsAndSave();
         FantasyAlert saveSuccessAlert = new FantasyAlert(stage);
         saveSuccessAlert.setTitle("alert.settingsSaved");
         saveSuccessAlert.setAlertType(Alert.AlertType.INFORMATION);
@@ -291,42 +323,15 @@ public class SettingsScene {
       }
 
     });
+    return saveButton;
+  }
 
-    FantasyButton cancelButton = new FantasyButton("alert.goBack");
-    cancelButton.setPrefWidth(200);
-    cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
-    cancelButton.setOnMouseClicked(event -> {
-      if (!settingsSaved) {
-        FantasyAlert quitAlert = new FantasyAlert(stage);
-        quitAlert.setTitle("alert.goBack");
-        quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
-        quitAlert.setHeader("alert.goBackText");
-
-        quitAlert.showAndWait();
-
-        if (FantasyAlert.getResult().equals(ButtonType.OK)) {
-          MusicPlayer.setMusicVolume(masterVolume, musicVolume);
-          SoundEffectPlayer.setSoundEffectVolume(masterVolume, soundEffectVolume);
-          if (musicMuted) {
-            MusicPlayer.muteMusic();
-          } else {
-            MusicPlayer.unmuteMusic();
-          }
-          if (soundEffectMuted) {
-            SoundEffectPlayer.muteSoundEffects();
-          } else {
-            SoundEffectPlayer.unmuteSoundEffects();
-          }
-          MainMenuScene.getContentContainer().getChildren().remove(1);
-        }
-      } else {
-        MainMenuScene.getContentContainer().getChildren().remove(1);
-      }
-    });
-    HBox bottomButtons = new HBox(saveButton, cancelButton);
-    bottomButtons.setAlignment(Pos.CENTER);
-    bottomButtons.setSpacing(20);
-    bottomButtons.setPadding(new Insets(10));
-    return bottomButtons;
+  private static void getSettingsAndSave() {
+    settings.setMasterVolume(masterVolumeSlider.getValue());
+    settings.setMusicVolume(musicVolumeSlider.getValue());
+    settings.setSoundEffectVolume(soundEffectVolumeSlider.getValue());
+    settings.setGameMusicMuted(muteMusic.isSelected());
+    settings.setSoundEffectMuted(muteSoundEffect.isSelected());
+    SettingsDao.saveSettings();
   }
 }

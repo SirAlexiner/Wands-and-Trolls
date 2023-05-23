@@ -23,19 +23,22 @@ public class Passage {
 
   /**
    * A method for adding a Link to a list. Checks if the
-   * link object already exist in the list.
+   * link object already exists in the list.
    *
    * @param link The link to be added to the list.
    * @return A boolean value.
    */
   public boolean addLink(Link link) {
-    if (links.contains(link)){
+    if (links.contains(link)) {
       return false;
-    } else return links.add(link);
+    } else {
+      return links.add(link);
+    }
   }
 
   /**
    * A method for checking if the list has any Links.
+   *
    * @return A boolean value.
    */
   public boolean hasLinks() {
@@ -43,6 +46,7 @@ public class Passage {
   }
 
   // This function is not in req-spec, but is needed for everything to work:
+
   /**
    * If the list includes any links, then a for each loop is used. If the link's
    * toString() method returns the same value as the command parameter, then return the link.
@@ -64,32 +68,29 @@ public class Passage {
 
   /**
    * A method for returning the Link object to a string.
+   *
    * @return A String of the Link object.
    */
   @Override
   public String toString() {
-    // The different characters refers to '.path' characters for Link.
-    return ( ("::") + this.title + ("\n") + this.content);
+    // The different characters refer to '.path' characters for Link.
+    return (("::") + this.title + ("\n") + this.content);
   }
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Passage passage = (Passage) o;
-    return  Objects.equals(title, passage.title);
+    return Objects.equals(title, passage.title);
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(title);
   }
 }

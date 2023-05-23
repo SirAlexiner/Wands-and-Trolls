@@ -4,8 +4,6 @@ import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -13,10 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
+import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
-import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
+import no.ntnu.idatg2001.grp13.gui.util.QuickButtons;
 
+@UtilityClass
 public class HelpScreen {
 
   public static Scene getHelpScene(Stage stage) {
@@ -40,21 +39,7 @@ public class HelpScreen {
 
     root.getChildren().add(0, backgroundView);
 
-    FantasyButton cancelButton = new FantasyButton("button.goBack");
-    cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
-    cancelButton.setPrefWidth(200);
-    cancelButton.setOnMouseClicked(event -> {
-      FantasyAlert quitAlert = new FantasyAlert(stage);
-      quitAlert.setTitle("alert.goBack");
-      quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
-      quitAlert.setHeader("alert.goBackText");
-
-      quitAlert.showAndWait();
-
-      if (FantasyAlert.getResult().equals(ButtonType.OK)) {
-        MainMenuScene.getContentContainer().getChildren().remove(1);
-      }
-    });
+    FantasyButton cancelButton = QuickButtons.getGoBackButton(stage);
 
     HBox bottomButton = new HBox(cancelButton);
     bottomButton.setAlignment(Pos.CENTER_RIGHT);

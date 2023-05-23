@@ -5,13 +5,10 @@ import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -21,19 +18,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.experimental.UtilityClass;
-import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.LocalizedLabel;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.QuickButtons;
 
 @UtilityClass
 public class LoadAdventureScene {
@@ -134,21 +128,7 @@ public class LoadAdventureScene {
     pusher.setPrefWidth(310);
     pusher.setPrefHeight(40);
 
-    FantasyButton cancelButton = new FantasyButton("button.goBack");
-    cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
-    cancelButton.setPrefWidth(200);
-    cancelButton.setOnMouseClicked(event -> {
-      FantasyAlert quitAlert = new FantasyAlert(stage);
-      quitAlert.setTitle("alert.goBack");
-      quitAlert.setAlertType(Alert.AlertType.CONFIRMATION);
-      quitAlert.setHeader("alert.goBackText");
-
-      quitAlert.showAndWait();
-
-      if (FantasyAlert.getResult().equals(ButtonType.OK)) {
-        MainMenuScene.getContentContainer().getChildren().remove(1);
-      }
-    });
+    FantasyButton cancelButton = QuickButtons.getGoBackButton(stage);
 
     FantasyButton saveButton = new FantasyButton("button.save");
     saveButton.setFantasyButtonType(FantasyButtonType.BONE);

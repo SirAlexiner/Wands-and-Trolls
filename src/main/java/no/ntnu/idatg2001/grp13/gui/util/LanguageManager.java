@@ -15,7 +15,6 @@ import javafx.scene.control.ChoiceBox;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.scene.SettingsScene;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
-import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 @UtilityClass
@@ -57,13 +56,13 @@ public class LanguageManager {
         currentLanguage.get();
         ObservableList<String> items = FXCollections.observableArrayList();
         items.add(LanguageManager.getStringProperty("language.german")
-            .get()); // Add the selected value to the items list
+            .get());
         items.add(LanguageManager.getStringProperty("language.english")
-            .get()); // Add the selected value to the items list
+            .get());
         items.add(LanguageManager.getStringProperty("language.spanish")
-            .get()); // Add the selected value to the items list
+            .get());
         items.add(LanguageManager.getStringProperty("language.norwegian")
-            .get()); // Add the selected value to the items list
+            .get());
         return items;
       }
     };

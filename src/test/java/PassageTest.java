@@ -31,12 +31,10 @@ class PassageTest {
 
     @Test
     void testAddLink(){
-        // Positive, adding link to list
         boolean successfullyAdded = passage.addLink(link);
         boolean successfullyAddedSecondLink = passage.addLink(otherLink);
         assertTrue(successfullyAdded);
         assertTrue(successfullyAddedSecondLink);
-        // Negative, link already exist will therefore become false
         boolean notSuccess = passage.addLink(link);
         assertFalse(notSuccess);
     }

@@ -1,16 +1,13 @@
 package no.ntnu.idatg2001.grp13.gui.elements;
 
-import java.util.Objects;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.media.AudioClip;
 import lombok.Getter;
 import lombok.Setter;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
 import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
 

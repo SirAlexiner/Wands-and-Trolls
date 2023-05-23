@@ -1,6 +1,7 @@
 package no.ntnu.idatg2001.grp13.model.goals;
 
 import no.ntnu.idatg2001.grp13.model.Player;
+
 /**
  * Implements Goal, and upon initializing you set a goal of how much gold you need to fulfill
  * the gold goal.
@@ -9,9 +10,7 @@ public class GoldGoals implements Goal {
 
   private final int minimumGold;
 
-  //TODO Add javadoc.
-  public GoldGoals(int minimumGold)
-  {
+  public GoldGoals(int minimumGold) {
     this.minimumGold = minimumGold;
   }
 
@@ -22,7 +21,7 @@ public class GoldGoals implements Goal {
    * @return true or false.
    */
   @Override
-  public boolean isFulfilled(Player player){
+  public boolean isFulfilled(Player player) {
     return player.getGold() >= minimumGold;
   }
 }

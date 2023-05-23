@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import no.ntnu.idatg2001.grp13.gui.stage.MainStage;
 
@@ -184,11 +183,7 @@ public class FantasyPlayerUi extends StackPane {
   }
 
   public void setHealth(int health) {
-    if (health > 99999) {
-      this.health = 99999;
-    } else {
-      this.health = health;
-    }
+    this.health = Math.min(health, 99999);
     animateProgressBar(healthBar, ((this.health + (maxHealth * 0.20)) / maxHealth));
     healthLabel.setText(this.health + " / " + maxHealth);
   }

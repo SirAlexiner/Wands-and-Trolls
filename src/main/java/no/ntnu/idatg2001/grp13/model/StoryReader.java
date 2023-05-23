@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
+import java.util.logging.Level;
 import no.ntnu.idatg2001.grp13.model.actions.Action;
 import no.ntnu.idatg2001.grp13.model.actions.GoldAction;
 import no.ntnu.idatg2001.grp13.model.actions.HealthAction;
 import no.ntnu.idatg2001.grp13.model.actions.InventoryAction;
 import no.ntnu.idatg2001.grp13.model.actions.ScoreAction;
+import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 /**
  * This class is part of the "WiNG" application, this class acts as a file handler.
@@ -33,52 +34,77 @@ public class StoryReader {
    * @return A story object.
    */
   public static Story readFromFile(String fileName) {
-    String lineOfText;
-    Story story = null;
-    Passage passage = null;
-    Link link = null;
     Path filePath = Path.of(fileName);
-
-    if (!Files.exists(filePath)) {
-      throw new IllegalArgumentException("File does not exist: " + fileName);
-    }
+    validateFileExists(filePath);
 
     try (BufferedReader reader = Files.newBufferedReader(filePath)) {
       String titleOfGame = reader.readLine();
+      validateTextExists(titleOfGame);
 
-      if (titleOfGame == null || titleOfGame.isEmpty()) {
-        throw new IllegalArgumentException("File does not contain any text.");
-      }
+      Story story = null;
+      Passage passage = null;
+      Link link = null;
 
+      String lineOfText;
       while ((lineOfText = reader.readLine()) != null) {
         if (lineOfText.startsWith("::")) {
-          String[] line = lineOfText.split("::");
-          passage = new Passage(line[1], reader.readLine());
-
-          if (story == null) {
-            story = new Story(titleOfGame, passage);
-          }
+          passage = createPassage(lineOfText, reader.readLine());
+          story = createStoryIfNull(story, titleOfGame, passage);
           story.addPassage(passage);
         }
         if (lineOfText.startsWith("[") && (passage != null)) {
-          String[] line = lineOfText.split("\\[");
-          String[] text = line[1].split("]");
-
-          line = text[1].split("\\(");
-          String[] reference = line[1].split("\\)");
-          link = new Link(text[0], reference[0]);
+          link = createLink(lineOfText);
           passage.addLink(link);
         }
         if (lineOfText.startsWith("=") && link != null) {
-          // Adds an action to the link object.
           link.addAction(readActionFromFile(lineOfText));
         }
       }
+
+      return story;
     } catch (IOException e) {
-      System.out.println(e);
+      logError("An Error occurred while reading from file: " + e);
+      return null;
+    }
+  }
+
+  private static void validateFileExists(Path filePath) {
+    if (!Files.exists(filePath)) {
+      throw new IllegalArgumentException("File does not exist: " + filePath);
+    }
+  }
+
+  private static void validateTextExists(String text) {
+    if (text == null || text.isEmpty()) {
+      throw new IllegalArgumentException("File does not contain any text.");
+    }
+  }
+
+  private static Passage createPassage(String lineOfText, String passageText) {
+    String[] line = lineOfText.split("::");
+    return new Passage(line[1], passageText);
+  }
+
+  private static Story createStoryIfNull(Story story, String titleOfGame, Passage passage) {
+    if (story == null) {
+      return new Story(titleOfGame, passage);
     }
     return story;
   }
+
+  private static Link createLink(String lineOfText) {
+    String[] line = lineOfText.split("\\[");
+    String[] text = line[1].split("]");
+
+    line = text[1].split("\\(");
+    String[] reference = line[1].split("\\)");
+    return new Link(text[0], reference[0]);
+  }
+
+  private static void logError(String message) {
+    ErrorLogger.LOGGER.log(Level.SEVERE, message);
+  }
+
 
   /**
    * A method for reading action from a CSV file format.
@@ -106,7 +132,7 @@ public class StoryReader {
         return (new InventoryAction(action[1]));
       }
 
-      default -> System.err.print("error in switch");
+      default -> ErrorLogger.LOGGER.log(Level.WARNING, "Error in Switch case");
     }
     return null;
   }

@@ -12,7 +12,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
-import javafx.scene.AmbientLight;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,6 +25,7 @@ import javafx.util.Duration;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.StylizedBorderPane;
 
 @UtilityClass
 public class VictoryScene {
@@ -36,21 +36,12 @@ public class VictoryScene {
   private static Random random;
 
   public static Scene getVictoryScene(Stage stage) {
-    BorderPane root = new BorderPane();
-    root.getStylesheets().add(
-        String.valueOf(SettingsScene.class.getResource("/CSS/WindowUi/FantasyStyle_Settings.css")));
-
-    Image background = new Image(Objects.requireNonNull(
-        SettingsScene.class.getResourceAsStream("/Image/Window/Background_Purple.png")));
-    ImageView backgroundView = new ImageView(background);
-    backgroundView.setFitWidth(1024);
-    backgroundView.setFitHeight(768);
+    BorderPane root = StylizedBorderPane.getBorderPane();
 
     Image victory = new Image(Objects.requireNonNull(
         SettingsScene.class.getResourceAsStream("/Image/Window/Victory.png")));
     ImageView victoryView = new ImageView(victory);
 
-    root.getChildren().add(backgroundView);
     root.setCenter(victoryView);
 
     // Initialize confetti pieces

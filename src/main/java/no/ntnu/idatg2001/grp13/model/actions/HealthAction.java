@@ -2,7 +2,7 @@ package no.ntnu.idatg2001.grp13.model.actions;
 
 import no.ntnu.idatg2001.grp13.model.Player;
 
-public class HealthAction implements Action{
+public class HealthAction implements Action {
 
   private final int health;
 
@@ -16,11 +16,12 @@ public class HealthAction implements Action{
   }
 
   @Override
-  public String getActionType(){
+  public String getActionType() {
     return "Health";
   }
+
   @Override
-  public String getActionValue(){
+  public String getActionValue() {
     return String.valueOf(this.health);
   }
 }

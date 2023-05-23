@@ -13,23 +13,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.model.Link;
 import no.ntnu.idatg2001.grp13.model.Passage;
 
-/**
- * This class is part of the "WiNG" application and represents the game scene within the application.
- * It is a utility class that is responsible for generating the game scene. The game scene is made up of various user interface elements including text area,
- * list view for links, buttons and background. These elements are structured in the layout for an interactive game
- * experience.
- */
+@UtilityClass
 public class GameScene {
   private static TextArea passageTextArea;
   private static ListView<Link> linkView;
   private static HBox linkButtonsContainer;
-  private static Stage stage;
 
   public static Scene getGameScene(Stage stage) {
 
@@ -79,6 +73,7 @@ public class GameScene {
       linkButtonsContainer.getChildren().add(linkButton);
     }
   }
+
   public static void refreshLinkButtons() {
     // Clears the existing buttons
     linkButtonsContainer.getChildren().clear();
@@ -178,7 +173,7 @@ public class GameScene {
       // Reset the game state
       GameController.restartGame(stage);
 
-      // Reset passage  text area and link view
+      // Reset passage text area and link view
       passageTextArea.clear();
       // Sets the text
       passageTextArea.setText(GameController.getCurrentPassage().getTitle() + "\n"

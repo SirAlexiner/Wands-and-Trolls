@@ -1,7 +1,13 @@
 package no.ntnu.idatg2001.grp13.model;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import lombok.Getter;
 
 /**
@@ -30,17 +36,13 @@ public class Story {
    */
   public void removePassage(Link link) throws IllegalStateException {
     if (passages.containsKey(link)) {
-      // The string of the passage to be removed
       String passageToBeRemoved = passages.get(link).getTitle();
-      // Returns a list of links in each passage
       List<Link> linksInPassages = passages.values().stream()
           .map(Passage::getLinks)
           .flatMap(Collection::stream)
           .toList();
       linksInPassages.stream()
-          // Removes the original link from the list since this will always match
           .filter(l -> l != link)
-          // Filter on the link (l) reference and checks that link reference does not match the passage.
           .filter(l -> !l.getReference().matches(passageToBeRemoved))
           .forEach(passages::remove);
     }

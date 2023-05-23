@@ -16,12 +16,12 @@ public class InventoryAction implements Action {
   }
 
   @Override
-  public String getActionType(){
+  public String getActionType() {
     return "Inventory";
   }
 
   @Override
-  public String getActionValue(){
+  public String getActionValue() {
     return this.item;
   }
 }
