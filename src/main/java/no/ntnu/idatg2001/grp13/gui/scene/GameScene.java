@@ -189,7 +189,7 @@ public class GameScene {
   }
 
   private static FantasyButton setupRestartButton(Stage stage) {
-    FantasyButton restartButton = new FantasyButton("button.restart!", true);
+    FantasyButton restartButton = new FantasyButton("button.restart", true);
     restartButton.setFantasyButtonType(FantasyButtonType.BONE);
     restartButton.setPrefWidth(210);
     restartButton.setScaleX(0.9);
