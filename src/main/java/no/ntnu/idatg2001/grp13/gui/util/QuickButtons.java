@@ -12,7 +12,7 @@ import no.ntnu.idatg2001.grp13.gui.scene.MainMenuScene;
 @UtilityClass
 public class QuickButtons {
   public static FantasyButton getGoBackButton(Stage stage) {
-    FantasyButton cancelButton = new FantasyButton("button.goBack");
+    FantasyButton cancelButton = new FantasyButton("button.goBack", true);
     cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
     cancelButton.setPrefWidth(200);
     cancelButton.setOnMouseClicked(event -> {

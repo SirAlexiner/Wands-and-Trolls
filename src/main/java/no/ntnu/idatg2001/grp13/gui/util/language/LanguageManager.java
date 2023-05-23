@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.grp13.gui.util;
+package no.ntnu.idatg2001.grp13.gui.util.language;
 
 import java.util.HashMap;
 import java.util.Locale;

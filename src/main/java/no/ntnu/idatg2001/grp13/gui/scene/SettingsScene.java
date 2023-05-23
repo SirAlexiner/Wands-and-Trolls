@@ -21,9 +21,9 @@ import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyCheckbox;
 import no.ntnu.idatg2001.grp13.gui.elements.LocalizedLabel;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.sound.MusicPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.sound.SoundEffectPlayer;
 import no.ntnu.idatg2001.grp13.gui.util.StylizedBorderPane;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
 import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
@@ -261,7 +261,7 @@ public class SettingsScene {
   }
 
   private static FantasyButton getCancelButton(Stage stage) {
-    FantasyButton cancelButton = new FantasyButton("alert.goBack");
+    FantasyButton cancelButton = new FantasyButton("alert.goBack", true);
     cancelButton.setPrefWidth(200);
     cancelButton.setFantasyButtonType(FantasyButtonType.BONE);
     cancelButton.setOnMouseClicked(event -> {
@@ -300,7 +300,7 @@ public class SettingsScene {
   }
 
   private static FantasyButton getSaveButton(Stage stage) {
-    FantasyButton saveButton = new FantasyButton("button.save");
+    FantasyButton saveButton = new FantasyButton("button.save", true);
     saveButton.setPrefWidth(200);
     saveButton.setFantasyButtonType(FantasyButtonType.BONE);
     saveButton.setOnMouseClicked(event -> {

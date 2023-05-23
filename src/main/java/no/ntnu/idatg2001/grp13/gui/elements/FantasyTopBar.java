@@ -22,7 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import no.ntnu.idatg2001.grp13.gui.util.SoundEffectPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.sound.SoundEffectPlayer;
 
 public class FantasyTopBar extends StackPane {
 

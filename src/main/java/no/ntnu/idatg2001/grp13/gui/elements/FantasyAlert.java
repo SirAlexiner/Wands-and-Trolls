@@ -22,8 +22,12 @@ import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
 
+/**
+ * The FantasyAlert class is a custom Java alert dialog that allows for customization of the alert
+ * type, header, and buttons.
+ */
 public class FantasyAlert {
   @Getter
   @Setter
@@ -58,7 +62,7 @@ public class FantasyAlert {
     BorderPane root = new BorderPane();
     root.getChildren().add(0, backgroundView);
 
-    FantasyButton confirm = new FantasyButton("button.yes");
+    FantasyButton confirm = new FantasyButton("button.yes", true);
     confirm.setFantasyButtonType(FantasyButtonType.BONE);
     confirm.setButtonType(ButtonType.OK);
     confirm.setPrefWidth(150);
@@ -67,7 +71,7 @@ public class FantasyAlert {
       stage.close();
     });
 
-    FantasyButton cancel = new FantasyButton("button.no");
+    FantasyButton cancel = new FantasyButton("button.no", true);
     cancel.setFantasyButtonType(FantasyButtonType.BONE);
     cancel.setButtonType(ButtonType.CANCEL);
     cancel.setPrefWidth(150);
@@ -142,7 +146,7 @@ public class FantasyAlert {
   }
 
   private void addConfirmationButton() {
-    FantasyButton ok = new FantasyButton("button.confirm");
+    FantasyButton ok = new FantasyButton("button.confirm", true);
     ok.setFantasyButtonType(FantasyButtonType.BONE);
     ok.setButtonType(ButtonType.OK);
     ok.setPrefWidth(150);

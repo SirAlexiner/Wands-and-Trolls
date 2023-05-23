@@ -11,8 +11,8 @@ import javafx.stage.StageStyle;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyFooter;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyTopBar;
 import no.ntnu.idatg2001.grp13.gui.scene.MainMenuScene;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
-import no.ntnu.idatg2001.grp13.gui.util.MusicPlayer;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.sound.MusicPlayer;
 import no.ntnu.idatg2001.grp13.gui.util.settings.Settings;
 import no.ntnu.idatg2001.grp13.gui.util.settings.SettingsDao;
 
@@ -59,6 +59,7 @@ public class MainStage extends Application {
     root.setBottom(bottomBar);
 
     Scene scene = new Scene(root, 1024, 768, Color.TRANSPARENT);
+    scene.setOnMouseClicked(event -> root.requestFocus());
     scene.getStylesheets()
         .add(String.valueOf(MainStage.class.getResource("/CSS/WindowUi/FantasyStyle.css")));
 

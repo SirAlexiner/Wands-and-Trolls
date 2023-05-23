@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import lombok.experimental.UtilityClass;
 import no.ntnu.idatg2001.grp13.gui.scene.SettingsScene;
+import no.ntnu.idatg2001.grp13.gui.util.DaoLoader;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 /**
@@ -27,29 +28,8 @@ public class SettingsDao {
    * This function loads the game settings from a json file using the Gson library in Java.
    */
   public static Settings loadSettingsFromFile() {
-    Gson gson = new Gson();
+    Gson gson = DaoLoader.getDaoJsonLoader(FILE_PATH);
     JsonObject json = null;
-    File file = new File(FILE_PATH);
-
-    if (file.exists()) {
-      ErrorLogger.LOGGER.log(Level.FINE, "File already exists.");
-    } else {
-      try {
-        File parentDir = file.getParentFile();
-        if (!parentDir.exists()) {
-          boolean direCreated = parentDir.mkdirs();
-          boolean fileCreated = file.createNewFile();
-          if (direCreated && fileCreated) {
-            ErrorLogger.LOGGER.log(Level.FINE, "File and directory created successfully");
-          } else {
-            ErrorLogger.LOGGER.log(Level.WARNING,
-                "Failed to create File and directory successfully");
-          }
-        }
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
     try (Reader reader = new FileReader(FILE_PATH)) {
       json = gson.fromJson(reader, JsonObject.class);
     } catch (IOException e) {

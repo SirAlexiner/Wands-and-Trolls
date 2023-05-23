@@ -32,7 +32,7 @@ public class HelpScreen {
     // Create a layout container
     BorderPane root = new BorderPane();
     Image background = new Image(Objects.requireNonNull(
-        LoadAdventureScene.class.getResourceAsStream("/Image/Window/Background.png")));
+        LoadAdventureScene.class.getResourceAsStream("/Image/Background/Background.png")));
     ImageView backgroundView = new ImageView(background);
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);

@@ -11,6 +11,7 @@ module WandsAndTrolls {
   requires javafx.media;
   requires javafx.controls;
   requires javafx.web;
+  requires java.desktop;
 
   opens no.ntnu.idatg2001.grp13.model;
 
@@ -19,4 +20,7 @@ module WandsAndTrolls {
   exports no.ntnu.idatg2001.grp13.model;
   exports no.ntnu.idatg2001.grp13.model.goals;
   exports no.ntnu.idatg2001.grp13.model.actions;
+  exports no.ntnu.idatg2001.grp13.gui.util.stories to com.google.gson;
+  exports no.ntnu.idatg2001.grp13.gui.elements;
+  exports no.ntnu.idatg2001.grp13.gui.elements.util;
 }

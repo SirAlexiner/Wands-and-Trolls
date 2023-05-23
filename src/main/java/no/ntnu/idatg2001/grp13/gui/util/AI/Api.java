@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.grp13.gui.util;
+package no.ntnu.idatg2001.grp13.gui.util.AI;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import no.ntnu.idatg2001.grp13.gui.util.App;
 import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 @UtilityClass

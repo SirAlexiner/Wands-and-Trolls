@@ -2,7 +2,7 @@ package no.ntnu.idatg2001.grp13.gui.elements;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
 
 public class LocalizedLabel extends Label {
 

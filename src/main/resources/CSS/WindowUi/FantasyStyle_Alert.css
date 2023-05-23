@@ -4,13 +4,13 @@
 }
 
 .alert {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
+    -fx-background-image: url("Background/Background.png"); /* Set the background image */
     -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
     -fx-background-size: cover; /* Adjust the background image size to cover the alert */
 }
 
 .alert .header-panel {
-    -fx-background-image: url("../../Image/Window/Background.png"); /* Set the background image */
+    -fx-background-image: url("Background/Background.png"); /* Set the background image */
     -fx-background-repeat: no-repeat; /* Specify the background image should not repeat */
     -fx-background-size: cover; /* Adjust the background image size to cover the alert */
 }
@@ -21,7 +21,7 @@
 
 .label {
     -fx-font-family: 'Constantia';
-    -fx-text-fill: #F1EDDF;
+    -fx-text-fill: #CDB593;
     -fx-font-size: 14px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.7), 5, 0.0, 0, 1),
     innershadow(three-pass-box, rgba(255, 255, 255, 0.15), 5, 0.0, 0, 5),

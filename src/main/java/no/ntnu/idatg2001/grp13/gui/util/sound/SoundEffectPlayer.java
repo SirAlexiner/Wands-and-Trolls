@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.grp13.gui.util;
+package no.ntnu.idatg2001.grp13.gui.util.sound;
 
 import java.util.Objects;
 import javafx.scene.media.Media;
@@ -38,5 +38,16 @@ public class SoundEffectPlayer {
 
   public static void unmuteSoundEffects() {
     effectPlayer.setMute(false);
+  }
+
+  public static void playTypeWriterSoundEffect() {
+    Settings settings = SettingsDao.loadSettingsFromFile();
+    effectPlayer = new MediaPlayer(new Media(
+        Objects.requireNonNull(MainStage.class.getResource("/Audio/Typewriter.wav"))
+            .toString()));
+    effectPlayer.setVolume(settings.getMasterVolume() * settings.getSoundEffectVolume());
+    effectPlayer.setMute(settings.isSoundEffectMuted());
+    effectPlayer.play();
+    effectPlayer.setOnEndOfMedia(effectPlayer::stop);
   }
 }

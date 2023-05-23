@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.grp13.gui.util;
+package no.ntnu.idatg2001.grp13.gui.util.AI;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

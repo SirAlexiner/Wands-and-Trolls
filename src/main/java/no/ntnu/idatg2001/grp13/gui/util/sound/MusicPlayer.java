@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.grp13.gui.util;
+package no.ntnu.idatg2001.grp13.gui.util.sound;
 
 import java.util.Objects;
 import javafx.scene.media.AudioClip;
@@ -74,5 +74,16 @@ public class MusicPlayer {
 
   public static void stop() {
     audioPlayer.stop();
+  }
+
+  public static void playAdventureMusic() {
+    Settings settings = SettingsDao.loadSettingsFromFile();
+    audioPlayer.stop();
+    audioPlayer = new MediaPlayer(new Media(
+        Objects.requireNonNull(MainStage.class.getResource("/Audio/Adventure.wav"))
+            .toString()));
+    audioPlayer.setVolume(settings.getMusicVolume() * settings.getMasterVolume());
+    audioPlayer.setMute(settings.isGameMusicMuted());
+    audioPlayer.play();
   }
 }

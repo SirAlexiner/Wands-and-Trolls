@@ -1,10 +1,13 @@
 package no.ntnu.idatg2001.grp13.gui.scene;
 
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,19 +26,27 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.experimental.UtilityClass;
+import no.ntnu.idatg2001.grp13.gui.elements.FantasyAlert;
 import no.ntnu.idatg2001.grp13.gui.elements.FantasyButton;
 import no.ntnu.idatg2001.grp13.gui.elements.LocalizedLabel;
 import no.ntnu.idatg2001.grp13.gui.elements.util.FantasyButtonType;
-import no.ntnu.idatg2001.grp13.gui.util.LanguageManager;
+import no.ntnu.idatg2001.grp13.gui.util.language.LanguageManager;
 import no.ntnu.idatg2001.grp13.gui.util.QuickButtons;
+import no.ntnu.idatg2001.grp13.gui.util.stories.StoriesDao;
+import no.ntnu.idatg2001.grp13.gui.util.stories.StoryReference;
+import no.ntnu.idatg2001.grp13.model.Story;
+import no.ntnu.idatg2001.grp13.model.StoryReader;
+import no.ntnu.idatg2001.grp13.util.ErrorLogger;
 
 @UtilityClass
 public class LoadAdventureScene {
 
+  private static File file;
+
   public static Scene getScene(Stage stage) {
     BorderPane root = new BorderPane();
     Image background = new Image(Objects.requireNonNull(
-        LoadAdventureScene.class.getResourceAsStream("/Image/Window/Background.png")));
+        LoadAdventureScene.class.getResourceAsStream("/Image/Background/Background.png")));
     ImageView backgroundView = new ImageView(background);
     backgroundView.setFitWidth(1024);
     backgroundView.setFitHeight(768);
@@ -50,7 +61,7 @@ public class LoadAdventureScene {
     selectedLabel.setPadding(new Insets(20));
     selectedLabel.setTextAlignment(TextAlignment.CENTER);
 
-    FantasyButton addButton = new FantasyButton("button.selectFile");
+    FantasyButton addButton = new FantasyButton("button.selectFile", true);
     addButton.setFantasyButtonType(FantasyButtonType.BLUE);
     addButton.setOnMouseClicked(event -> {
       FileChooser fileChooser = new FileChooser();
@@ -59,7 +70,7 @@ public class LoadAdventureScene {
           new FileChooser.ExtensionFilter("Paths Files", "*.paths")
       );
 
-      File file = fileChooser.showOpenDialog(stage);
+      file = fileChooser.showOpenDialog(stage);
 
       if (file != null) {
         selectedLabel.setText(file.getName() + "\n" + file.getAbsolutePath());
@@ -76,7 +87,7 @@ public class LoadAdventureScene {
         "-fx-effect: innershadow(three-pass-box, rgba(88,88,88,0.75), 50, -25.0, 0, 0);");
 
     Image fileDropperBackground = new Image(Objects.requireNonNull(
-        LoadAdventureScene.class.getResourceAsStream("/Image/Window/Background_Purple.png")));
+        LoadAdventureScene.class.getResourceAsStream("/Image/Background/Background_Purple.png")));
 
     fileDropBox.setBackground(new Background(
         new BackgroundImage(fileDropperBackground, BackgroundRepeat.REPEAT,
@@ -87,7 +98,7 @@ public class LoadAdventureScene {
 
     fileDropBox.setOnDragOver(event -> {
       boolean isValid = event.getDragboard().getFiles().stream()
-          .allMatch(file -> file.getName().endsWith(".txt")); // Only accept .txt files
+          .allMatch(file -> file.getName().endsWith(".paths")); // Only accept .txt files
 
       if (isValid) {
         event.acceptTransferModes(javafx.scene.input.TransferMode.COPY);
@@ -106,7 +117,7 @@ public class LoadAdventureScene {
       boolean success = false;
 
       if (dragboard.hasFiles()) {
-        File file = dragboard.getFiles().get(0);
+        file = dragboard.getFiles().get(0);
         selectedLabel.setText(file.getName() + "\n" + file.getAbsolutePath());
 
         success = true;
@@ -130,7 +141,12 @@ public class LoadAdventureScene {
 
     FantasyButton cancelButton = QuickButtons.getGoBackButton(stage);
 
-    FantasyButton saveButton = new FantasyButton("button.save");
+    FantasyButton saveButton = new FantasyButton("button.save", true);
+    saveButton.setOnMouseClicked(event -> {
+      if (file != null) {
+        saveFilePath(stage);
+      }
+    });
     saveButton.setFantasyButtonType(FantasyButtonType.BONE);
     saveButton.setPrefWidth(200);
 
@@ -146,5 +162,48 @@ public class LoadAdventureScene {
     root.setPadding(new Insets(5));
 
     return new Scene(root);
+  }
+
+  private static void saveFilePath(Stage stage) {
+    try {
+      Story story = StoryReader.readFromFile(file.getAbsolutePath());
+      if (story != null && (story.getBrokenLinks().isEmpty())) {
+        saveStoryReference(stage);
+      } else {
+        ErrorLogger.LOGGER.log(Level.SEVERE, "Failed to load story from file.");
+        FantasyAlert brokenLinksAlert = new FantasyAlert(stage);
+        brokenLinksAlert.setAlertType(Alert.AlertType.WARNING);
+        brokenLinksAlert.setHeader("alert.storyEmptyOrBrokenLinks");
+        brokenLinksAlert.setTitle("alert.error");
+        brokenLinksAlert.showAndWait();
+      }
+    } catch (Exception e) {
+      ErrorLogger.LOGGER.log(Level.SEVERE, String.format("Failed to load story from file: %s", e));
+    }
+  }
+
+  private static void saveStoryReference(Stage stage) {
+    StoryReference newStory = new StoryReference(file.getAbsolutePath());
+    try {
+      List<StoryReference> stories = StoriesDao.loadStoryReferencesFromFile();
+      if (stories.contains(newStory)) {
+        FantasyAlert storyExistsAlert = new FantasyAlert(stage);
+        storyExistsAlert.setAlertType(Alert.AlertType.INFORMATION);
+        storyExistsAlert.setHeader("alert.storyExistsText");
+        storyExistsAlert.setTitle("alert.storyExists");
+        storyExistsAlert.showAndWait();
+      } else {
+        stories.add(newStory);
+        FantasyAlert storySavedAlert = new FantasyAlert(stage);
+        storySavedAlert.setAlertType(Alert.AlertType.INFORMATION);
+        storySavedAlert.setHeader("alert.storySavedText");
+        storySavedAlert.setTitle("alert.storySaved");
+        storySavedAlert.showAndWait();
+      }
+      StoriesDao.saveStoryReferences();
+    } catch (Exception e) {
+      ErrorLogger.LOGGER.log(Level.SEVERE, String.format(
+          "Story should not be empty or contain broken links, but failed to load: %s", e));
+    }
   }
 }

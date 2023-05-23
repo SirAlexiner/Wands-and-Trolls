@@ -61,7 +61,7 @@ public class FantasyPlayerUi extends StackPane {
     healthBar.setPrefWidth(190);
     healthBar.setPrefHeight(18);
     healthBar.setTranslateX(-7);
-    healthBar.setTranslateY(-9);
+    healthBar.setTranslateY(-9.5);
 
     ColorAdjust healthColorAdjust = new ColorAdjust();
     healthColorAdjust.setHue(Color.RED.getHue());
