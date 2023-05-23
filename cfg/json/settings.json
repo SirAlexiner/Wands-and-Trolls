@@ -1,9 +1,9 @@
 {
-  "masterVolume": 0.1023391812865497,
-  "musicVolume": 0.2066869300911854,
-  "soundEffectVolume": 0.15501519756838905,
+  "masterVolume": 1.0,
+  "musicVolume": 1.0,
+  "soundEffectVolume": 1.0,
   "gameMusicMuted": false,
   "soundEffectMuted": false,
   "aiImagesEnabled": true,
-  "currentLanguage": "no"
+  "currentLanguage": "de"
 }
