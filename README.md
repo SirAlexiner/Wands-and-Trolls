@@ -1,4 +1,4 @@
-![a Logo for the repository](WnT.png)
+![a Logo for the repository](./WnT.jpg)
 # Wands and Trolls
 
 
